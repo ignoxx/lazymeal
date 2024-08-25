@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"lazymeal/app/views/landing"
+	"lazymeal/app/views/home"
 
 	"github.com/anthdm/superkit/kit"
 )
 
 func HandleLandingIndex(kit *kit.Kit) error {
-	return kit.Render(landing.Index())
+	return kit.Render(home.Index())
 }
