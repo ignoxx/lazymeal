@@ -674,6 +674,27 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -783,6 +804,10 @@ body {
   flex-shrink: 0;
 }
 
+.flex-grow {
+  flex-grow: 1;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -871,6 +896,10 @@ body {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
 }
 
 .rounded-lg {
