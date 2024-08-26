@@ -16,6 +16,9 @@ func HandleLandingIndex(kit *kit.Kit) error {
 		return err
 	}
 
+	// TODO: apply filters
+	// and fetch 200 meals
+
 	return kit.Render(home.Index(meals[:3], meals, activeFilters))
 }
 

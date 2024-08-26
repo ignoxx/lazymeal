@@ -1,6 +1,7 @@
 package home
 
 import (
+	"fmt"
 	"lazymeal/app/views/layouts"
 	"lazymeal/app/views/components"
 	"lazymeal/app/db/sqlc"
@@ -19,9 +20,9 @@ templ Index(trendingMeals, meals []sqlc.Meal, activeFilters map[string]bool) {
 						<div class="space-y-2">
 							for _, filter := range types.MEAL_FILTERS {
 								if activeFilters[filter.ID] {
-									<button class="w-full text-left bg-green-200 hover:bg-green-300 p-2 rounded-lg text-gray-900">{ filter.Emoji } { filter.Name }</button>
+									<button class="w-full text-left bg-green-200 hover:bg-green-300 p-2 rounded-lg text-gray-900" @click={ fmt.Sprintf("applyFilter('%s')", filter.ID) }>{ filter.Emoji } { filter.Name }</button>
 								} else {
-									<button class="w-full text-left bg-gray-100 hover:bg-gray-200 p-2 rounded-lg text-gray-900">{ filter.Emoji } { filter.Name }</button>
+									<button class="w-full text-left bg-gray-100 hover:bg-gray-200 p-2 rounded-lg text-gray-900" @click={ fmt.Sprintf("applyFilter('%s')", filter.ID) }>{ filter.Emoji } { filter.Name }</button>
 								}
 							}
 						</div>
