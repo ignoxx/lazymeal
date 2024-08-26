@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"lazymeal/app/db"
 	"fmt"
+	"lazymeal/app/db"
 	"net/http"
 	"os"
 	"strconv"
@@ -57,13 +57,13 @@ func HandleSignupCreate(kit *kit.Kit) error {
 
 func HandleResendVerificationCode(kit *kit.Kit) error {
 	idstr := kit.FormValue("userID")
-	id, err := strconv.Atoi(idstr)
+	id, err := strconv.ParseInt(idstr, 10, 64)
 	if err != nil {
 		return err
 	}
 
-	var user User
-	if err = db.Get().First(&user, id).Error; err != nil {
+	user, err := db.Get().FindUserByID(kit.Request.Context(), int64(id))
+	if err != nil {
 		return kit.Text(http.StatusOK, "An unexpected error occured")
 	}
 
@@ -71,7 +71,7 @@ func HandleResendVerificationCode(kit *kit.Kit) error {
 		return kit.Text(http.StatusOK, "Email already verified!")
 	}
 
-	token, err := createVerificationToken(uint(id))
+	token, err := createVerificationToken(id)
 	if err != nil {
 		return kit.Text(http.StatusOK, "An unexpected error occured")
 	}
@@ -86,7 +86,7 @@ func HandleResendVerificationCode(kit *kit.Kit) error {
 	return kit.Text(http.StatusOK, msg)
 }
 
-func createVerificationToken(userID uint) (string, error) {
+func createVerificationToken(userID int64) (string, error) {
 	expiryStr := kit.Getenv("SUPERKIT_AUTH_EMAIL_VERIFICATION_EXPIRY_IN_HOURS", "1")
 	expiry, err := strconv.Atoi(expiryStr)
 	if err != nil {

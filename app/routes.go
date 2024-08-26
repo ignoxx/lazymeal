@@ -3,7 +3,6 @@ package app
 import (
 	"lazymeal/app/handlers"
 	"lazymeal/app/views/errors"
-	"lazymeal/plugins/auth"
 	"log/slog"
 
 	"github.com/anthdm/superkit/kit"
@@ -31,15 +30,15 @@ func InitializeRoutes(router *chi.Mux) {
 	//      AuthFunc: YourAuthHandler,
 	//      RedirectURL: "/login",
 	//  }
-	auth.InitializeRoutes(router)
-	authConfig := kit.AuthenticationConfig{
-		AuthFunc:    auth.AuthenticateUser,
-		RedirectURL: "/login",
-	}
+	// auth.InitializeRoutes(router)
+	// authConfig := kit.AuthenticationConfig{
+	// 	AuthFunc:    auth.AuthenticateUser,
+	// 	RedirectURL: "/login",
+	// }
 
 	// Routes that "might" have an authenticated user
 	router.Group(func(app chi.Router) {
-		app.Use(kit.WithAuthentication(authConfig, false)) // strict set to false
+		// app.Use(kit.WithAuthentication(authConfig, false)) // strict set to false
 
 		// Routes
 		app.Get("/", kit.Handler(handlers.HandleLandingIndex))
@@ -50,12 +49,12 @@ func InitializeRoutes(router *chi.Mux) {
 	// Routes that "must" have an authenticated user or else they
 	// will be redirected to the configured redirectURL, set in the
 	// AuthenticationConfig.
-	router.Group(func(app chi.Router) {
-		app.Use(kit.WithAuthentication(authConfig, true)) // strict set to true
-
-		// Routes
-		// app.Get("/path", kit.Handler(myHandler.HandleIndex))
-	})
+	// router.Group(func(app chi.Router) {
+	// 	app.Use(kit.WithAuthentication(authConfig, true)) // strict set to true
+	//
+	// 	// Routes
+	// 	// app.Get("/path", kit.Handler(myHandler.HandleIndex))
+	// })
 }
 
 // NotFoundHandler that will be called when the requested path could

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"lazymeal/app/db"
 	"lazymeal/app/types"
 	"lazymeal/app/views/home"
 
@@ -8,10 +9,32 @@ import (
 )
 
 func HandleLandingIndex(kit *kit.Kit) error {
-	trendingMeals := []types.Meal{}
-	meals := []types.Meal{
-		{Name: "Spaghetti Carbonara", Description: "A delicious pasta dish with bacon and eggs.", ShortDescription: "A delicious pasta dish with bacon and eggs. A delicious pasta dish with bacon and eggs.A delicious pasta dish with bacon and eggs. ", Ingredients: []types.Ingredient{{Name: "Spaghetti", Unit: types.GRAMS, Amount: 200, WashingEffort: 1, PeelingEffort: 0}, {Name: "Bacon", Unit: types.GRAMS, Amount: 100, WashingEffort: 1, PeelingEffort: 0}, {Name: "Eggs", Unit: types.PIECE, Amount: 2, WashingEffort: 1, PeelingEffort: 0}}, Items: []types.CookItem{{Name: "Pan", WashingEffort: 1}, {Name: "Pot", WashingEffort: 1}}, InstructionSteps: []string{"Cook the spaghetti", "Fry the bacon", "Mix the eggs", "Mix everything together"}, Nutritions: []types.Nutrition{{Name: "Calories", Unit: types.GRAMS, Amount: 500}}, TotalEffort: 5, Calories: 500, Likes: 420, Comments: []string{}, ImageUrl: "https://i.pinimg.com/564x/66/fd/76/66fd766d2f75f4fb791d248087864ef1.jpg"},
+	activeFilters := getActiveFilters(kit)
+
+	meals, err := db.Get().GetAllMeals(kit.Request.Context())
+	if err != nil {
+		return err
 	}
 
-	return kit.Render(home.Index(trendingMeals, meals))
+	return kit.Render(home.Index(meals[:3], meals, activeFilters))
+}
+
+func getActiveFilters(kit *kit.Kit) map[string]bool {
+	queryValues := kit.Request.URL.Query()
+
+	if _, ok := queryValues["filter"]; !ok {
+		return map[string]bool{}
+	}
+
+	var filters = map[string]bool{}
+
+	for _, filter := range queryValues["filter"] {
+		for _, f := range types.MEAL_FILTERS {
+			if f.ID == filter {
+				filters[filter] = true
+			}
+		}
+	}
+
+	return filters
 }

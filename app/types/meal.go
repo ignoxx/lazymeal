@@ -10,23 +10,47 @@ const (
 	PIECE Unit = "pcs"
 )
 
+type MealFilter struct {
+	ID    string
+	Name  string
+	Emoji string
+}
+
+var (
+	MEAL_FILTERS []MealFilter = []MealFilter{
+		{ID: "fastest", Name: "Fastest", Emoji: "🚀"},
+		{ID: "high-protein", Name: "High Protein", Emoji: "💪"},
+		{ID: "low-calorie", Name: "Low-Calorie", Emoji: "🥗"},
+		{ID: "no-cutting", Name: "No Cutting", Emoji: "🔪"},
+		{ID: "no-peeling", Name: "No Peeling", Emoji: "🥕"},
+		{ID: "min-ingredients", Name: "Minimal Ingredients", Emoji: "🥄"},
+		{ID: "min-washing", Name: "Minimal Washing", Emoji: "🧼"},
+	}
+)
+
 type Meal struct {
 	Name             string
 	Description      string
 	ShortDescription string
 	ImageUrl         string
 	ImagePreview     string
-	Ingredients      []Ingredient
-	Items            []CookItem
-	InstructionSteps []string
-	Nutritions       []Nutrition
 	TotalEffort      int
 	Calories         int
 	CookTime         time.Time
 	PrepTime         time.Time
 	TotalTime        time.Time
-	Likes            int
-	Comments         []string
+	InstructionSteps []string
+
+	Ingredients []Ingredient
+	Nutritions  []Nutrition
+	Items       []CookItem
+	Comments    []string
+	Likes       int
+}
+
+type Like struct {
+	Source    string
+	CreatedAt time.Time
 }
 
 type Ingredient struct {

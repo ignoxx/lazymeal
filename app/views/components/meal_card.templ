@@ -1,11 +1,12 @@
 package components
 
 import (
-	"lazymeal/app/types"
 	"fmt"
+	"time"
+	"lazymeal/app/db/sqlc"
 )
 
-templ MealCard(meal types.Meal) {
+templ MealCard(meal sqlc.Meal) {
 	<div class="aspect-w-4 aspect-h-3">
 		<div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
 			<img class="w-full h-48 object-cover" src={ meal.ImageUrl } alt="Meal Image"/>
@@ -16,6 +17,18 @@ templ MealCard(meal types.Meal) {
 					<span class="text-sm text-gray-500">{ fmt.Sprint(meal.Likes) } likes</span>
 				</div>
 			</div>
+		</div>
+	</div>
+}
+
+templ MealTrendingCard(meal sqlc.Meal) {
+	<div class="flex items-center bg-gray-100 hover:bg-gray-200 p-2 rounded-lg">
+		<div class="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+			<img class="w-full h-full object-cover" src={ meal.ImageUrl } alt={ meal.ShortDescription }/>
+		</div>
+		<div class="ml-4">
+			<p class="font-semibold text-gray-900">{ meal.Name }</p>
+			<p class="text-sm text-gray-500">{ fmt.Sprint(time.Duration(meal.TotalTime).Minutes()) } min.</p>
 		</div>
 	</div>
 }

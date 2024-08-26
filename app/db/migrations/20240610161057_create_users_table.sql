@@ -13,3 +13,11 @@ create table if not exists users(
 
 -- +goose Down
 drop table if exists users;
+
+UPDATE users
+SET
+    email_verified_at = datetime('now'),
+    updated_at = datetime('now')
+WHERE
+    id = 1
+    AND email_verified_at IS NULL;

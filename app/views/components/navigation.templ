@@ -4,11 +4,20 @@ templ Navigation() {
 	<nav class="border-b py-3">
 		<div class="container mx-auto flex justify-between">
 			<div class="text-lg text-foreground">
-				<a href="/" class="font-semibold uppercase">lazy<span class="text-green-600">meal</span></a>
+				<a href="/" class="font-semibold uppercase">🍲 lazy<span class="text-green-600">meal</span></a>
 			</div>
 			<div class="flex gap-4 items-center">
-				<div>
-					@ThemeSwitcher()
+				<div class="bg-gray-100 hover:bg-gray-200 rounded w-8 h-8">
+					// plus icon for adding a new meal
+					<a href="/add" class="text-green font-semibold">
+						<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+						</svg>
+					</a>
+				</div>
+				<div class="w-8 h-8 bg-gray-400 rounded-full circular-xl">
+					// user icon for user profile,a filled circle
+					<a href="/profile" class="text-green font-semibold"></a>
 				</div>
 			</div>
 		</div>

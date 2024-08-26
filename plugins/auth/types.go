@@ -1,8 +1,10 @@
 package auth
 
 import (
-	"lazymeal/app/db"
+	"context"
 	"database/sql"
+	"lazymeal/app/db"
+	"lazymeal/app/db/sqlc"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -18,7 +20,7 @@ const (
 // UserWithVerificationToken is a struct that will be sent over the
 // auth.signup event. It holds the User struct and the Verification token string.
 type UserWithVerificationToken struct {
-	User  User
+	User  sqlc.User
 	Token string
 }
 
@@ -44,19 +46,25 @@ type User struct {
 	UpdatedAt       time.Time
 }
 
-func createUserFromFormValues(values SignupFormValues) (User, error) {
+func createUserFromFormValues(values SignupFormValues) (sqlc.User, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(values.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return User{}, err
+		return sqlc.User{}, err
 	}
-	user := User{
+	// user := User{
+	// 	Email:        values.Email,
+	// 	FirstName:    values.FirstName,
+	// 	LastName:     values.LastName,
+	// 	PasswordHash: string(hash),
+	// }
+	user, err := db.Get().CreateUser(context.TODO(), sqlc.CreateUserParams{
 		Email:        values.Email,
 		FirstName:    values.FirstName,
 		LastName:     values.LastName,
 		PasswordHash: string(hash),
-	}
-	result := db.Get().Create(&user)
-	return user, result.Error
+	})
+
+	return user, err
 }
 
 type Session struct {
