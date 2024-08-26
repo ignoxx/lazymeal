@@ -10,6 +10,10 @@ LIMIT ?1 OFFSET ?2;
 SELECT * FROM meals
 WHERE id = ?1;
 
+-- name: GetMealByIDs :many
+SELECT * FROM meals
+WHERE id IN (?1, ?2, ?3);
+
 -- name: GetMealsByCategory :many
 SELECT * FROM meals
 WHERE category = ?1;

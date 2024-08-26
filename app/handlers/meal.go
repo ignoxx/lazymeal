@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"lazymeal/app/db"
+	"lazymeal/app/db/sqlc"
 	"lazymeal/app/views/errors"
 	mealView "lazymeal/app/views/meal"
 	"strconv"
@@ -16,7 +17,13 @@ func HandleMealIndex(kit *kit.Kit) error {
 		return kit.Render(errors.Error404())
 	}
 
+	trendingMeals, err := db.Get().GetMealByIDs(kit.Request.Context(), sqlc.GetMealByIDsParams{
+		ID:   7,
+		ID_2: 5,
+		ID_3: 3,
+	})
+
 	meal, err := db.Get().GetMealByID(kit.Request.Context(), mealID)
 
-	return kit.Render(mealView.Index(meal))
+	return kit.Render(mealView.Index(trendingMeals, meal))
 }

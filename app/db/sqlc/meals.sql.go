@@ -259,6 +259,62 @@ func (q *Queries) GetMealByID(ctx context.Context, id int64) (Meal, error) {
 	return i, err
 }
 
+const getMealByIDs = `-- name: GetMealByIDs :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE id IN (?1, ?2, ?3)
+`
+
+type GetMealByIDsParams struct {
+	ID   int64
+	ID_2 int64
+	ID_3 int64
+}
+
+func (q *Queries) GetMealByIDs(ctx context.Context, arg GetMealByIDsParams) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealByIDs, arg.ID, arg.ID_2, arg.ID_3)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getMealsByCalories = `-- name: GetMealsByCalories :many
 SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
 WHERE calories < ?1
