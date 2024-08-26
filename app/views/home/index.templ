@@ -8,7 +8,7 @@ import (
 	"lazymeal/app/types"
 )
 
-templ Index(trendingMeals, meals []sqlc.Meal, activeFilters map[string]bool) {
+templ Index(trendingMeals, meals []sqlc.Meal, activeFilter string) {
 	@layouts.App() {
 		<div class="p-4 lg:p-8">
 			<div class="flex flex-col lg:flex-row gap-8">
@@ -19,7 +19,7 @@ templ Index(trendingMeals, meals []sqlc.Meal, activeFilters map[string]bool) {
 						<h2 class="text-lg font-bold mb-4 text-gray-900">Quick Filters</h2>
 						<div class="space-y-2">
 							for _, filter := range types.MEAL_FILTERS {
-								if activeFilters[filter.ID] {
+								if activeFilter == filter.ID {
 									<button class="w-full text-left bg-green-200 hover:bg-green-300 p-2 rounded-lg text-gray-900" @click={ fmt.Sprintf("applyFilter('%s')", filter.ID) }>{ filter.Emoji } { filter.Name }</button>
 								} else {
 									<button class="w-full text-left bg-gray-100 hover:bg-gray-200 p-2 rounded-lg text-gray-900" @click={ fmt.Sprintf("applyFilter('%s')", filter.ID) }>{ filter.Emoji } { filter.Name }</button>

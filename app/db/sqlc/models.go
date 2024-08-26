@@ -9,66 +9,28 @@ import (
 	"time"
 )
 
-type Comment struct {
-	ID        int64
-	Author    string
-	Content   string
-	Approved  bool
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	MealID    int64
-}
-
-type CookItem struct {
-	ID            int64
-	Name          string
-	WashingEffort int64
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	MealID        int64
-}
-
-type Ingredient struct {
-	ID            int64
-	Name          string
-	Unit          string
-	Amount        int64
-	Calories      int64
-	WashingEffort int64
-	CuttingEffort int64
-	PellingEffort int64
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	MealID        int64
-}
-
 type Meal struct {
-	ID               int64
-	Name             string
-	Category         string
-	Description      string
-	ShortDescription string
-	ImageUrl         string
-	ImagePreview     string
-	Calories         int64
-	Likes            int64
-	TotalEffort      int64
-	InstructionSteps string
-	CookTime         int64
-	PrepTime         int64
-	TotalTime        int64
-	CreatedAt        time.Time
-	UpdatedAt        time.Time
-}
-
-type Nutrition struct {
-	ID           int64
-	Name         string
-	Unit         string
-	Amount       int64
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	IngredientID int64
+	ID                       int64
+	Name                     string
+	Category                 string
+	Description              string
+	LightVersionInstructions sql.NullString
+	Instructions             string
+	ImageUrl                 string
+	Calories                 int64
+	Protein                  int64
+	CookTime                 int64
+	PrepTime                 int64
+	TotalTime                int64
+	WashingEffort            int64
+	PeelingEffort            int64
+	CuttingEffort            int64
+	ItemsRequired            string
+	Ingredients              string
+	TotalEffort              sql.NullInt64
+	Likes                    int64
+	CreatedAt                time.Time
+	UpdatedAt                time.Time
 }
 
 type Session struct {

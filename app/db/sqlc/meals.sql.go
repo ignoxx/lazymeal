@@ -7,76 +7,21 @@ package sqlc
 
 import (
 	"context"
+	"database/sql"
 )
 
-const createMeal = `-- name: CreateMeal :one
-INSERT INTO meals (
-    name, category, description, short_description,
-    image_url, image_preview, calories, likes, total_effort,
-    instruction_steps, cook_time, prep_time, total_time, created_at, updated_at
-) VALUES (
-    ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10,
-    ?11, ?12, ?13, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
-)
-RETURNING id, name, category, description, short_description, image_url, image_preview, calories, likes, total_effort, instruction_steps, cook_time, prep_time, total_time, created_at, updated_at
+const deleteMeal = `-- name: DeleteMeal :exec
+DELETE FROM meals
+WHERE id = ?1
 `
 
-type CreateMealParams struct {
-	Name             string
-	Category         string
-	Description      string
-	ShortDescription string
-	ImageUrl         string
-	ImagePreview     string
-	Calories         int64
-	Likes            int64
-	TotalEffort      int64
-	InstructionSteps string
-	CookTime         int64
-	PrepTime         int64
-	TotalTime        int64
-}
-
-func (q *Queries) CreateMeal(ctx context.Context, arg CreateMealParams) (Meal, error) {
-	row := q.db.QueryRowContext(ctx, createMeal,
-		arg.Name,
-		arg.Category,
-		arg.Description,
-		arg.ShortDescription,
-		arg.ImageUrl,
-		arg.ImagePreview,
-		arg.Calories,
-		arg.Likes,
-		arg.TotalEffort,
-		arg.InstructionSteps,
-		arg.CookTime,
-		arg.PrepTime,
-		arg.TotalTime,
-	)
-	var i Meal
-	err := row.Scan(
-		&i.ID,
-		&i.Name,
-		&i.Category,
-		&i.Description,
-		&i.ShortDescription,
-		&i.ImageUrl,
-		&i.ImagePreview,
-		&i.Calories,
-		&i.Likes,
-		&i.TotalEffort,
-		&i.InstructionSteps,
-		&i.CookTime,
-		&i.PrepTime,
-		&i.TotalTime,
-		&i.CreatedAt,
-		&i.UpdatedAt,
-	)
-	return i, err
+func (q *Queries) DeleteMeal(ctx context.Context, id int64) error {
+	_, err := q.db.ExecContext(ctx, deleteMeal, id)
+	return err
 }
 
 const getAllMeals = `-- name: GetAllMeals :many
-SELECT id, name, category, description, short_description, image_url, image_preview, calories, likes, total_effort, instruction_steps, cook_time, prep_time, total_time, created_at, updated_at FROM meals
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
 `
 
 func (q *Queries) GetAllMeals(ctx context.Context) ([]Meal, error) {
@@ -93,16 +38,21 @@ func (q *Queries) GetAllMeals(ctx context.Context) ([]Meal, error) {
 			&i.Name,
 			&i.Category,
 			&i.Description,
-			&i.ShortDescription,
+			&i.LightVersionInstructions,
+			&i.Instructions,
 			&i.ImageUrl,
-			&i.ImagePreview,
 			&i.Calories,
-			&i.Likes,
-			&i.TotalEffort,
-			&i.InstructionSteps,
+			&i.Protein,
 			&i.CookTime,
 			&i.PrepTime,
 			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {
@@ -120,9 +70,7 @@ func (q *Queries) GetAllMeals(ctx context.Context) ([]Meal, error) {
 }
 
 const getAllMealsPaginated = `-- name: GetAllMealsPaginated :many
-
-
-SELECT id, name, category, description, short_description, image_url, image_preview, calories, likes, total_effort, instruction_steps, cook_time, prep_time, total_time, created_at, updated_at FROM meals
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
 ORDER BY created_at DESC
 LIMIT ?1 OFFSET ?2
 `
@@ -132,10 +80,6 @@ type GetAllMealsPaginatedParams struct {
 	Offset int64
 }
 
-// SELECT * FROM meals
-// WHERE created_at > ?1
-// ORDER BY created_at DESC
-// LIMIT ?2;
 func (q *Queries) GetAllMealsPaginated(ctx context.Context, arg GetAllMealsPaginatedParams) ([]Meal, error) {
 	rows, err := q.db.QueryContext(ctx, getAllMealsPaginated, arg.Limit, arg.Offset)
 	if err != nil {
@@ -150,16 +94,21 @@ func (q *Queries) GetAllMealsPaginated(ctx context.Context, arg GetAllMealsPagin
 			&i.Name,
 			&i.Category,
 			&i.Description,
-			&i.ShortDescription,
+			&i.LightVersionInstructions,
+			&i.Instructions,
 			&i.ImageUrl,
-			&i.ImagePreview,
 			&i.Calories,
-			&i.Likes,
-			&i.TotalEffort,
-			&i.InstructionSteps,
+			&i.Protein,
 			&i.CookTime,
 			&i.PrepTime,
 			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
 		); err != nil {
@@ -174,4 +123,609 @@ func (q *Queries) GetAllMealsPaginated(ctx context.Context, arg GetAllMealsPagin
 		return nil, err
 	}
 	return items, nil
+}
+
+const getFastestMeals = `-- name: GetFastestMeals :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+ORDER BY total_time ASC
+`
+
+func (q *Queries) GetFastestMeals(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getFastestMeals)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getHighProteinMeals = `-- name: GetHighProteinMeals :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE protein >= 30
+`
+
+func (q *Queries) GetHighProteinMeals(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getHighProteinMeals)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealByID = `-- name: GetMealByID :one
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE id = ?1
+`
+
+func (q *Queries) GetMealByID(ctx context.Context, id int64) (Meal, error) {
+	row := q.db.QueryRowContext(ctx, getMealByID, id)
+	var i Meal
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Category,
+		&i.Description,
+		&i.LightVersionInstructions,
+		&i.Instructions,
+		&i.ImageUrl,
+		&i.Calories,
+		&i.Protein,
+		&i.CookTime,
+		&i.PrepTime,
+		&i.TotalTime,
+		&i.WashingEffort,
+		&i.PeelingEffort,
+		&i.CuttingEffort,
+		&i.ItemsRequired,
+		&i.Ingredients,
+		&i.TotalEffort,
+		&i.Likes,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getMealsByCalories = `-- name: GetMealsByCalories :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE calories < ?1
+`
+
+func (q *Queries) GetMealsByCalories(ctx context.Context, calories int64) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsByCalories, calories)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealsByCategory = `-- name: GetMealsByCategory :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE category = ?1
+`
+
+func (q *Queries) GetMealsByCategory(ctx context.Context, category string) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsByCategory, category)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealsByEffort = `-- name: GetMealsByEffort :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE total_effort <= ?1
+`
+
+func (q *Queries) GetMealsByEffort(ctx context.Context, totalEffort sql.NullInt64) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsByEffort, totalEffort)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealsWithMinimumIngredients = `-- name: GetMealsWithMinimumIngredients :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+ORDER BY LENGTH(ingredients) - LENGTH(REPLACE(ingredients, ',', '')) ASC
+`
+
+func (q *Queries) GetMealsWithMinimumIngredients(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsWithMinimumIngredients)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealsWithMinimumWashing = `-- name: GetMealsWithMinimumWashing :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+ORDER BY washing_effort ASC
+`
+
+func (q *Queries) GetMealsWithMinimumWashing(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsWithMinimumWashing)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealsWithNoCutting = `-- name: GetMealsWithNoCutting :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE cutting_effort = 0
+`
+
+func (q *Queries) GetMealsWithNoCutting(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsWithNoCutting)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealsWithNoPeeling = `-- name: GetMealsWithNoPeeling :many
+SELECT id, name, category, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE peeling_effort = 0
+`
+
+func (q *Queries) GetMealsWithNoPeeling(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsWithNoPeeling)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const insertMeal = `-- name: InsertMeal :exec
+INSERT INTO meals (
+    name, category, description, light_version_instructions, instructions, image_url, calories, protein,
+    cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, likes, created_at, updated_at
+) VALUES (
+    ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+)
+`
+
+type InsertMealParams struct {
+	Name                     string
+	Category                 string
+	Description              string
+	LightVersionInstructions sql.NullString
+	Instructions             string
+	ImageUrl                 string
+	Calories                 int64
+	Protein                  int64
+	CookTime                 int64
+	PrepTime                 int64
+	TotalTime                int64
+	WashingEffort            int64
+	PeelingEffort            int64
+	CuttingEffort            int64
+	ItemsRequired            string
+	Ingredients              string
+	Likes                    int64
+}
+
+func (q *Queries) InsertMeal(ctx context.Context, arg InsertMealParams) error {
+	_, err := q.db.ExecContext(ctx, insertMeal,
+		arg.Name,
+		arg.Category,
+		arg.Description,
+		arg.LightVersionInstructions,
+		arg.Instructions,
+		arg.ImageUrl,
+		arg.Calories,
+		arg.Protein,
+		arg.CookTime,
+		arg.PrepTime,
+		arg.TotalTime,
+		arg.WashingEffort,
+		arg.PeelingEffort,
+		arg.CuttingEffort,
+		arg.ItemsRequired,
+		arg.Ingredients,
+		arg.Likes,
+	)
+	return err
+}
+
+const updateMeal = `-- name: UpdateMeal :exec
+UPDATE meals
+SET
+    name = ?2,
+    category = ?3,
+    description = ?4,
+    light_version_instructions = ?5,
+    instructions = ?6,
+    image_url = ?7,
+    calories = ?8,
+    protein = ?9,
+    cook_time = ?10,
+    prep_time = ?11,
+    total_time = ?12,
+    washing_effort = ?13,
+    peeling_effort = ?14,
+    cutting_effort = ?15,
+    items_required = ?16,
+    ingredients = ?17,
+	likes = ?18,
+    updated_at = CURRENT_TIMESTAMP
+WHERE id = ?1
+`
+
+type UpdateMealParams struct {
+	ID                       int64
+	Name                     string
+	Category                 string
+	Description              string
+	LightVersionInstructions sql.NullString
+	Instructions             string
+	ImageUrl                 string
+	Calories                 int64
+	Protein                  int64
+	CookTime                 int64
+	PrepTime                 int64
+	TotalTime                int64
+	WashingEffort            int64
+	PeelingEffort            int64
+	CuttingEffort            int64
+	ItemsRequired            string
+	Ingredients              string
+	Likes                    int64
+}
+
+func (q *Queries) UpdateMeal(ctx context.Context, arg UpdateMealParams) error {
+	_, err := q.db.ExecContext(ctx, updateMeal,
+		arg.ID,
+		arg.Name,
+		arg.Category,
+		arg.Description,
+		arg.LightVersionInstructions,
+		arg.Instructions,
+		arg.ImageUrl,
+		arg.Calories,
+		arg.Protein,
+		arg.CookTime,
+		arg.PrepTime,
+		arg.TotalTime,
+		arg.WashingEffort,
+		arg.PeelingEffort,
+		arg.CuttingEffort,
+		arg.ItemsRequired,
+		arg.Ingredients,
+		arg.Likes,
+	)
+	return err
 }

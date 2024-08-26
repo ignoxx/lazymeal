@@ -16,15 +16,27 @@ type MealFilter struct {
 	Emoji string
 }
 
+const (
+	MEAL_FILTER_FASTEST         = "fastest"
+	MEAL_FILTER_LOWEST_EFFORT   = "lowest-effort"
+	MEAL_FILTER_HIGH_PROTEIN    = "high-protein"
+	MEAL_FILTER_LOW_CALORIE     = "low-calorie"
+	MEAL_FILTER_NO_CUTTING      = "no-cutting"
+	MEAL_FILTER_NO_PEELING      = "no-peeling"
+	MEAL_FILTER_MIN_INGREDIENTS = "min-ingredients"
+	MEAL_FILTER_MIN_WASHING     = "min-washing"
+)
+
 var (
 	MEAL_FILTERS []MealFilter = []MealFilter{
-		{ID: "fastest", Name: "Fastest", Emoji: "🚀"},
-		{ID: "high-protein", Name: "High Protein", Emoji: "💪"},
-		{ID: "low-calorie", Name: "Low-Calorie", Emoji: "🥗"},
-		{ID: "no-cutting", Name: "No Cutting", Emoji: "🔪"},
-		{ID: "no-peeling", Name: "No Peeling", Emoji: "🥕"},
-		{ID: "min-ingredients", Name: "Minimal Ingredients", Emoji: "🥄"},
-		{ID: "min-washing", Name: "Minimal Washing", Emoji: "🧼"},
+		{ID: MEAL_FILTER_FASTEST, Name: "Fastest", Emoji: "🚀"},
+		{ID: MEAL_FILTER_LOWEST_EFFORT, Name: "Lowest Effort", Emoji: "👌"},
+		{ID: MEAL_FILTER_HIGH_PROTEIN, Name: "High Protein", Emoji: "💪"},
+		{ID: MEAL_FILTER_LOW_CALORIE, Name: "Low-Calorie", Emoji: "🥗"},
+		{ID: MEAL_FILTER_NO_CUTTING, Name: "No Cutting", Emoji: "🔪"},
+		{ID: MEAL_FILTER_NO_PEELING, Name: "No Peeling", Emoji: "🥕"},
+		{ID: MEAL_FILTER_MIN_INGREDIENTS, Name: "Minimal Ingredients", Emoji: "🥄"},
+		{ID: MEAL_FILTER_MIN_WASHING, Name: "Minimal Washing", Emoji: "🧼"},
 	}
 )
 
