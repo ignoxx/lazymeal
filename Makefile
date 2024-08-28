@@ -60,7 +60,7 @@ build:
 	@go mod tidy
 	@npx tailwindcss -i app/assets/app.css -o ./public/assets/styles.css
 	@npx esbuild app/assets/index.js --bundle --outdir=public/assets
-	@go build -ldflags="-s -w" -o bin/app_prod cmd/app/main.go
+	# @go build -ldflags="-s -w" -o bin/app_prod cmd/app/main.go
 	@echo "compiled your application with all its assets to a single binary => bin/app_prod"
 
 db-status:

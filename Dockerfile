@@ -23,7 +23,7 @@ RUN apk add --no-cache \
     && rm golang.tar.gz
 
 # Set up Go environment variables
-ENV PATH $PATH:/usr/local/go/bin
+ENV PATH $PATH:/usr/local/go/bin:/app
 
 # Verify installations
 RUN node --version \
@@ -38,7 +38,9 @@ RUN yarn
 
 RUN make build
 
-RUN chmod +x ./bin/app_prod
+RUN go build -ldflags="-s -w" -o bin/app_prod cmd/app/main.go
+
+RUN chmod +x bin/app_prod
 
 ENTRYPOINT ["/app/bin/main"]
 
