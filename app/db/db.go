@@ -35,7 +35,7 @@ func init() {
 		User:     os.Getenv("DB_USER"),
 		Host:     os.Getenv("DB_HOST"),
 	}
-	dbRawInstance, err := db.New(config)
+	dbRawInstance, err := db.NewSQL(config)
 	if err != nil {
 		log.Fatal(err)
 	}
