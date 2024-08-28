@@ -6,7 +6,7 @@ COPY . .
 
 RUN go version
 
-RUN go build -ldflags="-s -w" -o bin/app_prod cmd/app/main.go
+RUN go build -ldflags="-s -w" -o bin/app_prod ./cmd/app/main.go
 
 RUN chmod +x bin/app_prod
 
