@@ -23,9 +23,7 @@ RUN apk add --no-cache \
     && rm golang.tar.gz
 
 # Set up Go environment variables
-ENV PATH /usr/local/go/bin:$PATH
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:$PATH
+ENV PATH $PATH:/usr/local/go/bin
 
 # Verify installations
 RUN node --version \
