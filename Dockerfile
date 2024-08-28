@@ -19,7 +19,7 @@ RUN go version
 
 WORKDIR /app
 
-COPY --from NODE_BUILDER . .
+COPY --from=NODE_BUILDER . .
 
 RUN go build -ldflags="-s -w" -o bin/app_prod cmd/app/main.go
 
