@@ -1,15 +1,13 @@
 FROM golang:1.23
 
-WORKDIR /app
+WORKDIR /usr/src/app
+
+# pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
 
 COPY . .
 
-RUN go version
+RUN go build -ldflags="-s -w" -v -o /usr/local/bin/app_prod ./cmd/app/main.go
 
-RUN go build -ldflags="-s -w" -o bin/app_prod ./cmd/app/main.go
-
-RUN chmod +x bin/app_prod
-
-ENTRYPOINT ["/app/bin/main"]
-
-
+ENTRYPOINT ["app_prod"]
