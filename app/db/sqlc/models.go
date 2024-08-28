@@ -13,6 +13,7 @@ type Meal struct {
 	ID                       int64
 	Name                     string
 	Category                 string
+	Servings                 int64
 	Description              string
 	LightVersionInstructions sql.NullString
 	Instructions             string
@@ -27,7 +28,7 @@ type Meal struct {
 	CuttingEffort            int64
 	ItemsRequired            string
 	Ingredients              string
-	TotalEffort              sql.NullInt64
+	TotalEffort              int64
 	Likes                    int64
 	CreatedAt                time.Time
 	UpdatedAt                time.Time

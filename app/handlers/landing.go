@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"lazymeal/app/db"
 	"lazymeal/app/db/sqlc"
 	"lazymeal/app/types"
@@ -14,6 +15,7 @@ func HandleLandingIndex(kit *kit.Kit) error {
 	activeFilter := getActiveFilter(kit)
 	meals, err := getMealsFiltered(kit.Request.Context(), activeFilter)
 	if err != nil {
+		fmt.Printf("%+v\n", err)
 		return err
 	}
 

@@ -4,6 +4,7 @@ import (
 	"lazymeal/app/handlers"
 	"lazymeal/app/views/errors"
 	"log/slog"
+	"net/http"
 
 	"github.com/anthdm/superkit/kit"
 	"github.com/anthdm/superkit/kit/middleware"
@@ -41,8 +42,12 @@ func InitializeRoutes(router *chi.Mux) {
 		// app.Use(kit.WithAuthentication(authConfig, false)) // strict set to false
 
 		// Routes
+		app.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+		})
 		app.Get("/", kit.Handler(handlers.HandleLandingIndex))
 		app.Get("/{mealID}", kit.Handler(handlers.HandleMealIndex))
+		app.Post("/{mealID}/like", kit.Handler(handlers.HandleMealLike))
 	})
 
 	// Authenticated routes

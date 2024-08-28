@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS meals (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     category TEXT NOT NULL,
+    servings INTEGER NOT NULL DEFAULT 1, -- Number of servings (people)
     description TEXT NOT NULL,
     light_version_instructions TEXT, -- Instructions for simplifying the meal
     instructions TEXT NOT NULL, -- Full instructions for the meal
@@ -17,10 +18,8 @@ CREATE TABLE IF NOT EXISTS meals (
     cutting_effort INTEGER NOT NULL, -- 1 to 10
     items_required TEXT NOT NULL, -- Comma-separated list of required items
     ingredients TEXT NOT NULL, -- Comma-separated list of ingredients with amounts
-    total_effort INTEGER GENERATED ALWAYS AS (
-        washing_effort + peeling_effort + cutting_effort
-    ) STORED, -- Computed column for total effort
-	likes INTEGER NOT NULL DEFAULT 0,
+    total_effort INTEGER NOT NULL, -- 1 to 10
+    likes INTEGER NOT NULL DEFAULT 0,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

@@ -27,3 +27,19 @@ func HandleMealIndex(kit *kit.Kit) error {
 
 	return kit.Render(mealView.Index(trendingMeals, meal))
 }
+
+func HandleMealLike(kit *kit.Kit) error {
+	mealIDStr := kit.Request.PathValue("mealID")
+	mealID, err := strconv.ParseInt(mealIDStr, 10, 64)
+	if err != nil {
+		return kit.Render(errors.Error404())
+	}
+
+	err = db.Get().UpdateMealLikes(kit.Request.Context(), mealID)
+	if err != nil {
+		return kit.Render(errors.Error500())
+	}
+
+	// 200 OK
+	return kit.Render(mealView.LikeButtonClicked())
+}
