@@ -681,9 +681,9 @@ func (q *Queries) GetMealsWithNoPeeling(ctx context.Context) ([]Meal, error) {
 const insertMeal = `-- name: InsertMeal :exec
 INSERT INTO meals (
     name, category, description, light_version_instructions, instructions, image_url, calories, protein,
-    cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, updated_at
+    cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, servings, updated_at
 ) VALUES (
-    ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+    ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, CURRENT_TIMESTAMP
 )
 `
 
@@ -705,6 +705,7 @@ type InsertMealParams struct {
 	ItemsRequired            string
 	Ingredients              string
 	TotalEffort              int64
+	Servings                 int64
 }
 
 func (q *Queries) InsertMeal(ctx context.Context, arg InsertMealParams) error {
@@ -726,6 +727,7 @@ func (q *Queries) InsertMeal(ctx context.Context, arg InsertMealParams) error {
 		arg.ItemsRequired,
 		arg.Ingredients,
 		arg.TotalEffort,
+		arg.Servings,
 	)
 	return err
 }

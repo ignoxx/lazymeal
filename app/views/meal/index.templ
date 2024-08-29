@@ -7,6 +7,7 @@ import (
 	"strings"
 	"fmt"
 	"lazymeal/app/views/components"
+	"lazymeal/app/utils"
 )
 
 func removeStepNumberFromStep(step string) string {
@@ -34,7 +35,7 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal) {
 					<div class="w-full  space-y-6">
 						<!-- Meal Image and Like Button -->
 						<div class="relative bg-white shadow-md rounded-lg overflow-hidden">
-							<img src={ meal.ImageUrl } alt={ meal.Name } class="w-full h-64 object-cover"/>
+							<img src={ utils.ImageURL(meal.ImageUrl) } alt={ meal.Name } class="w-full h-64 object-cover"/>
 							<!-- Like Button Inside Image -->
 							<button
 								class="absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm"
