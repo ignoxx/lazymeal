@@ -37,7 +37,7 @@ func HandleProfileShow(kit *kit.Kit) error {
 		Email:     user.Email,
 	}
 
-	return kit.Render(ProfileShow(formValues))
+	return kit.Render(ProfileShow(formValues, kit.Auth().Check()))
 }
 
 func HandleProfileUpdate(kit *kit.Kit) error {

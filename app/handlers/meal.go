@@ -117,12 +117,12 @@ func HandleMealEditIndex(kit *kit.Kit) error {
 	meal, err := db.Get().GetMealByID(kit.Request.Context(), mealID)
 
 	// 200 OK
-	return kit.Render(mealView.Edit(meal))
+	return kit.Render(mealView.Edit(meal, kit.Auth().Check()))
 }
 
 func HandleMealCreateIndex(kit *kit.Kit) error {
 	// 200 OK
-	return kit.Render(mealView.Create())
+	return kit.Render(mealView.Create(kit.Auth().Check()))
 }
 
 func HandleMealCreate(kit *kit.Kit) error {

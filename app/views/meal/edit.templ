@@ -7,8 +7,8 @@ import (
 	"fmt"
 )
 
-templ Edit(meal sqlc.Meal) {
-	@layouts.App() {
+templ Edit(meal sqlc.Meal, isAuthenticated bool) {
+	@layouts.App(isAuthenticated) {
 		<div class="p-4 lg:p-8">
 			<div class="flex flex-col lg:flex-row gap-8">
 				<!-- Main Content -->
@@ -94,7 +94,7 @@ templ Edit(meal sqlc.Meal) {
 						</div>
 						<!-- Submit Button -->
 						<div class="mt-6">
-							<button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+							<button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
 								Update Meal
 							</button>
 						</div>
