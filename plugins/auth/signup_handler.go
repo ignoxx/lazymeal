@@ -32,10 +32,17 @@ func HandleSignupIndex(kit *kit.Kit) error {
 
 func HandleSignupCreate(kit *kit.Kit) error {
 	var values SignupFormValues
+
 	errors, ok := v.Request(kit.Request, &values, signupSchema)
 	if !ok {
 		return kit.Render(SignupForm(values, errors))
 	}
+
+	if kit.Getenv("SUPERKIT_AUTH_SIGNUP_ENABLED", "false") != "true" {
+		errors.Add("signupEnabled", "signup is disabled")
+		return kit.Render(SignupForm(values, errors))
+	}
+
 	if values.Password != values.PasswordConfirm {
 		errors.Add("passwordConfirm", "passwords do not match")
 		return kit.Render(SignupForm(values, errors))

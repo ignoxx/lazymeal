@@ -678,13 +678,66 @@ func (q *Queries) GetMealsWithNoPeeling(ctx context.Context) ([]Meal, error) {
 	return items, nil
 }
 
-const insertMeal = `-- name: InsertMeal :exec
+const getNewestMeals = `-- name: GetNewestMeals :many
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+ORDER BY created_at DESC
+LIMIT ?1
+`
+
+func (q *Queries) GetNewestMeals(ctx context.Context, limit int64) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getNewestMeals, limit)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Servings,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const insertMeal = `-- name: InsertMeal :one
 INSERT INTO meals (
     name, category, description, light_version_instructions, instructions, image_url, calories, protein,
     cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, servings, updated_at
 ) VALUES (
     ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, CURRENT_TIMESTAMP
 )
+RETURNING id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at
 `
 
 type InsertMealParams struct {
@@ -708,8 +761,8 @@ type InsertMealParams struct {
 	Servings                 int64
 }
 
-func (q *Queries) InsertMeal(ctx context.Context, arg InsertMealParams) error {
-	_, err := q.db.ExecContext(ctx, insertMeal,
+func (q *Queries) InsertMeal(ctx context.Context, arg InsertMealParams) (Meal, error) {
+	row := q.db.QueryRowContext(ctx, insertMeal,
 		arg.Name,
 		arg.Category,
 		arg.Description,
@@ -729,7 +782,32 @@ func (q *Queries) InsertMeal(ctx context.Context, arg InsertMealParams) error {
 		arg.TotalEffort,
 		arg.Servings,
 	)
-	return err
+	var i Meal
+	err := row.Scan(
+		&i.ID,
+		&i.Name,
+		&i.Category,
+		&i.Servings,
+		&i.Description,
+		&i.LightVersionInstructions,
+		&i.Instructions,
+		&i.ImageUrl,
+		&i.Calories,
+		&i.Protein,
+		&i.CookTime,
+		&i.PrepTime,
+		&i.TotalTime,
+		&i.WashingEffort,
+		&i.PeelingEffort,
+		&i.CuttingEffort,
+		&i.ItemsRequired,
+		&i.Ingredients,
+		&i.TotalEffort,
+		&i.Likes,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
 }
 
 const updateMeal = `-- name: UpdateMeal :exec
@@ -752,7 +830,7 @@ SET
     items_required = ?16,
     ingredients = ?17,
     total_effort = ?18,
-	likes = ?19,
+    servings = ?19,
     updated_at = CURRENT_TIMESTAMP
 WHERE id = ?1
 `
@@ -776,7 +854,7 @@ type UpdateMealParams struct {
 	ItemsRequired            string
 	Ingredients              string
 	TotalEffort              int64
-	Likes                    int64
+	Servings                 int64
 }
 
 func (q *Queries) UpdateMeal(ctx context.Context, arg UpdateMealParams) error {
@@ -799,7 +877,7 @@ func (q *Queries) UpdateMeal(ctx context.Context, arg UpdateMealParams) error {
 		arg.ItemsRequired,
 		arg.Ingredients,
 		arg.TotalEffort,
-		arg.Likes,
+		arg.Servings,
 	)
 	return err
 }

@@ -1,0 +1,106 @@
+package meal
+
+import (
+	"lazymeal/app/views/layouts"
+	"lazymeal/app/db/sqlc"
+	"strings"
+	"fmt"
+)
+
+templ Edit(meal sqlc.Meal) {
+	@layouts.App() {
+		<div class="p-4 lg:p-8">
+			<div class="flex flex-col lg:flex-row gap-8">
+				<!-- Main Content -->
+				<div class="w-full lg:w-3/4 space-y-6">
+					<!-- Edit Meal Form -->
+					<form action={ templ.SafeURL(fmt.Sprintf("/%d", meal.ID)) } method="POST" class="bg-white shadow-md rounded-lg p-6">
+						<input type="hidden" name="_method" value="PUT"/>
+						<h2 class="text-xl font-semibold text-gray-800 mb-4">Edit Meal</h2>
+						<!-- Meal Name -->
+						<div class="mb-4">
+							<label for="name" class="block text-sm font-medium text-gray-700">Meal Name</label>
+							<input type="text" name="name" id="name" value={ meal.Name } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Image -->
+						<div class="mb-4">
+							<label for="image_url" class="block text-sm font-medium text-gray-700">Image URL</label>
+							<input type="text" name="image_url" id="image_url" value={ meal.ImageUrl } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Description -->
+						<div class="mb-4">
+							<label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+							<textarea name="description" id="description" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.Description }</textarea>
+						</div>
+						<!-- Servings -->
+						<div class="mb-4">
+							<label for="servings" class="block text-sm font-medium text-gray-700">Servings</label>
+							<input type="number" name="servings" id="servings" value={ fmt.Sprint(meal.Servings) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Total Time -->
+						<div class="mb-4">
+							<label for="total_time" class="block text-sm font-medium text-gray-700">Total Time (minutes)</label>
+							<input type="number" name="total_time" id="total_time" value={ fmt.Sprint(meal.TotalTime) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Calories -->
+						<div class="mb-4">
+							<label for="calories" class="block text-sm font-medium text-gray-700">Calories</label>
+							<input type="number" name="calories" id="calories" value={ fmt.Sprint(meal.Calories) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Protein -->
+						<div class="mb-4">
+							<label for="protein" class="block text-sm font-medium text-gray-700">Protein (g)</label>
+							<input type="number" name="protein" id="protein" value={ fmt.Sprint(meal.Protein) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Washing Effort -->
+						<div class="mb-4">
+							<label for="washing_effort" class="block text-sm font-medium text-gray-700">Washing Effort</label>
+							<input type="number" name="washing_effort" id="washing_effort" value={ fmt.Sprint(meal.WashingEffort) } min="0" max="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Cutting Effort -->
+						<div class="mb-4">
+							<label for="cutting_effort" class="block text-sm font-medium text-gray-700">Cutting Effort</label>
+							<input type="number" name="cutting_effort" id="cutting_effort" value={ fmt.Sprint(meal.CuttingEffort) } min="0" max="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Peeling Effort -->
+						<div class="mb-4">
+							<label for="peeling_effort" class="block text-sm font-medium text-gray-700">Peeling Effort</label>
+							<input type="number" name="peeling_effort" id="peeling_effort" value={ fmt.Sprint(meal.PeelingEffort) } min="0" max="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Category -->
+						<div class="mb-4">
+							<label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+							<textarea name="category" id="category" rows="2" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.Category }</textarea>
+						</div>
+						<!-- Ingredients -->
+						<div class="mb-4">
+							<label for="ingredients" class="block text-sm font-medium text-gray-700">Ingredients</label>
+							<textarea name="ingredients" id="ingredients" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ strings.Join(strings.Split(meal.Ingredients, ","), ", ") }</textarea>
+						</div>
+						<!-- Items Required -->
+						<div class="mb-4">
+							<label for="items_required" class="block text-sm font-medium text-gray-700">Items Required</label>
+							<textarea name="items_required" id="items_required" rows="2" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ strings.Join(strings.Split(meal.ItemsRequired, ","), ", ") }</textarea>
+						</div>
+						<!-- Instructions -->
+						<div class="mb-4">
+							<label for="instructions" class="block text-sm font-medium text-gray-700">Instructions</label>
+							<textarea name="instructions" id="instructions" rows="6" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ strings.Join(strings.Split(meal.Instructions, "\n"), "\n") }</textarea>
+						</div>
+						<!-- Light Version Instructions -->
+						<div class="mb-4">
+							<label for="light_version_instructions" class="block text-sm font-medium text-gray-700">Light Version Instructions (Optional)</label>
+							<textarea name="light_version_instructions" id="light_version_instructions" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.LightVersionInstructions.String }</textarea>
+						</div>
+						<!-- Submit Button -->
+						<div class="mt-6">
+							<button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+								Update Meal
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	}
+}

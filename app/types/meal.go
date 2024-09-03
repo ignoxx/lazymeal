@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"lazymeal/app/db/sqlc"
+	"time"
+)
 
 type Unit string
 
@@ -37,6 +40,12 @@ var (
 		{ID: MEAL_FILTER_NO_PEELING, Name: "No Peeling", Emoji: "🥕"},
 		{ID: MEAL_FILTER_MIN_INGREDIENTS, Name: "Minimal Ingredients", Emoji: "🥄"},
 		{ID: MEAL_FILTER_MIN_WASHING, Name: "Minimal Washing", Emoji: "🧼"},
+	}
+
+	TRENDING_MEALS sqlc.GetMealByIDsParams = sqlc.GetMealByIDsParams{
+		ID:   17,
+		ID_2: 18,
+		ID_3: 19,
 	}
 )
 

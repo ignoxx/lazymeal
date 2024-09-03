@@ -153,10 +153,6 @@ func AuthenticateUser(kit *kit.Kit) (kit.Auth, error) {
 		return auth, nil
 	}
 
-	// var session Session
-	// err := db.Get().
-	// 	Preload("User").
-	// 	Find(&session, "token = ? AND expires_at > ?", token, time.Now()).Error
 	session, err := db.Get().FindSessionByTokenAndExpiration(kit.Request.Context(), token)
 	if err != nil || session.ID == 0 {
 		return auth, nil

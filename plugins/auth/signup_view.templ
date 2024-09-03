@@ -40,6 +40,10 @@ templ SignupIndex(data SignupIndexPageData) {
 
 templ SignupForm(values SignupFormValues, errors v.Errors) {
 	<form hx-post="/signup" class="flex flex-col gap-4">
+		// error that signup is disabled
+		if errors.Has("signupEnabled") {
+			<div class="text-red-500 text-sm">{ errors.Get("signupEnabled")[0] }</div>
+		}
 		<div class="flex flex-col gap-1">
 			<label for="email">Email *</label>
 			<input { inputAttrs(errors.Has("email"))... } name="email" id="email" value={ values.Email }/>

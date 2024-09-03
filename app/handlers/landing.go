@@ -19,11 +19,7 @@ func HandleLandingIndex(kit *kit.Kit) error {
 		return err
 	}
 
-	trendingMeals, err := db.Get().GetMealByIDs(kit.Request.Context(), sqlc.GetMealByIDsParams{
-		ID:   7,
-		ID_2: 5,
-		ID_3: 3,
-	})
+	trendingMeals, err := db.Get().GetMealByIDs(kit.Request.Context(), types.TRENDING_MEALS)
 
 	return kit.Render(home.Index(trendingMeals, meals, activeFilter))
 }

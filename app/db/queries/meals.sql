@@ -34,6 +34,11 @@ WHERE total_effort <= ?1;
 SELECT * FROM meals
 ORDER BY total_time ASC;
 
+-- name: GetNewestMeals :many
+SELECT * FROM meals
+ORDER BY created_at DESC
+LIMIT ?1;
+
 -- name: GetMealsWithNoCutting :many
 SELECT * FROM meals
 WHERE cutting_effort = 0;
@@ -50,13 +55,14 @@ ORDER BY washing_effort ASC;
 SELECT * FROM meals
 ORDER BY LENGTH(ingredients) - LENGTH(REPLACE(ingredients, ',', '')) ASC;
 
--- name: InsertMeal :exec
+-- name: InsertMeal :one
 INSERT INTO meals (
     name, category, description, light_version_instructions, instructions, image_url, calories, protein,
     cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, servings, updated_at
 ) VALUES (
     ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, CURRENT_TIMESTAMP
-);
+)
+RETURNING *;
 
 -- name: UpdateMeal :exec
 UPDATE meals
@@ -78,7 +84,7 @@ SET
     items_required = ?16,
     ingredients = ?17,
     total_effort = ?18,
-	likes = ?19,
+    servings = ?19,
     updated_at = CURRENT_TIMESTAMP
 WHERE id = ?1;
 

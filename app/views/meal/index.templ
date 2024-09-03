@@ -25,7 +25,7 @@ templ LikeButtonClicked() {
 	</button>
 }
 
-templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal) {
+templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) {
 	@layouts.App() {
 		<div class="p-4 lg:p-8">
 			<div class="flex flex-col lg:flex-row gap-8">
@@ -39,12 +39,21 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal) {
 							<!-- Like Button Inside Image -->
 							<button
 								class="absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm"
-								hx-swap="outerHTML swap:2.2s"
+								hx-swap="outerHTML"
 								hx-post={ fmt.Sprintf("/%d/like", meal.ID) }
 								hx-on:htmx:before-request="this.classList.add('animate-pulse'); this.disabled = true;"
 							>
 								<i class="far fa-thumbs-up text-xl"></i>
 							</button>
+							if isAuthenticted {
+								<a href={ templ.SafeURL(fmt.Sprintf("/%d/edit", meal.ID)) }>
+									<button
+										class="absolute top-2 right-12 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm"
+									>
+										<i class="far fa-edit text-xl"></i>
+									</button>
+								</a>
+							}
 							<!-- Title and Details -->
 							<div class="p-6">
 								<h1 class="text-2xl font-bold text-gray-900 text-center mb-4 md:text-left">{ meal.Name }</h1>
@@ -57,9 +66,10 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal) {
 										<i class="fas fa-clock text-lg"></i>
 										<span>{ fmt.Sprint(meal.TotalTime) } min</span>
 									</div>
-									<div class="flex items-center space-x-2 text-sm">
+									// hide div on smaller screens
+									<div class="flex items-center space-x-2 text-sm hidden sm:flex">
 										<i class="fas fa-utensils text-lg"></i>
-										<span>{ meal.Category }</span>
+										<span class="line-clamp-1">{ meal.Category }</span>
 									</div>
 								</div>
 								<!-- Effort levels -->
@@ -142,7 +152,7 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal) {
 							<h2 class="text-xl font-semibold text-gray-800">Instructions</h2>
 							<ol class="list-decimal list-inside mt-2 text-gray-700 space-y-2">
 								for _, step := range strings.Split(meal.Instructions, "\n") {
-									<li>{ removeStepNumberFromStep(step) }</li>
+									<li>{ step }</li>
 								}
 							</ol>
 						</div>
@@ -150,23 +160,25 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal) {
 					<!-- Nutrition Facts -->
 					<div class="bg-white shadow-md rounded-lg p-6">
 						<h2 class="text-xl font-semibold text-gray-800">Nutrition Facts</h2>
+						// mention they are always per one serving, in very small suble font size
+						<p class="text-xs text-gray-600">*per one serving</p>
 						<div class="grid grid-cols-2 gap-4 mt-4">
 							<div>
 								<h3 class="text-lg font-medium text-gray-700">Calories</h3>
-								<p class="text-gray-800">{ fmt.Sprint(meal.Calories) } kcal</p>
+								<p class="text-gray-800"><i class="fas fa-fire"></i> { fmt.Sprint(meal.Calories) } kcal</p>
 							</div>
 							<div>
 								<h3 class="text-lg font-medium text-gray-700">Protein</h3>
-								<p class="text-gray-800">{ fmt.Sprint(meal.Protein) } g</p>
+								<p class="text-gray-800"><i class="fas fa-dumbbell"></i> { fmt.Sprint(meal.Protein) } g</p>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Sidebar -->
 				<div class="w-full lg:w-1/4 space-y-6">
-					<!-- Trending Recipes Sidebar -->
+					<!-- Newest Recipes Sidebar -->
 					<div class="p-4 border border-gray-300 rounded-lg bg-white shadow-sm">
-						<h2 class="text-lg font-bold text-gray-900 mb-4">Trending Recipes</h2>
+						<h2 class="text-lg font-bold text-gray-900 mb-4">Newest Recipes</h2>
 						<div class="space-y-2">
 							for _, trendingMeal := range trendingMeals {
 								@components.MealTrendingCard(trendingMeal)

@@ -3,6 +3,7 @@ package app
 import (
 	"lazymeal/app/handlers"
 	"lazymeal/app/views/errors"
+	"lazymeal/plugins/auth"
 	"log/slog"
 	"net/http"
 
@@ -17,11 +18,13 @@ import (
 func InitializeMiddleware(router *chi.Mux) {
 	router.Use(chimiddleware.Logger)
 	router.Use(chimiddleware.Recoverer)
+	router.Use(chimiddleware.StripSlashes)
 	router.Use(middleware.WithRequest)
 }
 
 // Define your routes in here
 func InitializeRoutes(router *chi.Mux) {
+	kit.Setup()
 	// Authentication plugin
 	//
 	// By default the auth plugin is active, to disable the auth plugin
@@ -31,15 +34,15 @@ func InitializeRoutes(router *chi.Mux) {
 	//      AuthFunc: YourAuthHandler,
 	//      RedirectURL: "/login",
 	//  }
-	// auth.InitializeRoutes(router)
-	// authConfig := kit.AuthenticationConfig{
-	// 	AuthFunc:    auth.AuthenticateUser,
-	// 	RedirectURL: "/login",
-	// }
+	auth.InitializeRoutes(router)
+	authConfig := kit.AuthenticationConfig{
+		AuthFunc:    auth.AuthenticateUser,
+		RedirectURL: "/login",
+	}
 
 	// Routes that "might" have an authenticated user
 	router.Group(func(app chi.Router) {
-		// app.Use(kit.WithAuthentication(authConfig, false)) // strict set to false
+		app.Use(kit.WithAuthentication(authConfig, false)) // strict set to false
 
 		// Routes
 		app.Get("/health", func(w http.ResponseWriter, r *http.Request) {
@@ -55,12 +58,15 @@ func InitializeRoutes(router *chi.Mux) {
 	// Routes that "must" have an authenticated user or else they
 	// will be redirected to the configured redirectURL, set in the
 	// AuthenticationConfig.
-	// router.Group(func(app chi.Router) {
-	// 	app.Use(kit.WithAuthentication(authConfig, true)) // strict set to true
-	//
-	// 	// Routes
-	// 	// app.Get("/path", kit.Handler(myHandler.HandleIndex))
-	// })
+	router.Group(func(app chi.Router) {
+		app.Use(kit.WithAuthentication(authConfig, true)) // strict set to true
+
+		// Routes
+		app.Get("/{mealID}/edit", kit.Handler(handlers.HandleMealEditIndex))
+		app.Post("/{mealID}", kit.Handler(handlers.HandleMealEdit))
+		app.Get("/create", kit.Handler(handlers.HandleMealCreateIndex))
+		app.Post("/meal", kit.Handler(handlers.HandleMealCreate))
+	})
 }
 
 // NotFoundHandler that will be called when the requested path could

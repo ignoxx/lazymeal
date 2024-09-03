@@ -2,13 +2,11 @@ package auth
 
 import (
 	"context"
-	"database/sql"
 	"lazymeal/app/db"
 	"lazymeal/app/db/sqlc"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 // Event name constants
@@ -34,29 +32,12 @@ func (auth Auth) Check() bool {
 	return auth.LoggedIn
 }
 
-type User struct {
-	gorm.Model
-
-	Email           string
-	FirstName       string
-	LastName        string
-	PasswordHash    string
-	EmailVerifiedAt sql.NullTime
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
-}
-
 func createUserFromFormValues(values SignupFormValues) (sqlc.User, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(values.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return sqlc.User{}, err
 	}
-	// user := User{
-	// 	Email:        values.Email,
-	// 	FirstName:    values.FirstName,
-	// 	LastName:     values.LastName,
-	// 	PasswordHash: string(hash),
-	// }
+
 	user, err := db.Get().CreateUser(context.TODO(), sqlc.CreateUserParams{
 		Email:        values.Email,
 		FirstName:    values.FirstName,
@@ -68,13 +49,11 @@ func createUserFromFormValues(values SignupFormValues) (sqlc.User, error) {
 }
 
 type Session struct {
-	gorm.Model
-
 	UserID    uint
 	Token     string
 	IPAddress string
 	UserAgent string
 	ExpiresAt time.Time
 	CreatedAt time.Time
-	User      User
+	User      sqlc.User
 }
