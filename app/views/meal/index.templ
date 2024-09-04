@@ -38,7 +38,7 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) {
 							<img src={ utils.ImageURL(meal.ImageUrl) } alt={ meal.Name } class="w-full h-64 object-cover"/>
 							<!-- Like Button Inside Image -->
 							<button
-								class="absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm"
+								class="plausible-event-name=MealLike absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm"
 								hx-swap="outerHTML"
 								hx-post={ fmt.Sprintf("/%d/like", meal.ID) }
 								hx-on:htmx:before-request="this.classList.add('animate-pulse'); this.disabled = true;"
