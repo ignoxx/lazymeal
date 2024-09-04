@@ -13,7 +13,7 @@ COPY . .
 
 RUN templ generate
 
-RUN cd public && cp *.jpg *.png assets
+RUN cd public && cp *.png assets/
 
 RUN go build -ldflags="-s -w" -v -o /usr/local/bin/app_prod ./cmd/app/main.go
 
