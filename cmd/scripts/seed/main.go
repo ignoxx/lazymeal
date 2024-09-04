@@ -14,6 +14,292 @@ func main() {
 
 	mealsParams := []sqlc.InsertMealParams{
 		{
+			Name:        "Chicken Fajita Mac and Cheese",
+			Category:    "Main Course, Comfort Food, Dinner",
+			Servings:    4,
+			Description: "This Chicken Fajita Mac and Cheese combines the spicy flavors of fajitas with creamy macaroni and cheese for a comforting and satisfying dish. Perfect for a weeknight meal that the whole family will love.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cooked chicken and pre-shredded cheese to reduce prep time.",
+				Valid:  true,
+			},
+			Instructions:  "Fry onion, peppers, and garlic in olive oil until translucent. Add chicken, fajita seasoning, and salt, cooking until chicken is slightly browned. Add cream, chicken stock, and macaroni, cooking on low for 20 minutes. Stir in cheddar cheese and top with roasted peppers and parsley.",
+			ImageUrl:      "chicken-fajita-mac-and-cheese.jpg",
+			Calories:      650, // Estimated per serving
+			Protein:       30,  // Estimated per serving
+			CookTime:      20,  // Time to cook the pasta and finish dish
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     30,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 1,
+			CuttingEffort: 3,
+			ItemsRequired: "Skillet, Pot, Wooden spoon, Knife",
+			Ingredients:   "500g macaroni, 2 cups chicken stock, 1/2 cup heavy cream, 1 packet fajita seasoning, 1 tsp salt, 3 diced chicken breasts, 2 tbsp olive oil, 1 small diced onion, 2 diced red peppers, 2 minced garlic cloves, 1 cup cheddar cheese, Parsley for garnish",
+			TotalEffort:   2,
+		},
+
+		{
+			Name:        "Chicken Enchilada Casserole",
+			Category:    "Main Course, Dinner, Comfort Food",
+			Servings:    4,
+			Description: "This Chicken Enchilada Casserole is a cheesy, hearty, and delicious dish that's easy to prepare. Layered with enchilada sauce, shredded chicken, corn tortillas, and Monterey Jack cheese, it is perfect for a quick and satisfying dinner.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use rotisserie chicken and canned enchilada sauce to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Cook chicken breasts in enchilada sauce for 20 minutes. Shred the chicken and layer with tortillas, sauce, and cheese in a casserole dish. Repeat layers and bake at 375F for 20-30 minutes until bubbly and browned on top.",
+			ImageUrl:      "chicken-enchilada-casserole.jpg",
+			Calories:      600, // Estimated per serving
+			Protein:       35,  // Estimated per serving
+			CookTime:      30,  // Time to bake the casserole
+			PrepTime:      15,  // Time to cook chicken and assemble
+			TotalTime:     45,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Casserole dish, Pot, Forks",
+			Ingredients:   "14 oz enchilada sauce, 3 cups shredded Monterey Jack cheese, 6 corn tortillas, 2 chicken breasts",
+			TotalEffort:   2,
+		},
+
+		{
+			Name:        "Bread Omelette",
+			Category:    "Breakfast, Snacks",
+			Servings:    1,
+			Description: "A quick and easy bread omelette, perfect for breakfast or a light snack. This dish combines eggs and bread for a hearty, filling meal in minutes.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-sliced bread and pre-beaten eggs to speed up the process.",
+				Valid:  true,
+			},
+			Instructions:  "Make and enjoy.",
+			ImageUrl:      "bread-omelette.jpg",
+			Calories:      250, // Estimated per serving
+			Protein:       10,  // Estimated per serving
+			CookTime:      5,   // Quick cook time for the omelette
+			PrepTime:      2,   // Minimal preparation required
+			TotalTime:     7,   // Total time: prep + cook
+			WashingEffort: 1,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Skillet, Spatula",
+			Ingredients:   "2 slices of bread, 2 eggs, 1/2 tsp salt",
+			TotalEffort:   1,
+		},
+
+		{
+			Name:        "Beetroot Soup (Borscht)",
+			Category:    "Soups, Vegetarian",
+			Servings:    4,
+			Description: "A traditional Eastern European dish, Beetroot Soup (Borscht) is a vibrant and earthy soup made with fresh beetroot, potatoes, and beans. It's a warm, nutritious, and flavorful dish that's perfect for a light yet hearty meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the beans and use pre-cooked beetroot to reduce cooking time.",
+				Valid:  true,
+			},
+			Instructions:  "Chop the beetroot and boil in water with a stock cube for 15 minutes. Add diced potatoes and cook until soft. Finally, add beans and cook for 5 more minutes. Serve hot, garnished with dill.",
+			ImageUrl:      "beetroot-soup-borscht.jpg",
+			Calories:      200, // Estimated per serving
+			Protein:       6,   // Estimated per serving
+			CookTime:      20,  // Time to cook the soup
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     30,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 3,
+			CuttingEffort: 3,
+			ItemsRequired: "Soup pot, Knife, Cutting board",
+			Ingredients:   "3 beetroots, 4 tbsp olive oil, 1 chicken stock cube, 6 cups water, 3 potatoes, 1 can cannellini beans, Fresh dill for garnish",
+			TotalEffort:   3,
+		},
+
+		{
+			Name:        "Blini Pancakes",
+			Category:    "Breakfast, Appetizers",
+			Servings:    4,
+			Description: "Blini pancakes are small, fluffy pancakes made with buckwheat flour and yeast, traditionally served with toppings like sour cream, caviar, or smoked salmon. Perfect for breakfast or as a savory appetizer.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-made pancake batter for a quick version. Skip the yeast and let the batter rest for just 10 minutes before cooking.",
+				Valid:  true,
+			},
+			Instructions:  "In a bowl, whisk buckwheat flour, all-purpose flour, salt, and yeast. Add warm milk and mix until smooth. Let rise for 1 hour. Stir in melted butter and egg yolk. Fold in whisked egg white. Let batter rest for 20 minutes. Heat butter in a skillet, drop batter, cook for 1 minute, flip, and cook for 30 seconds more. Repeat with remaining batter.",
+			ImageUrl:      "blini-pancakes.jpg",
+			Calories:      200, // Estimated per serving
+			Protein:       6,   // Estimated per serving
+			CookTime:      15,  // Time to cook blini pancakes
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     25,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Mixing bowl, Skillet, Whisk",
+			Ingredients:   "1/2 cup buckwheat flour, 2/3 cup flour, 1/2 tsp salt, 1 tsp yeast, 1 cup milk, 2 tbsp butter, 1 egg (separated)",
+			TotalEffort:   2,
+		},
+
+		{
+			Name:        "Bigos (Hunters Stew)",
+			Category:    "Main Course, Dinner, Comfort Food",
+			Servings:    6,
+			Description: "A hearty Polish dish, Bigos (Hunters Stew) is a flavorful combination of meats, cabbage, and sauerkraut, simmered with mushrooms, garlic, and spices. This traditional stew is perfect for a cold day, offering deep, rich flavors.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the initial browning steps by using pre-cooked meats, and opt for pre-shredded cabbage and sauerkraut to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat the oven to 350F (175C). Cook bacon and kielbasa in a large pot until browned. Remove and transfer to a casserole dish. Lightly flour and brown pork in the same pot, then transfer to the casserole. Cook garlic, onion, carrots, mushrooms, cabbage, and sauerkraut. Deglaze with red wine and add spices. Combine with the meat, cover, and bake for 2 1/2 to 3 hours.",
+			ImageUrl:      "bigos-hunters-stew.jpg",
+			Calories:      500, // Estimated per serving
+			Protein:       25,  // Estimated per serving
+			CookTime:      180, // Time to bake the stew
+			PrepTime:      20,  // Time to prepare ingredients
+			TotalTime:     200, // Total time: prep + cook
+			WashingEffort: 4,
+			PeelingEffort: 3,
+			CuttingEffort: 3,
+			ItemsRequired: "Casserole dish, Large pot, Slotted spoon, Knife",
+			Ingredients:   "2 slices bacon, 1 lb kielbasa, 1 lb pork, 1/4 cup flour, 3 garlic cloves, 1 diced onion, 1 1/2 cup mushrooms, 4 cups cabbage, 1 jar sauerkraut, 1/4 cup red wine, 1 bay leaf, 1 tsp basil, 1 tsp marjoram, 1 tbsp paprika, 1/8 tsp caraway seeds",
+			TotalEffort:   3,
+		},
+
+		{
+			Name:        "Breakfast Potatoes",
+			Category:    "Breakfast, Brunch",
+			Servings:    2,
+			Description: "A hearty and savory breakfast dish, these crispy breakfast potatoes are tossed with bacon, garlic, and a touch of maple syrup for a perfect balance of flavors. Serve with a sunny-side-up egg for a complete meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the bacon and use pre-chopped potatoes to save time. You can also use pre-minced garlic to reduce effort.",
+				Valid:  true,
+			},
+			Instructions:  "Freeze bacon for easy chopping. Wash and dice potatoes, then soak in water to prevent browning. Heat oil in a skillet over medium-high, drain potatoes, and cook with seasoning for 10 minutes. Add chopped bacon, cook for 5-6 minutes until crispy, then add garlic. Drizzle with maple syrup before serving, and toss for a caramelized finish.",
+			ImageUrl:      "breakfast-potatoes.jpg",
+			Calories:      350, // Estimated per serving
+			Protein:       10,  // Estimated per serving
+			CookTime:      15,  // Time to cook potatoes and bacon
+			PrepTime:      10,  // Time to chop and prepare ingredients
+			TotalTime:     25,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Skillet, Knife, Bowl",
+			Ingredients:   "3 medium potatoes, 1 tbsp olive oil, 2 strips bacon, 1 garlic clove, 1 tbsp maple syrup, Parsley for garnish, Salt, Pepper, Allspice",
+			TotalEffort:   3,
+		},
+
+		{
+			Name:        "Baked Salmon with Fennel & Tomatoes",
+			Category:    "Main Course, Dinner, Healthy",
+			Servings:    2,
+			Description: "A healthy and flavorful baked salmon dish with fennel and cherry tomatoes. This dish is packed with fresh flavors, combining tender salmon with the aromatic fennel and sweet roasted tomatoes. Perfect for a nutritious and simple dinner.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip pre-cooking the fennel in boiling water and directly roast it with the tomatoes and salmon to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Heat oven to 180C/fan 160C/gas 4. Trim the fronds from the fennel and set aside. Cut the fennel bulbs in half, then cut each half into 3 wedges. Cook in boiling salted water for 10 mins, then drain well. Chop the fennel fronds roughly, then mix with the parsley and lemon zest. Spread the drained fennel over a shallow ovenproof dish, then add the tomatoes. Drizzle with olive oil, then bake for 10 mins. Nestle the salmon among the veg, sprinkle with lemon juice, then bake 15 mins more until the fish is just cooked. Scatter over the parsley and serve.",
+			ImageUrl:      "baked-salmon-with-fennel-tomatoes.jpg",
+			Calories:      400, // Estimated per serving
+			Protein:       30,  // Estimated per serving
+			CookTime:      25,  // Time to bake salmon and vegetables
+			PrepTime:      10,  // Time to prepare vegetables and salmon
+			TotalTime:     35,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Ovenproof dish, Knife, Saucepan",
+			Ingredients:   "2 medium fennel, 2 tbsp chopped parsley, 1 lemon (juiced), 175g cherry tomatoes, 1 tbsp olive oil, 350g salmon, Black olives (optional)",
+			TotalEffort:   3,
+		},
+
+		{
+			Name:        "Blackberry Fool",
+			Category:    "Desserts, Comfort Food",
+			Servings:    4,
+			Description: "A classic British dessert, Blackberry Fool is a light and creamy treat made with fresh blackberries and a mix of cream and yogurt. Served with hazelnut biscuits, this dish is both fruity and indulgent.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip making the hazelnut biscuits and serve the fool with store-bought cookies. You can also use pre-made blackberry puree to save time.",
+				Valid:  true,
+			},
+			Instructions:  "For the biscuits, preheat the oven to 200C/180C (fan)/Gas 6 and line two large baking trays with baking parchment. Scatter the hazelnuts over a baking tray and roast for 6-8 minutes, or until golden-brown. Remove and cool. In a bowl, beat butter and sugar until light and creamy. Add chopped nuts, lemon zest, flour, and baking powder, and mix until a dough forms. Shape into 24 balls, flatten them, and bake for 12 minutes. For the fool, cook blackberries with sugar and lemon juice for 15 minutes. Sieve to remove seeds. Whip cream and yogurt until soft peaks form. Gently fold in the blackberry purée. Serve in glass bowls with biscuits.",
+			ImageUrl:      "blackberry-fool.jpg",
+			Calories:      320, // Estimated per serving
+			Protein:       4,   // Estimated per serving
+			CookTime:      15,  // Time to prepare the blackberry fool
+			PrepTime:      10,  // Time to prepare the biscuits and ingredients
+			TotalTime:     25,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Baking trays, Mixing bowl, Saucepan, Electric whisk, Sieve, Glass bowls",
+			Ingredients:   "50g hazelnuts, 125g butter, 150g caster sugar, 1 lemon (zested), 150g plain flour, 1/2 tsp baking powder, 600g blackberries, 75g sugar, 2 tbsp caster sugar, 1 tbsp lemon juice, 300ml double cream, 100ml yogurt, Mint leaves for garnish",
+			TotalEffort:   2,
+		},
+
+		{
+			Name:        "Apple Frangipane Tart",
+			Category:    "Desserts, Comfort Food",
+			Servings:    6,
+			Description: "A delicious Apple Frangipane Tart featuring a biscuit base with a rich almond-flavored filling and thinly sliced apples. A perfect dessert for special occasions, best served warm with cream or ice cream.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use a store-bought tart base to skip the biscuit base preparation and save time. Skip peeling the apples if using softer varieties like Golden Delicious.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat the oven to 200C/180C Fan/Gas 6. Put the digestive biscuits in a resealable freezer bag and crush with a rolling pin into fine crumbs. Melt butter in a pan, mix with biscuit crumbs, and press the mixture evenly over the base and sides of a tart tin. Chill in the fridge while preparing the filling. Cream butter and sugar until light and fluffy, then mix in eggs, ground almonds, and almond extract until combined. Peel and thinly slice the apples. Arrange apple slices over the biscuit base. Spread the frangipane filling over the apples, level the surface, and sprinkle with flaked almonds. Bake for 20-25 minutes until golden-brown and set. Let the tart cool for 15 minutes before removing from the tin. Serve warm with cream, crème fraiche, or ice cream.",
+			ImageUrl:      "apple-frangipane-tart.jpg",
+			Calories:      450, // Estimated per serving
+			Protein:       6,   // Estimated per serving
+			CookTime:      25,  // Time to bake the tart
+			PrepTime:      15,  // Time to prepare base and filling
+			TotalTime:     40,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 4,
+			CuttingEffort: 3,
+			ItemsRequired: "Tart tin, Rolling pin, Mixing bowl, Wooden spoon, Saucepan, Knife",
+			Ingredients:   "175g digestive biscuits, 75g butter, 200g Bramley apples, 75g caster sugar, 75g ground almonds, 1 tsp almond extract, 50g flaked almonds, 2 eggs",
+			TotalEffort:   3,
+		},
+
+		{
+			Name:        "Apple & Blackberry Crumble",
+			Category:    "Desserts, Comfort Food",
+			Servings:    4,
+			Description: "A warm and comforting Apple & Blackberry Crumble, combining tart apples and sweet blackberries with a buttery crumble topping. Perfect for a cozy dessert, served with ice cream.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the pre-baking of the crumble topping and directly bake it with the fruit filling to save time. Use store-bought crumble mix for convenience.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat oven to 190C (170C fan/gas 5). In a bowl, mix the flour and caster sugar. Add butter and rub it into the flour to form a light crumb texture. Spread the mixture on a baking sheet and bake for 15 minutes until lightly golden. For the compote, peel, core, and dice the apples. In a saucepan, melt butter and demerara sugar over medium heat until it turns to light caramel. Add apples and cook for 3 minutes, then add blackberries and cinnamon, cooking for 3 more minutes. Remove from heat and let sit for 2-3 minutes. Spoon the fruit mixture into an ovenproof dish, top with the crumble, and bake for another 5-10 minutes. Serve warm with ice cream.",
+			ImageUrl:      "apple-blackberry-crumble.jpg",
+			Calories:      380, // Estimated per serving
+			Protein:       3,   // Estimated per serving
+			CookTime:      15,  // Time to bake the crumble topping and finish dish
+			PrepTime:      10,  // Time to prepare fruit and crumble mixture
+			TotalTime:     25,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 4,
+			CuttingEffort: 3,
+			ItemsRequired: "Baking sheet, Ovenproof dish, Saucepan, Mixing bowl, Wooden spoon, Knife",
+			Ingredients:   "120g plain flour, 60g caster sugar, 60g butter, 300g Braeburn apples, 30g butter, 30g demerara sugar, 120g blackberries, 1/4 tsp cinnamon, Ice cream for serving",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Spicy Arrabiata Penne",
+			Category:    "Main Course, Dinner, Vegetarian",
+			Servings:    2,
+			Description: "This quick and spicy Arrabiata Penne is perfect for a simple yet flavorful dinner. Made with garlic, red chili flakes, and fresh basil, it brings a classic Italian dish to your table in under 30 minutes.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-minced garlic and canned tomato sauce to speed up the process. Skip the Parmigiano-Reggiano topping for a quicker, dairy-free version.",
+				Valid:  true,
+			},
+			Instructions:  "Bring a large pot of water to a boil. Add kosher salt and the penne pasta. Cook according to package instructions, about 9 minutes. Meanwhile, heat olive oil in a large skillet over medium-high heat until shimmering. Add minced garlic and sauté for 1 to 2 minutes until fragrant. Add chopped tomatoes, red chili flakes, Italian seasoning, and salt and pepper. Bring to a boil and cook for 5 minutes. Stir in chopped basil. Drain the pasta and mix it with the sauce. Garnish with Parmigiano-Reggiano and basil. Serve warm.",
+			ImageUrl:      "spicy-arrabiata-penne.jpg",
+			Calories:      500, // Estimated per serving
+			Protein:       12,  // Estimated per serving
+			CookTime:      9,   // Time to cook the pasta
+			PrepTime:      10,  // Time for sauce preparation and gathering ingredients
+			TotalTime:     19,  // Total time: prep + cook
+			WashingEffort: 4,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Pot, Skillet, Strainer, Wooden Spoon, Knife",
+			Ingredients:   "1 pound penne rigate, 1/4 cup olive oil, 3 cloves garlic, 1 tin chopped tomatoes, 1/2 teaspoon red chili flakes, 1/2 teaspoon Italian seasoning, 6 basil leaves, Parmigiano-Reggiano flakes",
+			TotalEffort:   3,
+		},
+		{
 			Name:        "Chicken in Curry Cream Sauce with Carrot Rice",
 			Category:    "Dinner, High-Protein, Main Course",
 			Servings:    2,
@@ -234,10 +520,10 @@ Serve the Beef & Broccoli Rice Skillet on deep plates, garnished with toasted se
 				String: "Skip the step of making the lime crema and serve with plain sour cream. Use store-bought salsa instead of making it fresh. Reduce the garnish to save time.",
 				Valid:  true,
 			},
-			Instructions: `Slice the white and green parts of the spring onion separately into thin rings. Quarter the lime. Drain the black beans in a sieve.
+			Instructions: `1. Slice the white and green parts of the spring onion separately into thin rings. Quarter the lime. Drain the black beans in a sieve.
 In a large pan, heat 1 tablespoon of oil. Press the garlic into the pan and sauté for 1 minute. Remove and mix with sour cream and juice from 1 lime quarter. Season with salt and pepper.
-In the same pan, without adding extra oil, brown the ground beef and the white part of the spring onion for 2-3 minutes. Add the "Hello Fiesta" spice mix and black beans, cooking for another minute. Deglaze with diced tomatoes, 50 ml of water, and 1 teaspoon of sugar. Simmer for 3-4 minutes, then season with salt and pepper.
-Serve the chili in deep bowls, topped with tortilla chips, lime crema, and tomato salsa. Garnish with the green part of the spring onion and serve with the remaining lime wedges. Enjoy!`,
+2. In the same pan, without adding extra oil, brown the ground beef and the white part of the spring onion for 2-3 minutes. Add the "Hello Fiesta" spice mix and black beans, cooking for another minute. Deglaze with diced tomatoes, 50 ml of water, and 1 teaspoon of sugar. Simmer for 3-4 minutes, then season with salt and pepper.
+3. Serve the chili in deep bowls, topped with tortilla chips, lime crema, and tomato salsa. Garnish with the green part of the spring onion and serve with the remaining lime wedges. Enjoy!`,
 			ImageUrl:      "tex-mex-chili-bowl-with-tortilla-chips.png",
 			Calories:      855,
 			Protein:       40,
@@ -250,10 +536,446 @@ Serve the chili in deep bowls, topped with tortilla chips, lime crema, and tomat
 			ItemsRequired: "Sieve, Large Pan, Small Bowl, Large Frying Pan",
 			Ingredients:   "380g black beans,75g tortilla chips,100g tomato salsa,1 garlic clove,6g 'Hello Fiesta' spice mix,100g sour cream,390g diced tomatoes,200g ground beef,1 spring onion,1 lime,50ml water,salt to taste,pepper to taste,1.5 tablespoons oil",
 		},
+		{
+			Name:        "Chicken Handi",
+			Category:    "Main Course, Dinner",
+			Servings:    4,
+			Description: "A flavorful and creamy Chicken Handi cooked with aromatic spices like cumin, coriander, and garam masala, blended with yogurt and cream. This popular dish is perfect when served with naan or roti.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-fried onions and canned tomato sauce to save time. You can also use boneless chicken pieces for quicker cooking.",
+				Valid:  true,
+			},
+			Instructions:  "Heat oil in a large pot, fry onions until golden brown, and set aside. Sauté garlic, add tomatoes, and cook until soft. Add the fried onions, ginger, cumin, coriander, green chilies, turmeric, and red chili powder. Add chicken and cook for 15 minutes. Add yogurt, fenugreek, and cream. Finish with garam masala and fenugreek leaves, and serve hot with naan or roti.",
+			ImageUrl:      "chicken-handi.jpg",
+			Calories:      450, // Estimated per serving
+			Protein:       40,  // Estimated per serving
+			CookTime:      30,  // Time to cook the chicken
+			PrepTime:      15,  // Time to prepare ingredients
+			TotalTime:     45,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Large pot, Knife, Wooden spoon",
+			Ingredients:   "1.2 kg chicken, 5 onions, 2 tomatoes, 8 garlic cloves, 1 tbsp ginger paste, 1/4 cup vegetable oil, 2 tsp cumin seeds, 3 tsp coriander seeds, 1 tsp turmeric, 1 tsp chili powder, 2 green chilies, 1 cup yogurt, 3/4 cup cream, 3 tsp dried fenugreek, 1 tsp garam masala",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Croatian Bean Stew",
+			Category:    "Soups, Main Course, Comfort Food",
+			Servings:    4,
+			Description: "A hearty and flavorful Croatian Bean Stew made with cannellini beans, vegetables, and chorizo. This stew is perfect for a cozy meal and gets even better when reheated the next day.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cooked beans and pre-chopped vegetables to save time. Skip the oven and finish on the stovetop for faster cooking.",
+				Valid:  true,
+			},
+			Instructions:  "Heat oil in a pan, sauté the chopped vegetables until tender. Add beans and vegetables into a pot, along with chorizo. Cook for 20 minutes on low heat or bake at 180C/350F for 30 minutes. Serve warm.",
+			ImageUrl:      "croatian-bean-stew.jpg",
+			Calories:      500, // Estimated per serving
+			Protein:       20,  // Estimated per serving
+			CookTime:      30,  // Time to cook the stew
+			PrepTime:      15,  // Time to prepare ingredients
+			TotalTime:     45,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Pan, Pot, Ovenproof dish",
+			Ingredients:   "2 cans cannellini beans, 3 tbsp vegetable oil, 2 cups tomatoes, 5 shallots, 2 garlic cloves, 1/2 kg chorizo, Pinch parsley",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Chivito uruguayo",
+			Category:    "Main Course, Snacks",
+			Servings:    1,
+			Description: "Chivito uruguayo is a traditional Uruguayan sandwich made with beef, bacon, ham, mozzarella, fried egg, and fresh vegetables. It’s a delicious, hearty sandwich perfect for a quick and filling meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip frying the bacon and ham if you want to reduce time and effort. You can also use pre-cooked or thinly sliced beef.",
+				Valid:  true,
+			},
+			Instructions:  "Flatten the beef and cook it on a griddle. Fry the bacon, ham, and eggs. Assemble the sandwich by layering the beef, bacon, ham, egg, mozzarella, tomato, and lettuce on bread. Serve immediately.",
+			ImageUrl:      "chivito-uruguayo.jpg",
+			Calories:      700, // Estimated per serving
+			Protein:       40,  // Estimated per serving
+			CookTime:      15,  // Time to cook the meat and eggs
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     25,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Griddle, Knife, Frying pan",
+			Ingredients:   "2 beef brisket slices, 2 bread rolls, 1 tomato, 1 lettuce, 100g ham, 100g mozzarella, 100g bacon, 1 egg, 1 onion, 1 pepper",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Fettucine Alfredo",
+			Category:    "Main Course, Dinner",
+			Servings:    2,
+			Description: "A rich and creamy Fettucine Alfredo made with clotted cream, Parmesan cheese, and butter. This quick and easy pasta dish is perfect for a comforting meal, topped with freshly chopped parsley for added flavor.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought Alfredo sauce to save time, or skip the nutmeg for a simpler flavor profile.",
+				Valid:  true,
+			},
+			Instructions:  "In a medium saucepan, stir the clotted cream, butter, and cornflour over low heat until it simmers. Cook the pasta in salted boiling water, then drain and mix with the cream sauce. Add Parmesan and stir over low heat until the sauce is glossy. Serve with parsley.",
+			ImageUrl:      "fettucine-alfredo.jpg",
+			Calories:      650, // Estimated per serving
+			Protein:       15,  // Estimated per serving
+			CookTime:      10,  // Time to cook pasta and sauce
+			PrepTime:      5,   // Time to prepare ingredients
+			TotalTime:     15,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Saucepan, Rubber spatula, Pot",
+			Ingredients:   "227g clotted cream, 25g butter, 1 tsp cornflour, 100g Parmesan, Nutmeg, 250g fettucine, Parsley",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Grilled Mac and Cheese Sandwich",
+			Category:    "Main Course, Snacks, Comfort Food",
+			Servings:    4,
+			Description: "A comforting and indulgent Grilled Mac and Cheese Sandwich, combining creamy macaroni and cheese with toasted bread for a satisfying meal or snack. Perfect for cheese lovers!",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-made mac and cheese and skip refrigerating it to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Prepare mac and cheese by cooking pasta, then making a cheese sauce with butter, flour, milk, cream, and cheese. Chill the mac and cheese, then assemble sandwiches with cheddar cheese and garlic butter. Cook on a skillet until golden brown.",
+			ImageUrl:      "grilled-mac-and-cheese-sandwich.jpg",
+			Calories:      700, // Estimated per serving
+			Protein:       25,  // Estimated per serving
+			CookTime:      20,  // Time to cook the sandwiches
+			PrepTime:      30,  // Time to prepare mac and cheese
+			TotalTime:     50,  // Total time: prep + cook
+			WashingEffort: 4,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Skillet, Spatula, Saucepan, Baking sheet",
+			Ingredients:   "230g macaroni, 1/3 cup flour, 1 1/2 cups milk, 1 cup heavy cream, 455g Monterey Jack cheese, 16 slices bread, 8 slices cheddar cheese, 6 tbsp butter, 1 tsp garlic powder",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "General Tso's Chicken",
+			Category:    "Main Course, Dinner",
+			Servings:    4,
+			Description: "General Tso's Chicken is a popular Chinese-American dish featuring crispy fried chicken in a sweet, tangy sauce. It's flavorful and perfect for dinner served over rice.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the deep frying and stir-fry the chicken instead to reduce oil usage.",
+				Valid:  true,
+			},
+			Instructions:  "Mix water, soy sauce, vinegar, garlic, ginger, and sauces for the sauce. Marinate chicken in egg whites and cornstarch, then deep fry until golden. Stir-fry the sauce, add broccoli, thicken with cornstarch, and combine with chicken. Serve hot over rice.",
+			ImageUrl:      "general-tsos-chicken.jpg",
+			Calories:      550, // Estimated per serving
+			Protein:       35,  // Estimated per serving
+			CookTime:      30,  // Time to fry and stir-fry the chicken
+			PrepTime:      15,  // Time to marinate and prepare ingredients
+			TotalTime:     45,  // Total time: prep + cook
+			WashingEffort: 4,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Wok, Deep fryer, Knife",
+			Ingredients:   "2 cups water, 2 tbsp soy sauce, 2 tbsp rice vinegar, 2 egg whites, 3 tbsp cornstarch, 2 chicken breasts, 1/4 cup hoisin sauce, 1 tbsp ketchup, 1 tsp ginger, 2 garlic cloves, 1 tsp sugar",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Honey Teriyaki Salmon",
+			Category:    "Main Course, Dinner, Healthy",
+			Servings:    2,
+			Description: "A delicious and simple Honey Teriyaki Salmon with a rich glaze, perfect for a quick and healthy dinner. Pan-fried to perfection, this dish is garnished with sesame seeds and pairs wonderfully with steamed vegetables or rice.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought teriyaki sauce to save time on preparing the glaze.",
+				Valid:  true,
+			},
+			Instructions:  "Mix all ingredients for the honey teriyaki glaze. Coat the salmon with the glaze. Heat oil in a skillet over medium heat and pan-fry the salmon on both sides until cooked through and the glaze thickens. Garnish with sesame seeds and serve.",
+			ImageUrl:      "honey-teriyaki-salmon.jpg",
+			Calories:      400, // Estimated per serving
+			Protein:       35,  // Estimated per serving
+			CookTime:      10,  // Time to pan-fry the salmon
+			PrepTime:      5,   // Time to prepare the glaze
+			TotalTime:     15,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Skillet, Whisk",
+			Ingredients:   "1 lb salmon, 1 tbsp olive oil, 2 tbsp soy sauce, 2 tbsp sake, 4 tbsp sesame seeds",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Honey Balsamic Chicken with Crispy Broccoli & Potatoes",
+			Category:    "Main Course, Dinner, Healthy",
+			Servings:    2,
+			Description: "A healthy and flavorful Honey Balsamic Chicken with crispy roasted broccoli and potatoes. This dish combines tender chicken with a sweet balsamic glaze and crispy vegetables for a well-balanced meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the glaze and use a store-bought balsamic vinaigrette to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat oven to 425°F. Toss potatoes with oil, salt, and pepper, roast for 5 minutes. Add broccoli with garlic oil and roast until crispy. Meanwhile, cook chicken in a pan until browned, set aside. Make a balsamic glaze with vinegar, honey, and stock, and coat the chicken. Serve with crispy potatoes and broccoli.",
+			ImageUrl:      "honey-balsamic-chicken-with-crispy-broccoli-potatoes.jpg",
+			Calories:      600, // Estimated per serving
+			Protein:       35,  // Estimated per serving
+			CookTime:      30,  // Time to roast veggies and cook chicken
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     40,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 2,
+			ItemsRequired: "Baking sheet, Pan, Knife",
+			Ingredients:   "5 potatoes, 1 broccoli, 2 garlic cloves, 2 chicken breasts, Balsamic vinegar, Honey, Chicken stock, 1 tbsp butter, 1 tbsp vegetable oil, 1 tbsp olive oil",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Key Lime Pie",
+			Category:    "Desserts, Comfort Food",
+			Servings:    8,
+			Description: "A classic Key Lime Pie with a crunchy biscuit base, filled with a zesty and creamy lime filling. It's topped with softly whipped cream, making it the perfect refreshing dessert.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought graham cracker crust and ready-made whipped cream to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Crush digestive biscuits and mix with melted butter, then press into a tart tin. Bake the base and let it cool. Whisk egg yolks, condensed milk, lime zest, and juice, then pour into the base. Bake for 15 minutes and chill for 3 hours. Serve topped with whipped cream and lime zest.",
+			ImageUrl:      "key-lime-pie.jpg",
+			Calories:      450, // Estimated per serving
+			Protein:       8,   // Estimated per serving
+			CookTime:      25,  // Total baking time
+			PrepTime:      15,  // Time to prepare the base and filling
+			TotalTime:     40,  // Total time: prep + bake + chill
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Tart tin, Food processor, Whisk, Electric beaters",
+			Ingredients:   "300g digestive biscuits, 150g butter, 400g condensed milk, 3 egg yolks, 4 limes, 300ml double cream, 1 tbsp icing sugar",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Kung Pao Chicken",
+			Category:    "Main Course, Dinner",
+			Servings:    4,
+			Description: "A spicy and flavorful Kung Pao Chicken dish made with marinated chicken, peanuts, and water chestnuts, tossed in a rich soy-based sauce. This popular Chinese dish is perfect for a quick and satisfying dinner.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought Kung Pao sauce to save time on preparing the sauce from scratch.",
+				Valid:  true,
+			},
+			Instructions:  "Marinate the chicken with sake, soy sauce, sesame oil, and cornflour for 30 minutes. Prepare the sauce with the remaining marinade, chillies, vinegar, and sugar. Sauté the chicken and combine with the sauce, spring onions, garlic, water chestnuts, and peanuts. Simmer until thickened.",
+			ImageUrl:      "kung-pao-chicken.jpg",
+			Calories:      550, // Estimated per serving
+			Protein:       35,  // Estimated per serving
+			CookTime:      20,  // Time to sauté and cook chicken
+			PrepTime:      30,  // Time for marinating and preparing ingredients
+			TotalTime:     50,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Frying pan, Knife, Glass bowl",
+			Ingredients:   "500g chicken, 2 tbsp sake, 2 tbsp soy sauce, 2 tbsp sesame oil, 2 tbsp cornflour, 1 tsp rice vinegar, 1 tbsp brown sugar, 4 spring onions, 6 garlic cloves, 220g water chestnuts, 100g peanuts",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Lasagne",
+			Category:    "Main Course, Dinner, Comfort Food",
+			Servings:    4,
+			Description: "A classic lasagne layered with rich beef ragu, creamy crème fraîche, and mozzarella, topped with Parmesan for a perfect golden finish. This hearty dish is ideal for a comforting family meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought lasagne sheets and ready-made ragu sauce to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Cook bacon, onions, celery, and carrots until softened. Add minced beef, cook until browned, then stir in tomato puree, chopped tomatoes, honey, and seasoning. Simmer for 20 minutes. Layer the ragu sauce and lasagne sheets in a baking dish, finish with crème fraîche and mozzarella topping. Bake for 25-30 minutes until golden and bubbling.",
+			ImageUrl:      "lasagne.jpg",
+			Calories:      750, // Estimated per serving
+			Protein:       35,  // Estimated per serving
+			CookTime:      30,  // Time to bake the lasagne
+			PrepTime:      20,  // Time to prepare the ragu sauce
+			TotalTime:     50,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Saucepan, Baking dish, Knife",
+			Ingredients:   "500g minced beef, 2 bacon rashers, 1 onion, 1 carrot, 1 stick celery, 2 cloves garlic, 1 tbsp tomato puree, 800g chopped tomatoes, 1 tbsp honey, 400ml crème fraîche, 125g mozzarella, 50g Parmesan, 500g lasagne sheets",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Moroccan Carrot Soup",
+			Category:    "Soups, Healthy",
+			Servings:    4,
+			Description: "A fragrant and warming Moroccan Carrot Soup made with roasted carrots, cumin, and coriander. This soup is both light and flavorful, perfect for a healthy meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the roasting step and boil the vegetables instead to reduce time.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat oven to 180°C. Mix carrots, onion, garlic, cumin, coriander, salt, and olive oil. Roast for 10-12 minutes. Blend the roasted vegetables with water into a smooth paste. Reheat in a pan, add garam masala and lemon juice. Serve hot.",
+			ImageUrl:      "moroccan-carrot-soup.jpg",
+			Calories:      150, // Estimated per serving
+			Protein:       2,   // Estimated per serving
+			CookTime:      12,  // Time to roast vegetables
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     22,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Baking tray, Blender, Non-stick pan",
+			Ingredients:   "6 carrots, 1 onion, 4 garlic cloves, 1 tsp cumin, 1/2 tsp coriander, 1 tbsp olive oil, 1/4 tsp garam masala, 1 tsp lemon juice",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Pancakes",
+			Category:    "Breakfast, Desserts",
+			Servings:    4,
+			Description: "Classic fluffy pancakes made with simple ingredients like flour, eggs, and milk. These are perfect for breakfast, served with fruit or syrup.",
+			LightVersionInstructions: sql.NullString{
+				String: "Skip the resting time for the batter and use pre-made pancake mix to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Whisk flour, eggs, milk, and oil into a smooth batter. Cook pancakes in a pan for 1 minute on each side until golden. Serve with lemon wedges, sugar, or your favorite topping.",
+			ImageUrl:      "pancakes.jpg",
+			Calories:      200, // Estimated per serving
+			Protein:       6,   // Estimated per serving
+			CookTime:      10,  // Time to cook the pancakes
+			PrepTime:      5,   // Time to prepare batter
+			TotalTime:     15,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Mixing bowl, Frying pan, Whisk",
+			Ingredients:   "100g flour, 2 eggs, 300ml milk, 1 tbsp oil, Sugar for serving, Raspberries, Blueberries",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Stuffed Bell Peppers with Quinoa and Black Beans",
+			Category:    "Main Course, Vegetarian",
+			Servings:    4,
+			Description: "These healthy stuffed bell peppers are filled with a flavorful mixture of quinoa, black beans, corn, and spices. Topped with melted cheese, they make for a satisfying vegetarian meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cooked quinoa and canned beans to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat oven to 375°F. Bake bell pepper halves for 15-20 minutes. Sauté onion and garlic, add quinoa, beans, corn, tomatoes, and spices. Stuff the peppers, top with cheese, and bake for another 15-20 minutes. Garnish with cilantro and serve.",
+			ImageUrl:      "stuffed-bell-peppers-with-quinoa-and-black-beans.jpg",
+			Calories:      350, // Estimated per serving
+			Protein:       10,  // Estimated per serving
+			CookTime:      40,  // Time to bake peppers and cook the filling
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     50,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 1,
+			CuttingEffort: 3,
+			ItemsRequired: "Baking dish, Skillet, Knife",
+			Ingredients:   "4 bell peppers, 1 cup quinoa, 1 can black beans, 1 cup corn, 1 can diced tomatoes, 1 onion, 2 garlic cloves, 1 tsp cumin, 1/2 tsp chili powder, 1/2 tsp smoked paprika, 1 1/2 cup shredded cheese",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Shakshuka",
+			Category:    "Breakfast, Vegetarian",
+			Servings:    4,
+			Description: "Shakshuka is a flavorful and comforting dish made of poached eggs in a rich tomato sauce, seasoned with spices and fresh herbs. It’s perfect for breakfast or brunch, served with crusty bread.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use canned tomatoes and pre-chopped vegetables to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Heat oil in a pan, soften onions, chili, garlic, and coriander for 5 mins. Add tomatoes and sugar, simmer for 8-10 mins. Create dips in the sauce, crack eggs, and cook with the lid on for 6-8 mins. Garnish with coriander and serve.",
+			ImageUrl:      "shakshuka.jpg",
+			Calories:      300, // Estimated per serving
+			Protein:       12,  // Estimated per serving
+			CookTime:      15,  // Time to cook eggs and sauce
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     25,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Frying pan, Knife",
+			Ingredients:   "1 tbsp olive oil, 2 onions, 1 red chili, 1 garlic clove, 1 tbsp caster sugar, 800g cherry tomatoes, 4 eggs, 1 tbsp chopped coriander, Feta cheese",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Tandoori Chicken",
+			Category:    "Main Course, Dinner",
+			Servings:    4,
+			Description: "Tandoori Chicken is a popular Indian dish where chicken thighs are marinated in yogurt and spices, then grilled to perfection for a smoky, charred flavor. It’s perfect for a flavorful and healthy meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-marinated chicken thighs to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Mix lemon juice with paprika and onions, slash chicken thighs, and marinate. Prepare the yogurt marinade with ginger, garlic, cumin, garam masala, chili powder, and turmeric. Let marinate for at least 1 hour, then grill for 8 minutes per side until cooked through.",
+			ImageUrl:      "tandoori-chicken.jpg",
+			Calories:      400, // Estimated per serving
+			Protein:       35,  // Estimated per serving
+			CookTime:      16,  // Time to grill the chicken
+			PrepTime:      10,  // Time to prepare the marinade
+			TotalTime:     26,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 2,
+			ItemsRequired: "Grill, Mixing bowl, Knife",
+			Ingredients:   "16 chicken thighs, 2 lemons, 4 tsp paprika, 2 onions, 300ml yogurt, 4 garlic cloves, 1 tbsp ginger, 1 tsp garam masala, 1 tsp cumin, 1/2 tsp chili powder, 1/4 tsp turmeric",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Vegan Lasagna",
+			Category:    "Main Course, Vegan",
+			Servings:    4,
+			Description: "A healthy and flavorful Vegan Lasagna made with lentils, vegetables, and a creamy vegan béchamel sauce. Perfect for a hearty and nutritious meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cooked lentils and ready-made vegan béchamel sauce to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Boil vegetables and lentils for 20 minutes. Blanch spinach and cook lasagna sheets. Make the béchamel by combining vegan butter, flour, soya milk, mustard, and vinegar. Assemble the lasagna in a dish and bake at 180°C for 25 minutes.",
+			ImageUrl:      "vegan-lasagna.jpg",
+			Calories:      400, // Estimated per serving
+			Protein:       12,  // Estimated per serving
+			CookTime:      25,  // Time to bake lasagna
+			PrepTime:      20,  // Time to prepare ingredients
+			TotalTime:     45,  // Total time: prep + cook
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Baking dish, Pan, Mixing bowl",
+			Ingredients:   "1 cup red lentils, 1 carrot, 1 onion, 1 zucchini, 150g spinach, 10 lasagna sheets, 35g vegan butter, 4 tbsp flour, 300ml soya milk, 1.5 tsp mustard, 1 tsp vinegar",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Vegetarian Chilli",
+			Category:    "Main Course, Vegetarian",
+			Servings:    4,
+			Description: "A hearty and healthy vegetarian chilli made with roasted vegetables, kidney beans, and mixed grains. It's a perfect, easy-to-make dish packed with flavor.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cooked grains and canned vegetables to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat oven to 200C. Roast vegetables for 15 minutes. Add beans and tomatoes, season, and cook for another 10-15 minutes. Heat the grains in the microwave and serve with the chilli.",
+			ImageUrl:      "vegetarian-chilli.jpg",
+			Calories:      350, // Estimated per serving
+			Protein:       12,  // Estimated per serving
+			CookTime:      30,  // Total cooking time
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     40,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Casserole dish, Knife, Microwave",
+			Ingredients:   "400g roasted vegetables, 1 can kidney beans, 1 can chopped tomatoes, 1 packet mixed grains",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Vegetarian Casserole",
+			Category:    "Main Course, Vegetarian",
+			Servings:    4,
+			Description: "A healthy and comforting vegetarian casserole made with lentils, fresh vegetables, and herbs. This dish is perfect for a wholesome meal, served with rice or quinoa.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use canned lentils and pre-cut vegetables to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Heat oil in a pan, cook onions until softened. Add garlic, spices, and vegetables. Cook for 5 minutes. Add tomatoes, stock, and thyme, simmer for 20-25 minutes. Stir in lentils and serve with rice or quinoa.",
+			ImageUrl:      "vegetarian-casserole.jpg",
+			Calories:      350, // Estimated per serving
+			Protein:       15,  // Estimated per serving
+			CookTime:      25,  // Time to cook casserole
+			PrepTime:      10,  // Time to prepare ingredients
+			TotalTime:     35,  // Total time: prep + cook
+			WashingEffort: 2,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Pan, Knife, Spoon",
+			Ingredients:   "1 tbsp rapeseed oil, 1 onion, 3 cloves garlic, 1 tsp paprika, 1/2 tsp cumin, 1 tbsp thyme, 3 carrots, 2 celery stalks, 1 red pepper, 1 yellow pepper, 2 tins tomatoes, 250ml vegetable stock, 2 courgettes, 250g lentils",
+			TotalEffort:   3,
+		},
 	}
-
 	for _, mealParams := range mealsParams {
-		err := d.InsertMeal(ctx, mealParams)
+		_, err := d.InsertMeal(ctx, mealParams)
 		if err != nil {
 			fmt.Printf("Error creating meal: %v\n", err)
 			return

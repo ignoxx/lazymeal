@@ -19,10 +19,10 @@ templ Create(isAuthenticated bool) {
 							<label for="name" class="block text-sm font-medium text-gray-700">Meal Name</label>
 							<input type="text" name="name" id="name" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
-						<!-- Image -->
+						<!-- Category -->
 						<div class="mb-4">
-							<label for="image_url" class="block text-sm font-medium text-gray-700">Image URL</label>
-							<input type="text" name="image_url" id="image_url" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+							<label for="category" class="block text-sm font-medium text-gray-700">Category <span class="text-xs text-gray-600">(multiple are comma seperated)</span></label>
+							<input name="category" id="category" rows="1" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
 						<!-- Description -->
 						<div class="mb-4">
@@ -34,60 +34,65 @@ templ Create(isAuthenticated bool) {
 							<label for="servings" class="block text-sm font-medium text-gray-700">Servings</label>
 							<input type="number" name="servings" id="servings" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
-						<!-- Total Time -->
+						<!-- Light Version Instructions -->
 						<div class="mb-4">
-							<label for="total_time" class="block text-sm font-medium text-gray-700">Total Time (minutes)</label>
-							<input type="number" name="total_time" id="total_time" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+							<label for="light_version_instructions" class="block text-sm font-medium text-gray-700">Light Version Instructions <span class="text-xs text-gray-600">(optional)</span></label>
+							<textarea name="light_version_instructions" id="light_version_instructions" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+						</div>
+						<!-- Instructions -->
+						<div class="mb-4">
+							<label for="instructions" class="block text-sm font-medium text-gray-700">Instructions <span class="text-xs text-gray-600">(one step per line, avoid numbering)</span></label>
+							<textarea name="instructions" id="instructions" rows="6" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+						</div>
+						<!-- Image -->
+						<div class="mb-4">
+							<label for="image_url" class="block text-sm font-medium text-gray-700">Image URL <span class="text-xs text-gray-600">(full or relative)</span></label>
+							<input type="text" name="image_url" id="image_url" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
 						<!-- Calories -->
 						<div class="mb-4">
-							<label for="calories" class="block text-sm font-medium text-gray-700">Calories</label>
+							<label for="calories" class="block text-sm font-medium text-gray-700">Calories <span class="text-xs text-gray-600">(kcal)</span></label>
 							<input type="number" name="calories" id="calories" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
 						<!-- Protein -->
 						<div class="mb-4">
-							<label for="protein" class="block text-sm font-medium text-gray-700">Protein (g)</label>
+							<label for="protein" class="block text-sm font-medium text-gray-700">Protein <span class="text-xs text-gray-600">(g)</span></label>
 							<input type="number" name="protein" id="protein" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Cook Time -->
+						<div class="mb-4">
+							<label for="cook_time" class="block text-sm font-medium text-gray-700">Cook Time <span class="text-xs text-gray-600">(minutes)</span></label>
+							<input type="number" name="cook_time" id="cook_time" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Prep Time -->
+						<div class="mb-4">
+							<label for="prep_time" class="block text-sm font-medium text-gray-700">Prep Time <span class="text-xs text-gray-600">(minutes)</span></label>
+							<input type="number" name="prep_time" id="prep_time" value="" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
 						<!-- Washing Effort -->
 						<div class="mb-4">
-							<label for="washing_effort" class="block text-sm font-medium text-gray-700">Washing Effort</label>
+							<label for="washing_effort" class="block text-sm font-medium text-gray-700">Washing Effort <span class="text-xs text-gray-600">(0-10)</span></label>
 							<input type="number" name="washing_effort" id="washing_effort" value="" min="0" max="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
-						</div>
-						<!-- Cutting Effort -->
-						<div class="mb-4">
-							<label for="cutting_effort" class="block text-sm font-medium text-gray-700">Cutting Effort</label>
-							<input type="number" name="cutting_effort" id="cutting_effort" value="" min="0" max="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
 						<!-- Peeling Effort -->
 						<div class="mb-4">
-							<label for="peeling_effort" class="block text-sm font-medium text-gray-700">Peeling Effort</label>
+							<label for="peeling_effort" class="block text-sm font-medium text-gray-700">Peeling Effort <span class="text-xs text-gray-600">(0-10)</span></label>
 							<input type="number" name="peeling_effort" id="peeling_effort" value="" min="0" max="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
-						<!-- Category -->
+						<!-- Cutting Effort -->
 						<div class="mb-4">
-							<label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-							<textarea name="category" id="category" rows="2" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-						</div>
-						<!-- Ingredients -->
-						<div class="mb-4">
-							<label for="ingredients" class="block text-sm font-medium text-gray-700">Ingredients</label>
-							<textarea name="ingredients" id="ingredients" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+							<label for="cutting_effort" class="block text-sm font-medium text-gray-700">Cutting Effort <span class="text-xs text-gray-600">(0-10)</span></label>
+							<input type="number" name="cutting_effort" id="cutting_effort" value="" min="0" max="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
 						<!-- Items Required -->
 						<div class="mb-4">
-							<label for="items_required" class="block text-sm font-medium text-gray-700">Items Required</label>
+							<label for="items_required" class="block text-sm font-medium text-gray-700">Items Required <span class="text-xs text-gray-600">(one item per line, avoid numbering)</span></label>
 							<textarea name="items_required" id="items_required" rows="2" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
 						</div>
-						<!-- Instructions -->
+						<!-- Ingredients -->
 						<div class="mb-4">
-							<label for="instructions" class="block text-sm font-medium text-gray-700">Instructions</label>
-							<textarea name="instructions" id="instructions" rows="6" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
-						</div>
-						<!-- Light Version Instructions -->
-						<div class="mb-4">
-							<label for="light_version_instructions" class="block text-sm font-medium text-gray-700">Light Version Instructions (Optional)</label>
-							<textarea name="light_version_instructions" id="light_version_instructions" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+							<label for="ingredients" class="block text-sm font-medium text-gray-700">Ingredients <span class="text-xs text-gray-600">(one ingredient per line, avoid numbering)</span></label>
+							<textarea name="ingredients" id="ingredients" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
 						</div>
 						<!-- Submit Button -->
 						<div class="mt-6">

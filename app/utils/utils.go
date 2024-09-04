@@ -10,5 +10,5 @@ func ImageURL(imageURL string) string {
 		return imageURL
 	}
 
-	return fmt.Sprintf("/public/%s", imageURL)
+	return fmt.Sprintf("/public/assets/%s", imageURL)
 }

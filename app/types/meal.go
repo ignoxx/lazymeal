@@ -43,9 +43,9 @@ var (
 	}
 
 	TRENDING_MEALS sqlc.GetMealByIDsParams = sqlc.GetMealByIDsParams{
-		ID:   17,
-		ID_2: 18,
-		ID_3: 19,
+		ID:   15,
+		ID_2: 12,
+		ID_3: 17,
 	}
 )
 
