@@ -661,6 +661,10 @@ body {
   top: 1.5rem;
 }
 
+.z-20 {
+  z-index: 20;
+}
+
 .m-10 {
   margin: 2.5rem;
 }
@@ -767,10 +771,6 @@ body {
   height: 12rem;
 }
 
-.h-64 {
-  height: 16rem;
-}
-
 .h-8 {
   height: 2rem;
 }
@@ -781,6 +781,30 @@ body {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-64 {
+  height: 16rem;
+}
+
+.h-32 {
+  height: 8rem;
+}
+
+.h-3\/4 {
+  height: 75%;
+}
+
+.h-1\/4 {
+  height: 25%;
+}
+
+.h-36 {
+  height: 9rem;
+}
+
+.h-72 {
+  height: 18rem;
 }
 
 .w-20 {
