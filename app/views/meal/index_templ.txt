@@ -1,0 +1,42 @@
+<button class=\"absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\"><i class=\"fas fa-thumbs-up text-xl\"></i></button>
+<div class=\"p-4 lg:p-8\"><div class=\"flex flex-col lg:flex-row gap-8\"><!-- Main Content --><div class=\"w-full lg:w-3/4 space-y-6\"><!-- Meal Image and Title --><div class=\"w-full  space-y-6\"><!-- Meal Image and Like Button --><div class=\"relative w-full h-64 bg-white shadow-md rounded-lg overflow-hidden\">
+<!-- Preview image --> <img class=\"absolute blur inset-0 w-full h-full object-cover transition-opacity duration-300\" src=\"
+\" alt=\"Preview Image\"> 
+<img src=\"
+\" alt=\"
+\" loading=\"lazy\" class=\"absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300\" onload=\"this.style.opacity=&#39;1&#39;\"><!-- Like Button Inside Image --><button class=\"plausible-event-name=MealLike absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\" hx-swap=\"outerHTML\" hx-post=\"
+\" hx-on:htmx:before-request=\"this.classList.add(&#39;animate-pulse&#39;); this.disabled = true;\"><i class=\"far fa-thumbs-up text-xl\"></i></button> 
+<a href=\"
+\"><button class=\"absolute top-2 right-12 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\"><i class=\"far fa-edit text-xl\"></i></button></a>
+<!-- Title and Details --><div class=\"p-6\"><h1 class=\"text-2xl font-bold text-gray-900 text-center mb-4 md:text-left\">
+</h1><div class=\"flex flex-row items-center gap-4 text-gray-600 mb-6 justify-center space-y-0 md:space-x-6 md:justify-start\"><div class=\"flex items-center space-x-2 text-sm\"><i class=\"fas fa-user text-lg\"></i> <span>
+</span></div><div class=\"flex items-center space-x-2 text-sm\"><i class=\"fas fa-clock text-lg\"></i> <span>
+ min</span></div><div class=\"flex items-center space-x-2 text-sm hidden sm:flex\"><i class=\"fas fa-utensils text-lg\"></i> <span class=\"line-clamp-1\">
+</span></div></div><!-- Effort levels --><div class=\"flex flex-col md:flex-row items-center text-gray-600 content-center gap-4 justify-center md:justify-start\"><!-- Washing Effort --><div class=\"flex items-center space-x-2\"><i class=\"fas fa-faucet text-lg\"></i><div class=\"flex space-x-1\">
+<div class=\"w-3 h-4 bg-blue-400 rounded\"></div>
+<div class=\"w-3 h-4 bg-blue-200 rounded\"></div>
+</div></div><!-- Cutting Effort --><div class=\"flex items-center space-x-2\"><i class=\"fas fa-cut text-lg\"></i><div class=\"flex space-x-1\">
+<div class=\"w-3 h-4 bg-yellow-400 rounded\"></div>
+<div class=\"w-3 h-4 bg-yellow-200 rounded\"></div>
+</div></div><!-- Peeling Effort --><div class=\"flex items-center space-x-2\"><i class=\"fas fa-seedling text-lg\"></i><div class=\"flex space-x-1\">
+<div class=\"w-3 h-4 bg-red-400 rounded\"></div>
+<div class=\"w-3 h-4 bg-red-200 rounded\"></div>
+</div></div></div></div></div></div><div class=\"bg-white shadow-md rounded-lg p-6\"><h2 class=\"text-xl font-semibold text-gray-800\">Nutrition Facts</h2><p class=\"text-xs text-gray-600\">*per one serving</p><div class=\"grid grid-cols-2 gap-4 mt-4\"><div><h3 class=\"text-lg font-medium text-gray-700\">Calories</h3><p class=\"text-gray-800\"><i class=\"fas fa-fire\"></i> 
+ kcal</p></div><div><h3 class=\"text-lg font-medium text-gray-700\">Protein</h3><p class=\"text-gray-800\"><i class=\"fas fa-dumbbell\"></i> 
+ g</p></div></div></div><!-- Meal Details --><div class=\"bg-white shadow-md rounded-lg p-6\"><h2 class=\"text-xl font-semibold text-gray-800\">Description</h2><p class=\"mt-2 text-gray-700\">
+</p><!-- Light Version -->
+<div class=\"bg-green-100 p-4 rounded-lg mt-6\"><h3 class=\"text-lg font-semibold text-gray-800\">Lighter Version</h3><p class=\"text-gray-700\">
+</p></div>
+<!-- Ingredients --><div class=\"mt-6\"><h2 class=\"text-xl font-semibold text-gray-800\">Ingredients</h2><ul class=\"list-disc list-inside mt-2 text-gray-700\">
+<li>
+</li>
+</ul></div><!-- Items Required --><div class=\"mt-6\"><h2 class=\"text-xl font-semibold text-gray-800\">Items Required</h2><ul class=\"list-disc list-inside mt-2 text-gray-700\">
+<li>
+</li>
+</ul></div><!-- Instructions --><div class=\"mt-6\"><h2 class=\"text-xl font-semibold text-gray-800\">Instructions</h2><ol class=\"list-decimal list-inside mt-2 text-gray-700 space-y-2\">
+<li>
+</li>
+</ol></div></div><!-- Nutrition Facts --></div><!-- Sidebar --><div class=\"w-full lg:w-1/4 space-y-6\"><!-- Newest Recipes Sidebar -->
+<div class=\"p-4 border border-gray-300 rounded-lg bg-white shadow-sm\"><h2 class=\"text-lg font-bold text-gray-900 mb-4\">Newest Recipes</h2><div class=\"space-y-2\">
+</div></div>
+<!-- New Recipes Sidebar --><!--\n\t\t\t\t\t<div class=\"p-4 border border-gray-300 rounded-lg bg-white shadow-sm\">\n\t\t\t\t\t\t<h2 class=\"text-lg font-bold text-gray-900 mb-4\">Ads</h2>\n\t\t\t\t\t\t<div class=\"space-y-2\">\n\t\t\t\t\t\t\t/*\n\t\t\t\t\t\t\tfor _, newMeal := range newMeals {\n\t\t\t\t\t\t\t\t@components.MealTrendingCard(newMeal)\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t*/\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t--></div></div></div>

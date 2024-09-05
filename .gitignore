@@ -1,5 +1,4 @@
 bin
-*_templ.txt
 node_modules
 tmp
 .env
