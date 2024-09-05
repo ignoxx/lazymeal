@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"lazymeal/app/views/components"
 	"lazymeal/app/utils"
+	"lazymeal/public"
 )
 
 func removeStepNumberFromStep(step string) string {
@@ -34,8 +35,22 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) {
 					<!-- Meal Image and Title -->
 					<div class="w-full  space-y-6">
 						<!-- Meal Image and Like Button -->
-						<div class="relative bg-white shadow-md rounded-lg overflow-hidden">
-							<img src={ utils.ImageURL(meal.ImageUrl) } alt={ meal.Name } class="w-full h-64 object-cover"/>
+						<div class="relative w-full h-64 bg-white shadow-md rounded-lg overflow-hidden">
+							if previewImage, ok := public.PreviewImages[meal.ImageUrl]; ok {
+								<!-- Preview image -->
+								<img
+									class="absolute blur inset-0 w-full h-full object-cover transition-opacity duration-300"
+									src={ previewImage }
+									alt="Preview Image"
+								/>
+							}
+							<img
+								src={ utils.ImageURL(meal.ImageUrl) }
+								alt={ meal.Description }
+								loading="lazy"
+								class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300"
+								onload="this.style.opacity='1'"
+							/>
 							<!-- Like Button Inside Image -->
 							<button
 								class="plausible-event-name=MealLike absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm"

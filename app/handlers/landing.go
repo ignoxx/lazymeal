@@ -21,6 +21,8 @@ func HandleLandingIndex(kit *kit.Kit) error {
 
 	trendingMeals, err := db.Get().GetMealByIDs(kit.Request.Context(), types.TRENDING_MEALS)
 
+	kit.Response.Header().Set("Content-Type", "text/html; charset=utf-8; image/jpeg; image/png; text/css; application/javascript")
+
 	return kit.Render(home.Index(trendingMeals, meals, activeFilter, kit.Auth().Check()))
 }
 

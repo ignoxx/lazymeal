@@ -20,6 +20,7 @@ func InitializeMiddleware(router *chi.Mux) {
 	router.Use(chimiddleware.Recoverer)
 	router.Use(chimiddleware.StripSlashes)
 	router.Use(middleware.WithRequest)
+	router.Use(chimiddleware.Compress(5, "text/html", "text/css", "application/javascript", "image/png", "image/jpeg"))
 }
 
 // Define your routes in here

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"lazymeal/app/db/sqlc"
 	"lazymeal/app/utils"
+	"lazymeal/public"
 )
 
 func formatLikes(likes int64) string {
@@ -27,8 +28,25 @@ templ MealCard(meal sqlc.Meal) {
 	<div class="aspect-w-4 aspect-h-3">
 		<div class="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full height-400">
 			<!-- Fixed height here -->
-			<a href={ templ.SafeURL(fmt.Sprintf("/%d", meal.ID)) } class="flex flex-col h-full">
-				<img class="w-full h-48 object-cover" src={ utils.ImageURL(meal.ImageUrl) } alt="Meal Image" loading="lazy"/>
+			<a href={ templ.SafeURL(fmt.Sprintf("/%d", meal.ID)) } class="flex flex-col h-full w-full">
+				<!-- Real high-resolution image -->
+				<div class="relative w-full h-48 object-cover transition-opacity duration-300">
+					if previewImage, ok := public.PreviewImages[meal.ImageUrl]; ok {
+						<!-- Preview image -->
+						<img
+							class="absolute blur inset-0 w-full h-48 object-cover transition-opacity duration-300"
+							src={ previewImage }
+							alt="Preview Image"
+						/>
+					}
+					<img
+						class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300"
+						src={ utils.ImageURL(meal.ImageUrl) }
+						loading="lazy"
+						alt={ meal.Description }
+						onload="this.style.opacity='1';"
+					/>
+				</div>
 				<div class="p-4 flex-grow flex flex-col justify-between">
 					<div>
 						<h3 class="font-bold text-lg text-gray-900 mb-2">{ meal.Name }</h3>
@@ -48,8 +66,22 @@ templ MealCard(meal sqlc.Meal) {
 templ MealTrendingCard(meal sqlc.Meal) {
 	<a href={ templ.SafeURL(fmt.Sprintf("/%d", meal.ID)) } class="block">
 		<div class="flex items-center bg-gray-100 hover:bg-gray-200 p-2 rounded-lg">
-			<div class="w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
-				<img class="w-full h-full object-cover" src={ utils.ImageURL(meal.ImageUrl) } alt={ meal.Name }/>
+			<div class="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden transition-opacity duration-300">
+				if previewImage, ok := public.PreviewImages[meal.ImageUrl]; ok {
+					<!-- Preview image -->
+					<img
+						class="absolute blur inset-0 w-full h-48 object-cover transition-opacity duration-300"
+						src={ previewImage }
+						alt="Preview Image"
+					/>
+				}
+				<img
+					class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300"
+					src={ utils.ImageURL(meal.ImageUrl) }
+					alt={ meal.Name }
+					loading="lazy"
+					onload="this.style.opacity='1'"
+				/>
 			</div>
 			<div class="ml-4">
 				<p class="font-semibold text-gray-900 line-clamp-2">{ meal.Name }</p>
