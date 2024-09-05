@@ -7,11 +7,7 @@ COPY go.mod go.sum ./
 
 RUN go mod download && go mod verify
 
-RUN go install github.com/a-h/templ/cmd/templ@latest
-
 COPY . .
-
-RUN templ generate
 
 RUN go build -ldflags="-s -w" -v -o /usr/local/bin/app_prod ./cmd/app/main.go
 
