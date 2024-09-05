@@ -9,7 +9,7 @@ import (
 )
 
 templ ProfileShow(formValues ProfileFormValues, isAuthenticated bool) {
-	@layouts.App(isAuthenticated) {
+	@layouts.App(isAuthenticated, "Profile", "") {
 		<div class="flex flex-col gap-12 m-10">
 			<div class="flex flex-col gap-2">
 				<h1 class="text-4xl">Welcome, <span class="font-medium">{ formValues.FirstName } { formValues.LastName }</span></h1>

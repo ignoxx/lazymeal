@@ -18,7 +18,7 @@ type LoginFormValues struct {
 }
 
 templ LoginIndex(data LoginIndexPageData) {
-	@layouts.BaseLayout() {
+	@layouts.BaseLayout("Login", "") {
 		<div class="fixed top-6 right-6">
 			@components.ThemeSwitcher()
 		</div>

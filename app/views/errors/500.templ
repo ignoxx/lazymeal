@@ -3,7 +3,7 @@ package errors
 import "lazymeal/app/views/layouts"
 
 templ Error500() {
-	@layouts.BaseLayout() {
+	@layouts.BaseLayout("", "") {
 		<div class="h-screen w-full flex flex-col justify-center align-middle items-center gap-4">
 			<div class="text-muted-foreground text-5xl font-bold">500</div>
 			<div class="text-lg">An unexpected error occured</div>

@@ -8,7 +8,7 @@ import (
 )
 
 templ Edit(meal sqlc.Meal, isAuthenticated bool) {
-	@layouts.App(isAuthenticated) {
+	@layouts.App(isAuthenticated, "", "") {
 		<div class="p-4 lg:p-8">
 			<div class="flex flex-col lg:flex-row gap-8">
 				<!-- Main Content -->
@@ -37,10 +37,15 @@ templ Edit(meal sqlc.Meal, isAuthenticated bool) {
 							<label for="servings" class="block text-sm font-medium text-gray-700">Servings</label>
 							<input type="number" name="servings" id="servings" value={ fmt.Sprint(meal.Servings) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
-						<!-- Total Time -->
+						<!-- Prep Time -->
 						<div class="mb-4">
-							<label for="total_time" class="block text-sm font-medium text-gray-700">Total Time (minutes)</label>
-							<input type="number" name="total_time" id="total_time" value={ fmt.Sprint(meal.TotalTime) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+							<label for="prep_time" class="block text-sm font-medium text-gray-700">Prep. Time (minutes)</label>
+							<input type="number" name="prep_time" id="prep_time" value={ fmt.Sprint(meal.PrepTime) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
+						</div>
+						<!-- Cook Time -->
+						<div class="mb-4">
+							<label for="cook_time" class="block text-sm font-medium text-gray-700">Cook Time (minutes)</label>
+							<input type="number" name="cook_time" id="cook_time" value={ fmt.Sprint(meal.CookTime) } required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"/>
 						</div>
 						<!-- Calories -->
 						<div class="mb-4">

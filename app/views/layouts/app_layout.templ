@@ -2,8 +2,8 @@ package layouts
 
 import "lazymeal/app/views/components"
 
-templ App(isAuthenticated bool) {
-	@BaseLayout() {
+templ App(isAuthenticated bool, title, metaDescription string) {
+	@BaseLayout(title, metaDescription) {
 		@components.Navigation(isAuthenticated)
 		<div class="max-w-7xl mx-auto">
 			{ children... }

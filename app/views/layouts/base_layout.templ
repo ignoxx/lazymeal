@@ -1,21 +1,33 @@
 package layouts
 
 import "github.com/anthdm/superkit/view"
+import "fmt"
 
 var (
-	title = "lazymeal - The fastest way to cook at home!"
+	defaultTitle = "lazymeal - The fastest way to cook at home!"
 )
 
-templ BaseLayout() {
+func getTitle(title string) string {
+	if title == "" {
+		return defaultTitle
+	}
+
+	return fmt.Sprintf("%s | Lazy Meal", title)
+}
+
+templ BaseLayout(title, metaDescription string) {
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
-			<title>{ title }</title>
+			<title>{ getTitle(title) }</title>
 			<link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico"/>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<script defer data-domain="lazy-meal.com" src="https://plausible.ignoxx.dev/js/script.tagged-events.js"></script>
+			if metaDescription != "" {
+				<meta name="description" content={ metaDescription }/>
+			}
 			<link rel="stylesheet" href={ view.Asset("styles.css") }/>
+			<script defer data-domain="lazy-meal.com" src="https://plausible.ignoxx.dev/js/script.tagged-events.js"></script>
 			<script src={ view.Asset("index.js") }></script>
 			<!-- Font Awesome -->
 			<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
