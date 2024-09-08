@@ -23,7 +23,7 @@ func HandleMealIndex(kit *kit.Kit) error {
 		return kit.Render(errors.Error404())
 	}
 
-	trendingMeals, err := db.Get().GetNewestMeals(kit.Request.Context(), 3)
+	trendingMeals, err := db.Get().GetMostLikedMeals(kit.Request.Context(), 3)
 
 	meal, err := db.Get().GetMealByID(kit.Request.Context(), mealID)
 

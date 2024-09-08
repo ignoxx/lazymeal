@@ -192,10 +192,9 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) {
 				</div>
 				<!-- Sidebar -->
 				<div class="w-full lg:w-1/4 space-y-6">
-					<!-- Newest Recipes Sidebar -->
 					if len(trendingMeals) > 0 {
 						<div class="p-4 border border-gray-300 rounded-lg bg-white shadow-sm">
-							<h2 class="text-lg font-bold text-gray-900 mb-4">Newest Recipes</h2>
+							<h2 class="text-lg font-bold text-gray-900 mb-4">Most Liked Recipes</h2>
 							<div class="space-y-2">
 								for _, trendingMeal := range trendingMeals {
 									@components.MealTrendingCard(trendingMeal)

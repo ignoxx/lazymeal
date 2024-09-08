@@ -8,7 +8,7 @@
  
 </button>
 </div></div>
-<!-- Trending Recipes --> <div class=\"p-4 border border-gray-300 rounded-lg bg-white\"><h2 class=\"text-lg font-bold mb-4 text-gray-900\">Trending Recipes</h2><div class=\"space-y-2\">
+<div class=\"p-4 border border-gray-300 rounded-lg bg-white\"><h2 class=\"text-lg font-bold mb-4 text-gray-900\">Trending Recipes</h2><div class=\"space-y-2\">
 </div></div>
 </div><!-- Main Content --><div class=\"w-full lg:w-3/4\"><!-- Grid of Images --><div class=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6\">
 </div></div></div></div>

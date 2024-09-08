@@ -36,7 +36,7 @@
 </ul></div><!-- Instructions --><div class=\"mt-6\"><h2 class=\"text-xl font-semibold text-gray-800\">Instructions</h2><ol class=\"list-decimal list-inside mt-2 text-gray-700 space-y-2\">
 <li>
 </li>
-</ol></div></div><!-- Nutrition Facts --></div><!-- Sidebar --><div class=\"w-full lg:w-1/4 space-y-6\"><!-- Newest Recipes Sidebar -->
-<div class=\"p-4 border border-gray-300 rounded-lg bg-white shadow-sm\"><h2 class=\"text-lg font-bold text-gray-900 mb-4\">Newest Recipes</h2><div class=\"space-y-2\">
+</ol></div></div><!-- Nutrition Facts --></div><!-- Sidebar --><div class=\"w-full lg:w-1/4 space-y-6\">
+<div class=\"p-4 border border-gray-300 rounded-lg bg-white shadow-sm\"><h2 class=\"text-lg font-bold text-gray-900 mb-4\">Most Liked Recipes</h2><div class=\"space-y-2\">
 </div></div>
 <!-- New Recipes Sidebar --><!--\n\t\t\t\t\t<div class=\"p-4 border border-gray-300 rounded-lg bg-white shadow-sm\">\n\t\t\t\t\t\t<h2 class=\"text-lg font-bold text-gray-900 mb-4\">Ads</h2>\n\t\t\t\t\t\t<div class=\"space-y-2\">\n\t\t\t\t\t\t\t/*\n\t\t\t\t\t\t\tfor _, newMeal := range newMeals {\n\t\t\t\t\t\t\t\t@components.MealTrendingCard(newMeal)\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t*/\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t--></div></div></div>

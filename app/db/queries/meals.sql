@@ -40,6 +40,11 @@ SELECT * FROM meals
 ORDER BY created_at DESC
 LIMIT ?1;
 
+-- name: GetMostLikedMeals :many
+SELECT * FROM meals
+ORDER BY likes DESC
+LIMIT ?1;
+
 -- name: GetMealsWithNoCutting :many
 SELECT * FROM meals
 ORDER BY cutting_effort ASC;
