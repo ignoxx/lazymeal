@@ -6,13 +6,484 @@ import (
 	"fmt"
 	"lazymeal/app/db"
 	"lazymeal/app/db/sqlc"
+	"strings"
 )
 
 func main() {
 	ctx := context.Background()
 	d := db.Get()
 
-	mealsParams := []sqlc.InsertMealParams{
+	meals, err := d.GetAllMeals(ctx)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("FIXING STARTG")
+
+	fixCategory := func(meal *sqlc.Meal) {
+		if strings.Contains(meal.ItemsRequired, ",") {
+			cats := strings.Split(strings.TrimSpace(meal.ItemsRequired), ",")
+			for i, c := range cats {
+				cats[i] = strings.TrimSpace(c)
+			}
+			meal.ItemsRequired = strings.Join(cats, "\n")
+		}
+	}
+
+	for _, meal := range meals {
+		fixCategory(&meal)
+
+		err := d.UpdateMeal(ctx, sqlc.UpdateMealParams{
+			ID:                       meal.ID,
+			Category:                 meal.Category,
+			Ingredients:              meal.Ingredients,
+			Instructions:             meal.Instructions,
+			Name:                     meal.Name,
+			Description:              meal.Description,
+			LightVersionInstructions: meal.LightVersionInstructions,
+			ImageUrl:                 meal.ImageUrl,
+			Calories:                 meal.Calories,
+			Protein:                  meal.Protein,
+			CookTime:                 meal.CookTime,
+			PrepTime:                 meal.PrepTime,
+			TotalTime:                meal.TotalTime,
+			WashingEffort:            meal.WashingEffort,
+			PeelingEffort:            meal.PeelingEffort,
+			CuttingEffort:            meal.CuttingEffort,
+			ItemsRequired:            meal.ItemsRequired,
+			TotalEffort:              meal.TotalEffort,
+			Servings:                 meal.Servings,
+		})
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+	}
+
+	fmt.Println("DONE")
+
+	// mealsParams := []sqlc.InsertMealParams{}
+	// mealsParams = append(mealsParams, mealWeek1()...)
+	// mealsParams = append(mealsParams, mealWeek2()...)
+	// mealsParams = append(mealsParams, mealWeek2Part2()...)
+
+	// fmt.Println("Total Meals inserting..", len(mealsParams))
+	//
+	// for _, mealParams := range mealsParams {
+	// 	_, err := d.InsertMeal(ctx, mealParams)
+	// 	if err != nil {
+	// 		fmt.Printf("Error creating meal: %v\n", err)
+	// 		return
+	// 	}
+	// 	fmt.Printf("Created meal\n")
+	// }
+}
+
+func mealWeek2Part2() []sqlc.InsertMealParams {
+	return []sqlc.InsertMealParams{
+		{
+			Name:        "Chicken Salad (Salpicão)",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    4,
+			Description: "A traditional and flavorful chicken salad made with shredded chicken, vegetables, raisins, and mayonnaise, topped with crunchy potato sticks. This dish is perfect for a light lunch or dinner.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use low-fat mayonnaise or reduce the amount to make a lighter version. You can also skip the potato sticks for fewer calories.",
+				Valid:  true,
+			},
+			Instructions:  "In a large bowl, mix the cooked and shredded chicken, grated carrots, peas, corn, raisins, diced apple, mayonnaise, and fresh parsley. Stir until well combined. Once mixed, top the salad with potato sticks. Serve immediately and enjoy!",
+			ImageUrl:      "chicken-salad-salpicao.jpg",
+			Calories:      350, // Approximate per serving
+			Protein:       25,
+			CookTime:      0,
+			PrepTime:      10,
+			TotalTime:     10,
+			WashingEffort: 2,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Large mixing bowl, spoon, grater, knife, cutting board",
+			Ingredients:   "500g cooked shredded chicken breast,2 large carrots grated,1 can peas,1 can corn,200g raisins,1 apple diced,mayonnaise to taste,fresh parsley to taste,potato sticks to taste",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Apple or Banana with Water",
+			Category:    "Snacks, Healthy",
+			Servings:    1,
+			Description: "A simple and satisfying snack of either an apple or banana, followed by a glass of water. Perfect for a quick, healthy boost that keeps you feeling full.",
+			LightVersionInstructions: sql.NullString{
+				String: "No simplification needed. Simply eat the fruit and drink a glass of water.",
+				Valid:  true,
+			},
+			Instructions:  "Pick either an apple or banana. Wash the apple or peel the banana, and enjoy it as a snack. Follow with a glass of water to feel satisfied.",
+			ImageUrl:      "apple-banana-water.png",
+			Calories:      100, // Approx. for one medium fruit
+			Protein:       1,
+			CookTime:      0,
+			PrepTime:      1,
+			TotalTime:     1,
+			WashingEffort: 1,
+			PeelingEffort: 1,
+			CuttingEffort: 0,
+			ItemsRequired: "Glass, knife (optional for apple)",
+			Ingredients:   "1 apple or 1 banana,1 glass of water",
+			TotalEffort:   1,
+		},
+
+		{
+			Name:        "Creamy Pasta",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A rich and delicious creamy pasta dish made with chicken breast, tomato sauce, and mozzarella cheese. Cooked quickly in a pressure cooker, it's a perfect hearty meal for busy days.",
+			LightVersionInstructions: sql.NullString{
+				String: "For a lighter version, reduce the amount of heavy cream and cheese, or substitute with low-fat alternatives. You can also use pre-cooked chicken to save time.",
+				Valid:  true,
+			},
+			Instructions:  "In a pressure cooker, sauté the garlic and onion with diced chicken until lightly browned. Add your preferred seasonings. Pour in the tomato sauce, penne pasta, and enough water to cover the ingredients. Seal the pressure cooker and cook under pressure for 10 minutes (or less). After releasing the pressure, open the cooker and stir in the heavy cream and mozzarella cheese. Adjust the salt and serve warm.",
+			ImageUrl:      "creamy-pasta.jpg",
+			Calories:      750,
+			Protein:       40,
+			CookTime:      10,
+			PrepTime:      10,
+			TotalTime:     20,
+			WashingEffort: 4,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Pressure cooker, knife, cutting board, spoon",
+			Ingredients:   "100g penne pasta,1 clove garlic,1/2 onion,1/2 cup tomato sauce,150g diced chicken breast,1/4 cup heavy cream,50g mozzarella cheese,water,salt,pepper,Optional: other seasonings (paprika, Italian herbs)",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Chicken Salad",
+			Category:    "Lunch, Dinner, Healthy",
+			Servings:    1,
+			Description: "A delicious and healthy chicken salad with mixed vegetables and a tangy lemon dressing. A perfect light meal with high protein content.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-made salad mix or eat raw vegetables like sweet pepper, cucumber, or tomato with a slice of bread for a quick sandwich.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Chop vegetables (red beans, corn, cucumber, carrot, spinach) and mix with olive oil, lemon juice, salt, and pepper. Optional: Add tuna for extra protein.",
+			ImageUrl:      "chicken-salad.png",
+			Calories:      400,
+			Protein:       45,
+			CookTime:      10,
+			PrepTime:      10,
+			TotalTime:     20,
+			WashingEffort: 4,
+			PeelingEffort: 2,
+			CuttingEffort: 5,
+			ItemsRequired: "Air fryer or oven, knife, cutting board, salad bowl",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,1/4 cup red beans,1/4 cup corn,1/2 cucumber,1 carrot,1 cup spinach,1 lemon,2 tbsp olive oil,salt,pepper,Optional: 1 can tuna",
+			TotalEffort:   4,
+		},
+		{
+			Name:        "Chicken Rice",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A satisfying chicken rice meal with sautéed onions and carrots, perfect for a hearty and comforting lunch or dinner.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use bag rice and skip sautéing the onion and carrot for a quicker version.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Sauté onion and grated carrot in olive oil, then add rice and water. Cook for 11 minutes over medium heat with the pot covered.",
+			ImageUrl:      "chicken-rice.png",
+			Calories:      550,
+			Protein:       42,
+			CookTime:      15,
+			PrepTime:      10,
+			TotalTime:     25,
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 3,
+			ItemsRequired: "Air fryer or oven, knife, cutting board, pot with lid, grater",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,1/2 cup basmati rice,1/2 onion,1-2 carrots,1 tbsp olive oil",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Chicken Pasta",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A simple and hearty chicken pasta dish, perfect for a filling meal. Combine chicken with your choice of pasta and sauce.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cooked pasta and store-bought sauce to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Boil pasta according to package instructions. Toss cooked pasta with olive oil and your choice of sauce (tomato or cream).",
+			ImageUrl:      "chicken-pasta.png",
+			Calories:      600,
+			Protein:       43,
+			CookTime:      15,
+			PrepTime:      10,
+			TotalTime:     25,
+			WashingEffort: 4,
+			PeelingEffort: 1,
+			CuttingEffort: 3,
+			ItemsRequired: "Air fryer or oven, pot, knife, cutting board",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,80g pasta,1 tbsp olive oil,1/2 cup tomato sauce or cream sauce",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Chicken Mashed Potatoes",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A classic combination of chicken and mashed potatoes, with creamy buttered potatoes making it a comforting and filling meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use instant mashed potatoes to reduce cooking time.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Boil peeled and cubed potatoes, then mash with butter, milk, salt, and pepper.",
+			ImageUrl:      "chicken-mashed-potatoes.png",
+			Calories:      550,
+			Protein:       42,
+			CookTime:      20,
+			PrepTime:      10,
+			TotalTime:     30,
+			WashingEffort: 4,
+			PeelingEffort: 5,
+			CuttingEffort: 3,
+			ItemsRequired: "Air fryer or oven, pot, potato masher, knife, cutting board",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,2 medium potatoes,1 tbsp butter,1/4 cup milk,salt,pepper",
+			TotalEffort:   4,
+		},
+	}
+}
+
+func mealWeek2() []sqlc.InsertMealParams {
+	return []sqlc.InsertMealParams{
+		{
+			Name:        "Tapioca or Crepioca with Cheese, Turkey, and Veggies",
+			Category:    "Breakfast, Lunch, Healthy",
+			Servings:    1,
+			Description: "A quick and healthy mini pancake made from tapioca or a mix of tapioca and egg (Crepioca), filled with cheese, turkey slices, and veggies. Perfect for a fast, nutritious meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "If you don't have tapioca, you can use chickpea flour to make a quick flatbread. You can also skip the veggies and turkey for an even simpler version.",
+				Valid:  true,
+			},
+			Instructions:  "In a bowl, mix 2 tbsp of tapioca flour (or chickpea flour) with 1 egg to make the crepioca. Heat a non-stick pan over medium heat and pour in the mixture, cooking it like a pancake for 2-3 minutes on each side until firm. Once cooked, add slices of cheese, turkey, and any sautéed or raw veggies you like (e.g., spinach, tomatoes, or peppers). Fold the crepioca in half and serve warm. If using just tapioca, simply heat the tapioca flour in a pan to form the flatbread, and then fill it with the toppings.",
+			ImageUrl:      "tapioca-crepioca.jpg",
+			Calories:      350,
+			Protein:       20,
+			CookTime:      5,
+			PrepTime:      5,
+			TotalTime:     10,
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Non-stick pan, bowl, spatula",
+			Ingredients:   "2 tbsp tapioca flour or chickpea flour,1 egg,2 slices cheese,2 slices turkey,Optional: veggies (spinach,tomatoes,peppers),salt,pepper",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Weekly Meal Prep",
+			Category:    "Meal Prep, Healthy, Comfort Food",
+			Servings:    0, // Number of servings will vary based on meal type
+			Description: "A method of batch cooking meals once a week and freezing them in small portions for easy reheating throughout the week. Ideal for people with busy schedules or those looking to save time in the kitchen.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought frozen meals or prepare simpler dishes that require less cooking time. Focus on easy-to-reheat ingredients like pre-cooked grains, roasted vegetables, and proteins like chicken or beans.",
+				Valid:  true,
+			},
+			Instructions:  "Set aside one day each week (e.g., Sunday) to prepare meals in large quantities. Cook multiple servings of different ingredients like grains (rice, quinoa, pasta), proteins (chicken, beef, tofu), and vegetables. Once the food is cooked, divide it into small, individual portions and store them in airtight containers or freezer bags. Label each container with the date and contents, then freeze. Throughout the week, simply reheat the frozen meals in the microwave or on the stovetop. You can also combine different portions to create variety in your meals. This method ensures you always have ready-to-eat meals with minimal daily effort.",
+			ImageUrl:      "weekly-meal-prep.jpg",
+			Calories:      0,
+			Protein:       0,
+			CookTime:      0, // Total time varies by recipe
+			PrepTime:      0,
+			TotalTime:     0,
+			WashingEffort: 6, // Average effort for meal prep
+			PeelingEffort: 5,
+			CuttingEffort: 6,
+			ItemsRequired: "Large pots, pans, containers for storage, freezer bags, knife, cutting board, oven, stove, microwave for reheating",
+			Ingredients:   "Various ingredients like rice, quinoa, pasta, vegetables, chicken, beef, tofu, beans, herbs, spices",
+			TotalEffort:   5,
+		},
+		{
+			Name:        "Overnight Oats with Yogurt and Fruits",
+			Category:    "Breakfast, Healthy, Meal Prep",
+			Servings:    1,
+			Description: "A quick and nutritious overnight oats recipe made with milk, yogurt, and fresh fruits. Perfect for a healthy breakfast or snack that's ready to grab and go the next morning.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought fruit yogurt or pre-cut fruits to save time. You can also use plant-based milk and yogurt for a dairy-free version.",
+				Valid:  true,
+			},
+			Instructions:  "The night before, combine 1/2 cup of rolled oats with 1 cup of milk in a jar or bowl. Cover and let it rest in the refrigerator overnight. The next morning, take out the oats and layer them with yogurt and your choice of fresh fruits such as berries, bananas, or apples. Serve immediately or store in the fridge for later.",
+			ImageUrl:      "overnight-oats.png",
+			Calories:      350,
+			Protein:       15,
+			CookTime:      0,
+			PrepTime:      5,
+			TotalTime:     5,
+			WashingEffort: 1,
+			PeelingEffort: 2,
+			CuttingEffort: 2,
+			ItemsRequired: "Bowl or jar, spoon, knife",
+			Ingredients:   "1/2 cup rolled oats,1 cup milk,1/2 cup yogurt,Optional: fresh fruits (berries,banana,apple),honey or sweetener to taste",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Stuffed Zucchini with Meat and Cheese",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A simple and quick meal of stuffed zucchini filled with ground meat and cheese, baked in the oven for a hearty and satisfying dish. Perfect for lazy cooking when you need to be done fast.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cooked or leftover meat, and skip the oven by microwaving for a few minutes to melt the cheese.",
+				Valid:  true,
+			},
+			Instructions:  "Preheat the oven to 200°C (400°F). Cut the zucchini in half lengthwise and scoop out some of the flesh to create a hollow center. Fill the zucchini halves with cooked ground meat and top with shredded cheese. Bake in the oven for 10 minutes or until the cheese is melted and bubbly. Serve warm.",
+			ImageUrl:      "stuffed-zucchini.png",
+			Calories:      400,
+			Protein:       25,
+			CookTime:      10,
+			PrepTime:      5,
+			TotalTime:     15,
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 3,
+			ItemsRequired: "Oven, knife, spoon, baking sheet",
+			Ingredients:   "1 medium zucchini,100g ground meat (beef or chicken),50g shredded cheese (cheddar or mozzarella),salt,pepper",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Pasta Salad",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A quick and easy pasta salad with tuna, corn, peas, and olives, mixed with mayonnaise for a creamy, delicious meal. Perfect for a light and satisfying lunch or dinner.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought pasta salad or skip the tuna for a vegetarian version. Alternatively, you can use a lighter dressing like yogurt instead of mayonnaise.",
+				Valid:  true,
+			},
+			Instructions:  "Cook the penne pasta in boiling salted water until al dente. Drain the pasta and add mayonnaise, tuna, corn, peas, olives, and fresh parsley or chives. Mix well, chill in the refrigerator for a few minutes, and serve.",
+			ImageUrl:      "pasta-salad.png",
+			Calories:      600,
+			Protein:       25,
+			CookTime:      10,
+			PrepTime:      5,
+			TotalTime:     15,
+			WashingEffort: 3,
+			PeelingEffort: 1,
+			CuttingEffort: 1,
+			ItemsRequired: "Pot, strainer, mixing bowl, spoon",
+			Ingredients:   "150g penne pasta,2 tbsp mayonnaise,1 can tuna,1/4 cup corn,1/4 cup peas,1/4 cup olives,1 tbsp fresh parsley or chives",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Chicken Couscous",
+			Category:    "Lunch, Dinner, Healthy",
+			Servings:    1,
+			Description: "A quick and easy chicken and couscous meal, perfect for a light and healthy lunch or dinner with Mediterranean flavors.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use instant couscous and skip adding vegetables for a quicker version.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Prepare couscous by adding boiling water, covering, and letting it steam for 5 minutes. Mix in olive oil and your choice of chopped vegetables like tomatoes, cucumbers, and bell peppers.",
+			ImageUrl:      "chicken-couscous.png",
+			Calories:      450,
+			Protein:       40,
+			CookTime:      10,
+			PrepTime:      10,
+			TotalTime:     20,
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 4,
+			ItemsRequired: "Air fryer or oven, pot, knife, cutting board",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,1/2 cup couscous,1 tbsp olive oil,Optional: tomatoes,cucumbers,bell peppers",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Chicken Roasted Vegetables",
+			Category:    "Lunch, Dinner, Healthy",
+			Servings:    1,
+			Description: "A healthy and flavorful chicken dish served with a variety of roasted vegetables like bell peppers, zucchini, and carrots, perfect for a balanced meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use frozen roasted vegetables to save time, or choose just one vegetable like zucchini for a simpler version.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Chop vegetables (bell peppers, zucchini, carrots) and toss with olive oil, salt, and pepper. Roast in oven at 200°C for 20-25 minutes.",
+			ImageUrl:      "chicken-roasted-vegetables.png",
+			Calories:      400,
+			Protein:       40,
+			CookTime:      25,
+			PrepTime:      10,
+			TotalTime:     35,
+			WashingEffort: 4,
+			PeelingEffort: 2,
+			CuttingEffort: 4,
+			ItemsRequired: "Air fryer or oven, baking sheet, knife, cutting board",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,1 bell pepper,1 zucchini,2 carrots,1 tbsp olive oil,salt,pepper",
+			TotalEffort:   4,
+		},
+		{
+			Name:        "Chicken Pita Bread with Hummus",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A delicious Mediterranean-inspired meal with grilled chicken, pita bread, and creamy hummus, ideal for a flavorful and satisfying dish.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use store-bought pita bread and hummus to simplify the meal.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Warm pita bread in the oven or microwave. Serve chicken with pita bread and hummus on the side. Optionally, add fresh vegetables like cucumber and tomato for extra flavor.",
+			ImageUrl:      "chicken-pita-hummus.png",
+			Calories:      500,
+			Protein:       45,
+			CookTime:      10,
+			PrepTime:      5,
+			TotalTime:     15,
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Air fryer or oven, microwave, knife, cutting board",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,1 pita bread,1/4 cup hummus,Optional: cucumber,tomato",
+			TotalEffort:   2,
+		},
+		{
+			Name:        "Chicken Feta and Tomato Salad",
+			Category:    "Lunch, Dinner, Healthy",
+			Servings:    1,
+			Description: "A fresh and tangy Greek-inspired chicken salad with feta cheese, tomatoes, cucumbers, and a drizzle of olive oil, perfect for a light and refreshing meal.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-cut salad mix and feta crumbles for a quicker version.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Chop tomatoes, cucumbers, and red onion. Mix with crumbled feta cheese and olive oil. Serve with chicken on the side or mixed in.",
+			ImageUrl:      "chicken-feta-tomato-salad.png",
+			Calories:      450,
+			Protein:       43,
+			CookTime:      10,
+			PrepTime:      10,
+			TotalTime:     20,
+			WashingEffort: 3,
+			PeelingEffort: 2,
+			CuttingEffort: 4,
+			ItemsRequired: "Air fryer or oven, knife, cutting board, salad bowl",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,2 tomatoes,1 cucumber,1/4 red onion,50g feta cheese,2 tbsp olive oil,salt,pepper",
+			TotalEffort:   3,
+		},
+		{
+			Name:        "Chicken Garlic Bread",
+			Category:    "Lunch, Dinner, Comfort Food",
+			Servings:    1,
+			Description: "A comforting meal with crispy garlic bread served alongside juicy chicken, perfect for a satisfying lunch or dinner.",
+			LightVersionInstructions: sql.NullString{
+				String: "Use pre-made garlic bread to save time.",
+				Valid:  true,
+			},
+			Instructions:  "Marinade chicken with sweet pepper, garlic, black pepper, soy sauce, and optional cayenne pepper. Cook in air fryer or oven. Prepare garlic bread by spreading butter and minced garlic on slices of bread, then toasting in the oven. Serve chicken with garlic bread on the side.",
+			ImageUrl:      "chicken-garlic-bread.png",
+			Calories:      600,
+			Protein:       45,
+			CookTime:      10,
+			PrepTime:      10,
+			TotalTime:     20,
+			WashingEffort: 2,
+			PeelingEffort: 1,
+			CuttingEffort: 2,
+			ItemsRequired: "Air fryer or oven, knife, cutting board, toaster",
+			Ingredients:   "200g chicken breast,1 tsp sweet pepper,1 clove garlic,1 tsp black pepper,1 tsp soy sauce,Optional: 1/4 tsp cayenne pepper,2 slices bread,1 tbsp butter,1 clove garlic",
+			TotalEffort:   2,
+		},
+	}
+}
+
+func mealWeek1() []sqlc.InsertMealParams {
+	return []sqlc.InsertMealParams{
 		{
 			Name:        "Chicken Fajita Mac and Cheese",
 			Category:    "Main Course, Comfort Food, Dinner",
@@ -973,14 +1444,6 @@ In a large pan, heat 1 tablespoon of oil. Press the garlic into the pan and saut
 			Ingredients:   "1 tbsp rapeseed oil, 1 onion, 3 cloves garlic, 1 tsp paprika, 1/2 tsp cumin, 1 tbsp thyme, 3 carrots, 2 celery stalks, 1 red pepper, 1 yellow pepper, 2 tins tomatoes, 250ml vegetable stock, 2 courgettes, 250g lentils",
 			TotalEffort:   3,
 		},
-	}
-	for _, mealParams := range mealsParams {
-		_, err := d.InsertMeal(ctx, mealParams)
-		if err != nil {
-			fmt.Printf("Error creating meal: %v\n", err)
-			return
-		}
-		fmt.Printf("Created meal\n")
 	}
 
 }

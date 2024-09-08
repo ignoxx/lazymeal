@@ -172,7 +172,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 76, Col: 103}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 76, Col: 94}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -209,9 +209,9 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var12 string
-			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Category)
+			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(strings.Join(strings.Split(meal.Category, "\n"), " - "))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 89, Col: 52}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 88, Col: 94}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -275,7 +275,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.Calories))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 145, Col: 88}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 144, Col: 88}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -288,7 +288,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.Protein))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 149, Col: 91}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 148, Col: 91}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -301,7 +301,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Description)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 156, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 155, Col: 54}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -311,7 +311,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			if meal.LightVersionInstructions.Valid {
+			if meal.LightVersionInstructions.Valid && meal.LightVersionInstructions.String != "" {
 				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 28)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -319,7 +319,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 				var templ_7745c5c3_Var16 string
 				templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(meal.LightVersionInstructions.String)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 161, Col: 71}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 160, Col: 71}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 				if templ_7745c5c3_Err != nil {
@@ -334,7 +334,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for _, ingredient := range strings.Split(meal.Ingredients, ",") {
+			for _, ingredient := range strings.Split(meal.Ingredients, "\n") {
 				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 31)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -342,7 +342,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 				var templ_7745c5c3_Var17 string
 				templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(strings.TrimSpace(ingredient))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 169, Col: 44}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 168, Col: 44}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 				if templ_7745c5c3_Err != nil {
@@ -357,7 +357,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for _, item := range strings.Split(meal.ItemsRequired, ",") {
+			for _, item := range strings.Split(meal.ItemsRequired, "\n") {
 				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 34)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -365,7 +365,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 				var templ_7745c5c3_Var18 string
 				templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(strings.TrimSpace(item))
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 178, Col: 38}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 177, Col: 38}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 				if templ_7745c5c3_Err != nil {
@@ -380,7 +380,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			for _, step := range strings.Split(meal.Instructions, ",") {
+			for _, step := range strings.Split(meal.Instructions, "\n") {
 				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 37)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -388,7 +388,7 @@ func Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) templ
 				var templ_7745c5c3_Var19 string
 				templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(step)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 187, Col: 19}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/index.templ`, Line: 186, Col: 19}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 				if templ_7745c5c3_Err != nil {

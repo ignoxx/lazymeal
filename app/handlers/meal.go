@@ -11,6 +11,7 @@ import (
 	"math"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/anthdm/superkit/kit"
 )
@@ -50,16 +51,16 @@ func HandleMealLike(kit *kit.Kit) error {
 	return kit.Render(mealView.LikeButtonClicked())
 }
 func HandleMealEdit(kit *kit.Kit) error {
-	fmt.Println("HandleMealEdit")
 	mealIDStr := kit.Request.PathValue("mealID")
 	mealID, err := strconv.ParseInt(mealIDStr, 10, 64)
 	if err != nil {
 		return kit.Render(errors.Error404())
 	}
 
+	lightVersionInstructionsValue := strings.TrimSpace(kit.Request.FormValue("light_version_instructions"))
 	lightVersionInstructions := sql.NullString{
-		String: kit.Request.FormValue("light_version_instructions"),
-		Valid:  true,
+		String: lightVersionInstructionsValue,
+		Valid:  len(lightVersionInstructionsValue) > 0,
 	}
 
 	fmt.Printf("lightVersionInstructions: %+v\n", lightVersionInstructions)

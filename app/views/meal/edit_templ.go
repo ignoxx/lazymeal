@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"lazymeal/app/db/sqlc"
 	"lazymeal/app/views/layouts"
-	"strings"
 )
 
 func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
@@ -61,7 +60,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 23, Col: 65}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 22, Col: 65}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -74,7 +73,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(meal.ImageUrl)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 28, Col: 79}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 27, Col: 79}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -87,7 +86,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Description)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 33, Col: 245}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 32, Col: 245}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -100,7 +99,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.Servings))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 38, Col: 91}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 37, Col: 91}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -113,7 +112,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.PrepTime))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 43, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 42, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -126,7 +125,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var9 string
 			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.CookTime))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 48, Col: 93}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 47, Col: 93}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 			if templ_7745c5c3_Err != nil {
@@ -139,7 +138,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.Calories))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 53, Col: 91}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 52, Col: 91}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -152,7 +151,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.Protein))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 58, Col: 88}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 57, Col: 88}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -165,7 +164,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var12 string
 			templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.WashingEffort))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 63, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 62, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 			if templ_7745c5c3_Err != nil {
@@ -178,7 +177,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var13 string
 			templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.CuttingEffort))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 68, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 67, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 			if templ_7745c5c3_Err != nil {
@@ -191,7 +190,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var14 string
 			templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(meal.PeelingEffort))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 73, Col: 108}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 72, Col: 108}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 			if templ_7745c5c3_Err != nil {
@@ -204,7 +203,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Category)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 78, Col: 236}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 77, Col: 236}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -215,9 +214,9 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var16 string
-			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(strings.Join(strings.Split(meal.Ingredients, ","), ", "))
+			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Ingredients)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 83, Col: 285}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 82, Col: 245}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -228,9 +227,9 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var17 string
-			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(strings.Join(strings.Split(meal.ItemsRequired, ","), ", "))
+			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(meal.ItemsRequired)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 88, Col: 293}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 87, Col: 253}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {
@@ -241,9 +240,9 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var18 string
-			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(strings.Join(strings.Split(meal.Instructions, "\n"), "\n"))
+			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(meal.Instructions)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 93, Col: 289}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 92, Col: 249}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 			if templ_7745c5c3_Err != nil {
@@ -256,7 +255,7 @@ func Edit(meal sqlc.Meal, isAuthenticated bool) templ.Component {
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(meal.LightVersionInstructions.String)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 98, Col: 286}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `app/views/meal/edit.templ`, Line: 97, Col: 286}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {

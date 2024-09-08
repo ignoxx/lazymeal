@@ -3,7 +3,6 @@ package meal
 import (
 	"lazymeal/app/views/layouts"
 	"lazymeal/app/db/sqlc"
-	"strings"
 	"fmt"
 )
 
@@ -75,22 +74,22 @@ templ Edit(meal sqlc.Meal, isAuthenticated bool) {
 						<!-- Category -->
 						<div class="mb-4">
 							<label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-							<textarea name="category" id="category" rows="2" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.Category }</textarea>
+							<textarea name="category" id="category" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.Category }</textarea>
 						</div>
 						<!-- Ingredients -->
 						<div class="mb-4">
 							<label for="ingredients" class="block text-sm font-medium text-gray-700">Ingredients</label>
-							<textarea name="ingredients" id="ingredients" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ strings.Join(strings.Split(meal.Ingredients, ","), ", ") }</textarea>
+							<textarea name="ingredients" id="ingredients" rows="6" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.Ingredients }</textarea>
 						</div>
 						<!-- Items Required -->
 						<div class="mb-4">
 							<label for="items_required" class="block text-sm font-medium text-gray-700">Items Required</label>
-							<textarea name="items_required" id="items_required" rows="2" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ strings.Join(strings.Split(meal.ItemsRequired, ","), ", ") }</textarea>
+							<textarea name="items_required" id="items_required" rows="4" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.ItemsRequired }</textarea>
 						</div>
 						<!-- Instructions -->
 						<div class="mb-4">
 							<label for="instructions" class="block text-sm font-medium text-gray-700">Instructions</label>
-							<textarea name="instructions" id="instructions" rows="6" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ strings.Join(strings.Split(meal.Instructions, "\n"), "\n") }</textarea>
+							<textarea name="instructions" id="instructions" rows="10" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{ meal.Instructions }</textarea>
 						</div>
 						<!-- Light Version Instructions -->
 						<div class="mb-4">

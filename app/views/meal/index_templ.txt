@@ -1,14 +1,14 @@
 <button class=\"absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\"><i class=\"fas fa-thumbs-up text-xl\"></i></button>
-<div class=\"p-4 lg:p-8\"><div class=\"flex flex-col lg:flex-row gap-8\"><!-- Main Content --><div class=\"w-full lg:w-3/4 space-y-6\"><!-- Meal Image and Title --><div class=\"w-full h-69 space-y-6\"><!-- Meal Image and Like Button --><div class=\"relative w-full h-full bg-white shadow-md rounded-lg overflow-hidden\"><div class=\"relative w-full h-36\">
+<div class=\"p-4 lg:p-8\"><div class=\"flex flex-col lg:flex-row gap-8\"><!-- Main Content --><div class=\"w-full lg:w-3/4 space-y-6\"><!-- Meal Image and Title --><div class=\"w-full space-y-6\"><!-- Meal Image and Like Button --><div class=\"relative w-full bg-white shadow-md rounded-lg overflow-hidden\"><div class=\"relative w-full\" style=\"height: 20vh;\">
 <!-- Preview image --> <img class=\"absolute blur inset-0 w-full h-full object-cover transition-opacity duration-300\" src=\"
 \" alt=\"Preview Image\"> 
 <img src=\"
 \" alt=\"
-\" loading=\"lazy\" class=\"absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300\" onload=\"this.style.opacity=&#39;1&#39;\"></div><!-- Like Button Inside Image --><button class=\"plausible-event-name=MealLike absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\" hx-swap=\"outerHTML\" hx-post=\"
+\" loading=\"lazy\" class=\"absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300\" onload=\"this.style.opacity=&#39;1&#39;; this.previousElementSibling.remove();\"></div><!-- Like Button Inside Image --><button class=\"plausible-event-name=MealLike absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\" hx-swap=\"outerHTML\" hx-post=\"
 \" hx-on:htmx:before-request=\"this.classList.add(&#39;animate-pulse&#39;); this.disabled = true;\"><i class=\"far fa-thumbs-up text-xl\"></i></button> 
 <a href=\"
 \"><button class=\"absolute top-2 right-12 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\"><i class=\"far fa-edit text-xl\"></i></button></a>
-<!-- Title and Details --><div class=\"p-6\"><h1 class=\"relative text-2xl font-bold text-gray-900 text-center mb-4 md:text-left\">
+<!-- Title and Details --><div class=\"p-6\"><h1 class=\"text-2xl font-bold text-gray-900 text-center mb-4 md:text-left\">
 </h1><div class=\"relative flex flex-row items-center gap-4 text-gray-600 mb-6 justify-center space-y-0 md:space-x-6 md:justify-start\"><div class=\"flex items-center space-x-2 text-sm\"><i class=\"fas fa-user text-lg\"></i> <span>
 </span></div><div class=\"flex items-center space-x-2 text-sm\"><i class=\"fas fa-clock text-lg\"></i> <span>
  min</span></div><div class=\"flex items-center space-x-2 text-sm hidden sm:flex\"><i class=\"fas fa-utensils text-lg\"></i> <span class=\"line-clamp-1\">

@@ -54,8 +54,12 @@ templ MealCard(meal sqlc.Meal) {
 					</div>
 					<div class="mt-4 flex items-center gap-3">
 						<span class="text-sm text-gray-500"><i class="fas fa-heart"></i> { formatLikes(meal.Likes) } </span>
-						<span class="text-sm text-gray-500"><i class="fas fa-clock"></i> { fmt.Sprint(meal.TotalTime) } min</span>
-						<span class="text-sm text-gray-500"><i class="fas fa-fire"></i> { fmt.Sprint(meal.Calories) } kcal</span>
+						if meal.TotalTime > 0 {
+							<span class="text-sm text-gray-500"><i class="fas fa-clock"></i> { fmt.Sprint(meal.TotalTime) } min</span>
+						}
+						if meal.Calories > 0 {
+							<span class="text-sm text-gray-500"><i class="fas fa-fire"></i> { fmt.Sprint(meal.Calories) } kcal</span>
+						}
 					</div>
 				</div>
 			</a>
