@@ -1,14 +1,32 @@
 package components
 
+import (
+	"math/rand"
+)
+
+func chooseRandomHeadline() string {
+	headlines := []string{
+		"Quick Chews for Busy Shoes",
+		"Eat Lazy, Live Easy",
+		"Easy Eats, Lazy Feasts",
+		"Bite Easy, Live Lazy",
+		"Quick Bites for Busy Nights",
+		"Speedy Eats for Busy Bees",
+		"Just Click, Cook Quick",
+	}
+
+	return headlines[rand.Intn(len(headlines))]
+}
+
 templ Navigation(isAuthenticated bool) {
 	<nav class="border-b py-3">
 		<div class="container mx-auto flex justify-between">
 			<div class="text-lg text-foreground">
 				<a href="/" class="font-semibold uppercase">🍲 lazy<span class="text-green-600">meal</span></a>
 			</div>
-			<div class="flex gap-4 items-center">
+			<div class="flex gap-4 items-center text-sm ">
 				<div>
-					Weekly new meals!
+					{ chooseRandomHeadline() }!
 				</div>
 				<!-- create meal button -->
 				if isAuthenticated {
