@@ -22,6 +22,7 @@ func (q *Queries) DeleteMeal(ctx context.Context, id int64) error {
 
 const getAllMeals = `-- name: GetAllMeals :many
 SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+ORDER BY category DESC
 `
 
 func (q *Queries) GetAllMeals(ctx context.Context) ([]Meal, error) {
@@ -180,7 +181,7 @@ func (q *Queries) GetFastestMeals(ctx context.Context) ([]Meal, error) {
 
 const getHighProteinMeals = `-- name: GetHighProteinMeals :many
 SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
-WHERE protein >= 30
+ORDER BY protein DESC
 `
 
 func (q *Queries) GetHighProteinMeals(ctx context.Context) ([]Meal, error) {
@@ -425,11 +426,11 @@ func (q *Queries) GetMealsByCategory(ctx context.Context, category string) ([]Me
 
 const getMealsByEffort = `-- name: GetMealsByEffort :many
 SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
-WHERE total_effort <= ?1
+ORDER BY total_effort ASC
 `
 
-func (q *Queries) GetMealsByEffort(ctx context.Context, totalEffort int64) ([]Meal, error) {
-	rows, err := q.db.QueryContext(ctx, getMealsByEffort, totalEffort)
+func (q *Queries) GetMealsByEffort(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsByEffort)
 	if err != nil {
 		return nil, err
 	}
@@ -476,7 +477,7 @@ func (q *Queries) GetMealsByEffort(ctx context.Context, totalEffort int64) ([]Me
 
 const getMealsWithMinimumIngredients = `-- name: GetMealsWithMinimumIngredients :many
 SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
-ORDER BY LENGTH(ingredients) - LENGTH(REPLACE(ingredients, ',', '')) ASC
+ORDER BY LENGTH(ingredients) ASC
 `
 
 func (q *Queries) GetMealsWithMinimumIngredients(ctx context.Context) ([]Meal, error) {
@@ -578,7 +579,7 @@ func (q *Queries) GetMealsWithMinimumWashing(ctx context.Context) ([]Meal, error
 
 const getMealsWithNoCutting = `-- name: GetMealsWithNoCutting :many
 SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
-WHERE cutting_effort = 0
+ORDER BY cutting_effort ASC
 `
 
 func (q *Queries) GetMealsWithNoCutting(ctx context.Context) ([]Meal, error) {
@@ -629,7 +630,7 @@ func (q *Queries) GetMealsWithNoCutting(ctx context.Context) ([]Meal, error) {
 
 const getMealsWithNoPeeling = `-- name: GetMealsWithNoPeeling :many
 SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
-WHERE peeling_effort = 0
+ORDER BY peeling_effort ASC
 `
 
 func (q *Queries) GetMealsWithNoPeeling(ctx context.Context) ([]Meal, error) {

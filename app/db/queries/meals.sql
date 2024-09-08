@@ -1,5 +1,6 @@
 -- name: GetAllMeals :many
-SELECT * FROM meals;
+SELECT * FROM meals
+ORDER BY category DESC;
 
 -- name: GetAllMealsPaginated :many
 SELECT * FROM meals
@@ -24,11 +25,11 @@ WHERE calories < ?1;
 
 -- name: GetHighProteinMeals :many
 SELECT * FROM meals
-WHERE protein >= 30;
+ORDER BY protein DESC;
 
 -- name: GetMealsByEffort :many
 SELECT * FROM meals
-WHERE total_effort <= ?1;
+ORDER BY total_effort ASC;
 
 -- name: GetFastestMeals :many
 SELECT * FROM meals
@@ -41,11 +42,11 @@ LIMIT ?1;
 
 -- name: GetMealsWithNoCutting :many
 SELECT * FROM meals
-WHERE cutting_effort = 0;
+ORDER BY cutting_effort ASC;
 
 -- name: GetMealsWithNoPeeling :many
 SELECT * FROM meals
-WHERE peeling_effort = 0;
+ORDER BY peeling_effort ASC;
 
 -- name: GetMealsWithMinimumWashing :many
 SELECT * FROM meals
@@ -53,7 +54,7 @@ ORDER BY washing_effort ASC;
 
 -- name: GetMealsWithMinimumIngredients :many
 SELECT * FROM meals
-ORDER BY LENGTH(ingredients) - LENGTH(REPLACE(ingredients, ',', '')) ASC;
+ORDER BY LENGTH(ingredients) ASC;
 
 -- name: InsertMeal :one
 INSERT INTO meals (
