@@ -1,5 +1,5 @@
 <button class=\"absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm\"><i class=\"fas fa-thumbs-up text-xl\"></i></button>
-<div class=\"p-4 lg:p-8\"><div class=\"flex flex-col lg:flex-row gap-8\"><!-- Main Content --><div class=\"w-full lg:w-3/4 space-y-6\"><!-- Meal Image and Title --><div class=\"w-full space-y-6\"><!-- Meal Image and Like Button --><div class=\"relative w-full bg-white shadow-md rounded-lg overflow-hidden\"><div class=\"relative w-full\" style=\"height: 20vh;\">
+<div class=\"p-4 lg:p-8\"><div class=\"flex flex-col lg:flex-row gap-8\"><!-- Main Content --><div class=\"w-full lg:w-3/4 space-y-6\"><!-- Meal Image and Title --><div class=\"w-full space-y-6\"><!-- Meal Image and Like Button --><div class=\"relative w-full bg-white shadow-md rounded-lg overflow-hidden\"><div class=\"relative w-full h-[30vh] md:h-[42vh]\">
 <!-- Preview image --> <img class=\"absolute blur inset-0 w-full h-full object-cover transition-opacity duration-300\" src=\"
 \" alt=\"
 \"> 
@@ -40,4 +40,4 @@
 </ol></div></div><!-- Nutrition Facts --></div><!-- Sidebar --><div class=\"w-full lg:w-1/4 space-y-6\">
 <div class=\"p-4 border border-gray-300 rounded-lg bg-white shadow-sm\"><h2 class=\"text-lg font-bold text-gray-900 mb-4\">Most Liked Recipes</h2><div class=\"space-y-2\">
 </div></div>
-<!-- New Recipes Sidebar --><!--\n\t\t\t\t\t<div class=\"p-4 border border-gray-300 rounded-lg bg-white shadow-sm\">\n\t\t\t\t\t\t<h2 class=\"text-lg font-bold text-gray-900 mb-4\">Ads</h2>\n\t\t\t\t\t\t<div class=\"space-y-2\">\n\t\t\t\t\t\t\t/*\n\t\t\t\t\t\t\tfor _, newMeal := range newMeals {\n\t\t\t\t\t\t\t\t@components.MealTrendingCard(newMeal)\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t*/\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t--></div></div></div>
+</div></div></div>
