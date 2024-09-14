@@ -86,4 +86,7 @@ db-slugify:
 sitemap:
 	@go run cmd/scripts/sitemap/main.go
 
+structured-data:
+	@go run cmd/scripts/structured-data/main.go
+
 
