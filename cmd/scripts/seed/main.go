@@ -6,78 +6,27 @@ import (
 	"fmt"
 	"lazymeal/app/db"
 	"lazymeal/app/db/sqlc"
-	"strings"
 )
 
 func main() {
 	ctx := context.Background()
 	d := db.Get()
 
-	meals, err := d.GetAllMeals(ctx)
-	if err != nil {
-		panic(err)
-	}
+	mealsParams := []sqlc.InsertMealParams{}
+	mealsParams = append(mealsParams, mealWeek1()...)
+	mealsParams = append(mealsParams, mealWeek2()...)
+	mealsParams = append(mealsParams, mealWeek2Part2()...)
 
-	fmt.Println("FIXING STARTG")
+	fmt.Println("Total Meals inserting..", len(mealsParams))
 
-	fixCategory := func(meal *sqlc.Meal) {
-		if strings.Contains(meal.ItemsRequired, ",") {
-			cats := strings.Split(strings.TrimSpace(meal.ItemsRequired), ",")
-			for i, c := range cats {
-				cats[i] = strings.TrimSpace(c)
-			}
-			meal.ItemsRequired = strings.Join(cats, "\n")
-		}
-	}
-
-	for _, meal := range meals {
-		fixCategory(&meal)
-
-		err := d.UpdateMeal(ctx, sqlc.UpdateMealParams{
-			ID:                       meal.ID,
-			Category:                 meal.Category,
-			Ingredients:              meal.Ingredients,
-			Instructions:             meal.Instructions,
-			Name:                     meal.Name,
-			Description:              meal.Description,
-			LightVersionInstructions: meal.LightVersionInstructions,
-			ImageUrl:                 meal.ImageUrl,
-			Calories:                 meal.Calories,
-			Protein:                  meal.Protein,
-			CookTime:                 meal.CookTime,
-			PrepTime:                 meal.PrepTime,
-			TotalTime:                meal.TotalTime,
-			WashingEffort:            meal.WashingEffort,
-			PeelingEffort:            meal.PeelingEffort,
-			CuttingEffort:            meal.CuttingEffort,
-			ItemsRequired:            meal.ItemsRequired,
-			TotalEffort:              meal.TotalEffort,
-			Servings:                 meal.Servings,
-		})
-
+	for _, mealParams := range mealsParams {
+		_, err := d.InsertMeal(ctx, mealParams)
 		if err != nil {
-			fmt.Println(err)
-			continue
+			fmt.Printf("Error creating meal: %v\n", err)
+			return
 		}
+		fmt.Printf("Created meal\n")
 	}
-
-	fmt.Println("DONE")
-
-	// mealsParams := []sqlc.InsertMealParams{}
-	// mealsParams = append(mealsParams, mealWeek1()...)
-	// mealsParams = append(mealsParams, mealWeek2()...)
-	// mealsParams = append(mealsParams, mealWeek2Part2()...)
-
-	// fmt.Println("Total Meals inserting..", len(mealsParams))
-	//
-	// for _, mealParams := range mealsParams {
-	// 	_, err := d.InsertMeal(ctx, mealParams)
-	// 	if err != nil {
-	// 		fmt.Printf("Error creating meal: %v\n", err)
-	// 		return
-	// 	}
-	// 	fmt.Printf("Created meal\n")
-	// }
 }
 
 func mealWeek2Part2() []sqlc.InsertMealParams {

@@ -14,25 +14,32 @@ import (
 	"strings"
 
 	"github.com/anthdm/superkit/kit"
+	"github.com/gosimple/slug"
 )
 
 func HandleMealIndex(kit *kit.Kit) error {
-	mealIDStr := kit.Request.PathValue("mealID")
-	mealID, err := strconv.ParseInt(mealIDStr, 10, 64)
-	if err != nil {
-		return kit.Render(errors.Error404())
-	}
+	mealSlug := kit.Request.PathValue("mealSlug")
 
-	trendingMeals, err := db.Get().GetMostLikedMeals(kit.Request.Context(), 3)
-
-	meal, err := db.Get().GetMealByID(kit.Request.Context(), mealID)
-
-	if err != nil {
-		slog.Warn("failed to get meal by id", slog.String("err", err.Error()))
+	if strings.TrimSpace(mealSlug) == "" {
 		kit.Redirect(http.StatusSeeOther, "/")
+		return nil
 	}
 
-	return kit.Render(mealView.Index(trendingMeals, meal, kit.Auth().Check()))
+	meal, err := db.Get().GetMealBySlug(kit.Request.Context(), sql.NullString{String: mealSlug, Valid: true})
+	if err != nil {
+		slog.Error("failed to get meal by slug", slog.String("mealID", mealSlug), slog.String("err", err.Error()))
+		kit.Redirect(http.StatusSeeOther, "/")
+		return nil
+	}
+
+	mostLikedMeals, err := db.Get().GetMostLikedMeals(kit.Request.Context(), 3)
+	if err != nil {
+		slog.Warn("failed to get most liked meals", slog.String("err", err.Error()))
+		kit.Redirect(http.StatusSeeOther, "/")
+		return nil
+	}
+
+	return kit.Render(mealView.Index(mostLikedMeals, meal, kit.Auth().Check()))
 }
 
 func HandleMealLike(kit *kit.Kit) error {
@@ -154,7 +161,14 @@ func HandleMealCreate(kit *kit.Kit) error {
 		totalEffort       = math.Floor(float64(washingEffort)+float64(peeelingEffort)+float64(cuttingEffort)) / 3
 	)
 
+	slug.AppendTimestamp = true
+	mealSlug := sql.NullString{
+		String: slug.Make(kit.Request.FormValue("name")),
+		Valid:  true,
+	}
+
 	updateParams := sqlc.InsertMealParams{
+		Slug:                     mealSlug,
 		Name:                     kit.Request.FormValue("name"),
 		Description:              kit.Request.FormValue("description"),
 		Category:                 kit.Request.FormValue("category"),
@@ -177,8 +191,9 @@ func HandleMealCreate(kit *kit.Kit) error {
 
 	meal, err := db.Get().InsertMeal(kit.Request.Context(), updateParams)
 	if err != nil {
+		// TODO: render same page with same values but pass errors over
 		return kit.Render(errors.Error500())
 	}
 
-	return kit.Redirect(http.StatusSeeOther, fmt.Sprintf("/%d", meal.ID))
+	return kit.Redirect(http.StatusSeeOther, fmt.Sprintf("/%s", meal.Slug))
 }

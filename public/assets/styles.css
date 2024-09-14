@@ -775,24 +775,16 @@ body {
   height: 2rem;
 }
 
+.h-\[30vh\] {
+  height: 30vh;
+}
+
 .h-full {
   height: 100%;
 }
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[32vh\] {
-  height: 32vh;
-}
-
-.h-\[10vh\] {
-  height: 10vh;
-}
-
-.h-\[30vh\] {
-  height: 30vh;
 }
 
 .w-20 {

@@ -11,6 +11,33 @@ import (
 
 type Meal struct {
 	ID                       int64
+	Slug                     sql.NullString
+	Name                     string
+	Category                 string
+	Servings                 int64
+	Description              string
+	LightVersionInstructions sql.NullString
+	Instructions             string
+	ImageUrl                 string
+	ImageAlt                 sql.NullString
+	Calories                 int64
+	Protein                  int64
+	CookTime                 int64
+	PrepTime                 int64
+	TotalTime                int64
+	WashingEffort            int64
+	PeelingEffort            int64
+	CuttingEffort            int64
+	ItemsRequired            string
+	Ingredients              string
+	TotalEffort              int64
+	Likes                    int64
+	CreatedAt                time.Time
+	UpdatedAt                time.Time
+}
+
+type OldMeal struct {
+	ID                       int64
 	Name                     string
 	Category                 string
 	Servings                 int64

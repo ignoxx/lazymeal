@@ -11,6 +11,10 @@ LIMIT ?1 OFFSET ?2;
 SELECT * FROM meals
 WHERE id = ?1;
 
+-- name: GetMealBySlug :one
+SELECT * FROM meals
+WHERE slug = ?1;
+
 -- name: GetMealByIDs :many
 SELECT * FROM meals
 WHERE id IN (?1, ?2, ?3);
@@ -68,10 +72,10 @@ ORDER BY LENGTH(ingredients) ASC;
 
 -- name: InsertMeal :one
 INSERT INTO meals (
-    name, category, description, light_version_instructions, instructions, image_url, calories, protein,
+    name, slug, category, description, light_version_instructions, instructions, image_url, calories, protein,
     cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, servings, updated_at
 ) VALUES (
-    ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, CURRENT_TIMESTAMP
+    ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19, CURRENT_TIMESTAMP
 )
 RETURNING *;
 
@@ -97,6 +101,7 @@ SET
     ingredients = ?18,
     total_effort = ?19,
     servings = ?20,
+    slug = ?21,
     updated_at = CURRENT_TIMESTAMP
 WHERE id = ?1;
 

@@ -9,6 +9,8 @@ RUN go mod download && go mod verify
 
 COPY . .
 
+RUN make sitemap && mv sitemap.xml ./public/assets/sitemap.xml
+
 RUN go build -ldflags="-s -w" -v -o /usr/local/bin/app_prod ./cmd/app/main.go
 
 ENTRYPOINT ["app_prod"]

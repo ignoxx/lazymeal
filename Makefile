@@ -18,8 +18,10 @@ SYNC_ASSETS_COMMAND =	@go run github.com/cosmtrek/air@v1.51.0 \
 # run templ generation in watch mode to detect all .templ files and
 # re-create _templ.txt files on change, then send reload event to browser.
 # Default url: http://localhost:7331
-templ:
+watch-templ:
 	@templ generate --watch --proxy="http://localhost$(HTTP_LISTEN_ADDR)" --open-browser=false
+templ:
+	@templ generate
 
 sqlc:
 	sqlc generate
@@ -50,7 +52,7 @@ sync_assets:
 
 # start the application in development
 dev:
-	@make -j6 templ server watch-assets watch-esbuild sync_assets sqlc
+	@make -j6 watch-templ server watch-assets watch-esbuild sync_assets sqlc
 
 # build the application for production. This will compile your app
 # to a single binary with all its assets embedded.
@@ -77,3 +79,11 @@ db-mig-create:
 
 db-seed:
 	@go run cmd/scripts/seed/main.go
+
+db-slugify:
+	@go run cmd/scripts/slugify/main.go
+
+sitemap:
+	@go run cmd/scripts/sitemap/main.go
+
+

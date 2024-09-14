@@ -50,7 +50,8 @@ func InitializeRoutes(router *chi.Mux) {
 			w.WriteHeader(http.StatusOK)
 		})
 		app.Get("/", kit.Handler(handlers.HandleLandingIndex))
-		app.Get("/{mealID}", kit.Handler(handlers.HandleMealIndex))
+		// {articleSlug:[a-z-]+
+		app.Get("/{mealSlug:[a-z-0-9]+}", kit.Handler(handlers.HandleMealIndex))
 		app.Post("/{mealID}/like", kit.Handler(handlers.HandleMealLike))
 	})
 

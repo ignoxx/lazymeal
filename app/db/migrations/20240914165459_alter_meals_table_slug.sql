@@ -1,0 +1,44 @@
+-- +goose Up
+-- generate uuid as default (sqlite)
+ALTER TABLE meals RENAME TO old_meals;
+
+CREATE TABLE IF NOT EXISTS meals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	slug TEXT UNIQUE,
+    name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    servings INTEGER NOT NULL DEFAULT 1, -- Number of servings (people)
+    description TEXT NOT NULL,
+    light_version_instructions TEXT, -- Instructions for simplifying the meal
+    instructions TEXT NOT NULL, -- Full instructions for the meal
+    image_url TEXT NOT NULL,
+	image_alt TEXT,
+    calories INTEGER NOT NULL,
+    protein INTEGER NOT NULL,
+    cook_time INTEGER NOT NULL, -- in minutes
+    prep_time INTEGER NOT NULL, -- in minutes
+    total_time INTEGER NOT NULL, -- in minutes
+    washing_effort INTEGER NOT NULL, -- 1 to 10
+    peeling_effort INTEGER NOT NULL, -- 1 to 10
+    cutting_effort INTEGER NOT NULL, -- 1 to 10
+    items_required TEXT NOT NULL, -- Comma-separated list of required items
+    ingredients TEXT NOT NULL, -- Comma-separated list of ingredients with amounts
+    total_effort INTEGER NOT NULL, -- 1 to 10
+    likes INTEGER NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO meals (
+	id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein,
+	cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at
+)
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein,
+	cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at
+FROM old_meals;
+
+-- DROP TABLE old_meals;
+
+
+-- +goose Down
+-- nothing to do
