@@ -9,14 +9,6 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-RUN echo "DB_NAME=/usr/src/app/app_db" > .env
-RUN echo "DB_DRIVER=sqlite3" >> .env
-RUN echo "DB_USER=" >> .env
-RUN echo "DB_HOST=" >> .env
-RUN echo "MIGRATION_DIR=app/db/migrations" >> .env
-
-RUN make sitemap && cp sitemap.xml ./public/assets/sitemap.xml
-
 RUN go build -ldflags="-s -w" -v -o /usr/local/bin/app_prod ./cmd/app/main.go
 
 ENTRYPOINT ["app_prod"]
