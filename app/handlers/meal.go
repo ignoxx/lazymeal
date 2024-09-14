@@ -25,6 +25,17 @@ func HandleMealIndex(kit *kit.Kit) error {
 		return nil
 	}
 
+	// WARN: this is temporarly only, in order to still redirect users to their found recipe that find us on google
+	// where google only indexed the pages by ID
+	mealID, err := strconv.ParseInt(mealSlug, 10, 64)
+	if err == nil {
+		meal, err := db.Get().GetMealByID(kit.Request.Context(), mealID)
+		if err == nil {
+			kit.Redirect(http.StatusSeeOther, fmt.Sprintf("/%s", meal.Slug.String))
+			return nil
+		}
+	}
+
 	meal, err := db.Get().GetMealBySlug(kit.Request.Context(), sql.NullString{String: mealSlug, Valid: true})
 	if err != nil {
 		slog.Error("failed to get meal by slug", slog.String("mealID", mealSlug), slog.String("err", err.Error()))
