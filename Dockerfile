@@ -9,7 +9,10 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-COPY ./app_db /mnt/lazymeal/app_db
+COPY app_db .
+
+RUN echo "DB_NAME=app_db" > .env
+RUN echo "DB_DRIVER=sqlite3" >> .env
 
 RUN make sitemap && mv sitemap.xml ./public/assets/sitemap.xml
 
