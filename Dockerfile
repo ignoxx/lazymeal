@@ -9,7 +9,7 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-COPY /data/lazymeal/prd/app_db /data/lazymeal/prd/app_db
+COPY /mnt/lazymeal/app_db /data/lazymeal/prd/app_db
 
 RUN make sitemap && mv sitemap.xml ./public/assets/sitemap.xml
 
