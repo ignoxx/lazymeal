@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /*/edit
+Disallow: /*/like
+Disallow: /login
+Disallow: /signup
+Disallow: /profile
+
+Allow: /
+Sitemap: https://lazy-meal.com/public/assets/sitemap.xml

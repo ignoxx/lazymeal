@@ -49,6 +49,11 @@ func InitializeRoutes(router *chi.Mux) {
 		app.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
 		})
+
+		app.Get("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
+			http.ServeFile(w, r, "public/assets/robots.txt")
+		})
+
 		app.Get("/", kit.Handler(handlers.HandleLandingIndex))
 		// {articleSlug:[a-z-]+
 		app.Get("/{mealSlug:[a-z-0-9]+}", kit.Handler(handlers.HandleMealIndex))
