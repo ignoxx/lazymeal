@@ -12,7 +12,7 @@ import (
 )
 
 const SITE_BASE_URL = "https://lazy-meal.com/"
-const SITE_BASE_URL_SLUG_FORMAT = SITE_BASE_URL + "%s"
+const SITE_BASE_URL_IMAGE_FORMAT = SITE_BASE_URL + "public/assets/%s"
 
 type RecipeSchema struct {
 	Context         string        `json:"@context"`
@@ -101,11 +101,15 @@ func generateRecipesSchema(meals []sqlc.Meal) []RecipeSchema {
 		cookTime := fmt.Sprintf("PT%dM", meal.CookTime)
 		totalTime := fmt.Sprintf("PT%dM", meal.TotalTime)
 
+		if meal.Likes == 0 {
+			meal.Likes++
+		}
+
 		recipe := RecipeSchema{
 			Context:        "https://schema.org",
 			Type:           "Recipe",
 			Name:           meal.Name,
-			Image:          meal.ImageUrl,
+			Image:          fmt.Sprintf(SITE_BASE_URL_IMAGE_FORMAT, meal.ImageUrl),
 			Author:         AuthorSchema{Type: "Organization", Name: "Lazy Meal"},
 			Description:    meal.Description,
 			PrepTime:       prepTime,
