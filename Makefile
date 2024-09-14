@@ -84,6 +84,10 @@ db-slugify:
 	@go run cmd/scripts/slugify/main.go
 
 sitemap:
+	@pwd
+	@ls -lisa
+	@cp /mnt/lazymeal/app_db .
+	@ls -lisa
 	@go run cmd/scripts/sitemap/main.go
 
 
