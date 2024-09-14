@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 	"lazymeal/app/db/sqlc"
 	"log"
 	"os"
@@ -35,6 +36,7 @@ func init() {
 		User:     os.Getenv("DB_USER"),
 		Host:     os.Getenv("DB_HOST"),
 	}
+	fmt.Println(config)
 	dbRawInstance, err := db.NewSQL(config)
 	if err != nil {
 		log.Fatal(err)

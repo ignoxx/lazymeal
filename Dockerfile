@@ -11,8 +11,11 @@ COPY . .
 
 RUN echo "DB_NAME=app_db" > .env
 RUN echo "DB_DRIVER=sqlite3" >> .env
+RUN echo "DB_USER=" >> .env
+RUN echo "DB_HOST=" >> .env
+RUN echo "MIGRATION_DIR=app/db/migrations" >> .env
 
-RUN make sitemap && mv sitemap.xml ./public/assets/sitemap.xml
+RUN make sitemap && cp sitemap.xml ./public/assets/sitemap.xml
 
 RUN go build -ldflags="-s -w" -v -o /usr/local/bin/app_prod ./cmd/app/main.go
 
