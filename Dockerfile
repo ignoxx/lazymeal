@@ -9,8 +9,6 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-COPY app_db .
-
 RUN echo "DB_NAME=app_db" > .env
 RUN echo "DB_DRIVER=sqlite3" >> .env
 
