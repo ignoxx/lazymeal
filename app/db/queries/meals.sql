@@ -21,7 +21,12 @@ WHERE category = ?1;
 
 -- name: GetMealsByCalories :many
 SELECT * FROM meals
-WHERE calories < ?1;
+ORDER BY calories ASC;
+
+-- name: GetMealsForOnePerson :many
+SELECT * FROM meals
+WHERE servings = 1 AND category LIKE '%dinner%'
+ORDER BY total_time ASC;
 
 -- name: GetHighProteinMeals :many
 SELECT * FROM meals

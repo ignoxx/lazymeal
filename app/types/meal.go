@@ -28,6 +28,7 @@ const (
 	MEAL_FILTER_NO_PEELING      = "no-peeling"
 	MEAL_FILTER_MIN_INGREDIENTS = "min-ingredients"
 	MEAL_FILTER_MIN_WASHING     = "min-washing"
+	MEAL_FILTER_ONE_SERVING     = "one-serving"
 )
 
 var (
@@ -36,8 +37,9 @@ var (
 		{ID: MEAL_FILTER_LOWEST_EFFORT, Name: "Lowest Effort", Emoji: "👌"},
 		{ID: MEAL_FILTER_HIGH_PROTEIN, Name: "High Protein", Emoji: "💪"},
 		{ID: MEAL_FILTER_LOW_CALORIE, Name: "Low-Calorie", Emoji: "🥗"},
-		{ID: MEAL_FILTER_NO_CUTTING, Name: "No Cutting", Emoji: "🔪"},
-		{ID: MEAL_FILTER_NO_PEELING, Name: "No Peeling", Emoji: "🥕"},
+		{ID: MEAL_FILTER_ONE_SERVING, Name: "Lazy dinner for one", Emoji: "🍽"},
+		// {ID: MEAL_FILTER_NO_CUTTING, Name: "No Cutting", Emoji: "🔪"},
+		// {ID: MEAL_FILTER_NO_PEELING, Name: "No Peeling", Emoji: "🥕"},
 		{ID: MEAL_FILTER_MIN_INGREDIENTS, Name: "Minimal Ingredients", Emoji: "🥄"},
 		{ID: MEAL_FILTER_MIN_WASHING, Name: "Minimal Washing", Emoji: "🧼"},
 	}

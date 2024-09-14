@@ -49,7 +49,7 @@ func getMealsFiltered(ctx context.Context, filter string) ([]sqlc.Meal, error) {
 	case types.MEAL_FILTER_HIGH_PROTEIN:
 		meals, err = db.Get().GetHighProteinMeals(ctx)
 	case types.MEAL_FILTER_LOW_CALORIE:
-		meals, err = db.Get().GetMealsByCalories(ctx, 400)
+		meals, err = db.Get().GetMealsByCalories(ctx)
 	case types.MEAL_FILTER_NO_CUTTING:
 		meals, err = db.Get().GetMealsWithNoCutting(ctx)
 	case types.MEAL_FILTER_NO_PEELING:
@@ -58,6 +58,8 @@ func getMealsFiltered(ctx context.Context, filter string) ([]sqlc.Meal, error) {
 		meals, err = db.Get().GetMealsWithMinimumIngredients(ctx)
 	case types.MEAL_FILTER_MIN_WASHING:
 		meals, err = db.Get().GetMealsWithMinimumWashing(ctx)
+	case types.MEAL_FILTER_ONE_SERVING:
+		meals, err = db.Get().GetMealsForOnePerson(ctx)
 	default:
 		meals, err = db.Get().GetAllMeals(ctx)
 	}

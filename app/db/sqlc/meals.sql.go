@@ -324,11 +324,11 @@ func (q *Queries) GetMealByIDs(ctx context.Context, arg GetMealByIDsParams) ([]M
 
 const getMealsByCalories = `-- name: GetMealsByCalories :many
 SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
-WHERE calories < ?1
+ORDER BY calories ASC
 `
 
-func (q *Queries) GetMealsByCalories(ctx context.Context, calories int64) ([]Meal, error) {
-	rows, err := q.db.QueryContext(ctx, getMealsByCalories, calories)
+func (q *Queries) GetMealsByCalories(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsByCalories)
 	if err != nil {
 		return nil, err
 	}
@@ -431,6 +431,58 @@ ORDER BY total_effort ASC
 
 func (q *Queries) GetMealsByEffort(ctx context.Context) ([]Meal, error) {
 	rows, err := q.db.QueryContext(ctx, getMealsByEffort)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Meal
+	for rows.Next() {
+		var i Meal
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.Category,
+			&i.Servings,
+			&i.Description,
+			&i.LightVersionInstructions,
+			&i.Instructions,
+			&i.ImageUrl,
+			&i.Calories,
+			&i.Protein,
+			&i.CookTime,
+			&i.PrepTime,
+			&i.TotalTime,
+			&i.WashingEffort,
+			&i.PeelingEffort,
+			&i.CuttingEffort,
+			&i.ItemsRequired,
+			&i.Ingredients,
+			&i.TotalEffort,
+			&i.Likes,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getMealsForOnePerson = `-- name: GetMealsForOnePerson :many
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+WHERE servings = 1 AND category LIKE '%dinner%'
+ORDER BY total_time ASC
+`
+
+func (q *Queries) GetMealsForOnePerson(ctx context.Context) ([]Meal, error) {
+	rows, err := q.db.QueryContext(ctx, getMealsForOnePerson)
 	if err != nil {
 		return nil, err
 	}
