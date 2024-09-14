@@ -63,7 +63,11 @@ func HandleMealEdit(kit *kit.Kit) error {
 		Valid:  len(lightVersionInstructionsValue) > 0,
 	}
 
-	fmt.Printf("lightVersionInstructions: %+v\n", lightVersionInstructions)
+	imageAltValue := strings.TrimSpace(kit.Request.FormValue("image_alt"))
+	imageAlt := sql.NullString{
+		String: imageAltValue,
+		Valid:  len(imageAltValue) > 0,
+	}
 
 	var (
 		servings, _       = strconv.Atoi(kit.Request.FormValue("servings"))
@@ -86,6 +90,7 @@ func HandleMealEdit(kit *kit.Kit) error {
 		LightVersionInstructions: lightVersionInstructions,
 		Instructions:             kit.Request.FormValue("instructions"),
 		ImageUrl:                 kit.Request.FormValue("image_url"),
+		ImageAlt:                 imageAlt,
 		Calories:                 int64(calories),
 		Protein:                  int64(protein),
 		CookTime:                 int64(cookTime),

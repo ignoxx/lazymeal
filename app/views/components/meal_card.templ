@@ -36,14 +36,14 @@ templ MealCard(meal sqlc.Meal) {
 						<img
 							class="absolute blur inset-0 w-full h-48 object-cover transition-opacity duration-300"
 							src={ previewImage }
-							alt="Preview Image"
+							alt={ meal.ImageAlt.String }
 						/>
 					}
 					<img
 						class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300"
 						src={ utils.ImageURL(meal.ImageUrl) }
 						loading="lazy"
-						alt={ meal.Description }
+						alt={ meal.ImageAlt.String }
 						onload="this.style.opacity='1';"
 					/>
 				</div>
@@ -76,13 +76,13 @@ templ MealTrendingCard(meal sqlc.Meal) {
 					<img
 						class="absolute blur inset-0 w-full h-48 object-cover transition-opacity duration-300"
 						src={ previewImage }
-						alt="Preview Image"
+						alt={ meal.ImageAlt.String }
 					/>
 				}
 				<img
 					class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300"
 					src={ utils.ImageURL(meal.ImageUrl) }
-					alt={ meal.Name }
+					alt={ meal.ImageAlt.String }
 					loading="lazy"
 					onload="this.style.opacity='1'"
 				/>

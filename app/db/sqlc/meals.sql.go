@@ -21,7 +21,7 @@ func (q *Queries) DeleteMeal(ctx context.Context, id int64) error {
 }
 
 const getAllMeals = `-- name: GetAllMeals :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY category DESC
 `
 
@@ -57,6 +57,7 @@ func (q *Queries) GetAllMeals(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -72,7 +73,7 @@ func (q *Queries) GetAllMeals(ctx context.Context) ([]Meal, error) {
 }
 
 const getAllMealsPaginated = `-- name: GetAllMealsPaginated :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY created_at DESC
 LIMIT ?1 OFFSET ?2
 `
@@ -114,6 +115,7 @@ func (q *Queries) GetAllMealsPaginated(ctx context.Context, arg GetAllMealsPagin
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -129,7 +131,7 @@ func (q *Queries) GetAllMealsPaginated(ctx context.Context, arg GetAllMealsPagin
 }
 
 const getFastestMeals = `-- name: GetFastestMeals :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY total_time ASC
 `
 
@@ -165,6 +167,7 @@ func (q *Queries) GetFastestMeals(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -180,7 +183,7 @@ func (q *Queries) GetFastestMeals(ctx context.Context) ([]Meal, error) {
 }
 
 const getHighProteinMeals = `-- name: GetHighProteinMeals :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY protein DESC
 `
 
@@ -216,6 +219,7 @@ func (q *Queries) GetHighProteinMeals(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -231,7 +235,7 @@ func (q *Queries) GetHighProteinMeals(ctx context.Context) ([]Meal, error) {
 }
 
 const getMealByID = `-- name: GetMealByID :one
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 WHERE id = ?1
 `
 
@@ -261,12 +265,13 @@ func (q *Queries) GetMealByID(ctx context.Context, id int64) (Meal, error) {
 		&i.Likes,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ImageAlt,
 	)
 	return i, err
 }
 
 const getMealByIDs = `-- name: GetMealByIDs :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 WHERE id IN (?1, ?2, ?3)
 `
 
@@ -308,6 +313,7 @@ func (q *Queries) GetMealByIDs(ctx context.Context, arg GetMealByIDsParams) ([]M
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -323,7 +329,7 @@ func (q *Queries) GetMealByIDs(ctx context.Context, arg GetMealByIDsParams) ([]M
 }
 
 const getMealsByCalories = `-- name: GetMealsByCalories :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY calories ASC
 `
 
@@ -359,6 +365,7 @@ func (q *Queries) GetMealsByCalories(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -374,7 +381,7 @@ func (q *Queries) GetMealsByCalories(ctx context.Context) ([]Meal, error) {
 }
 
 const getMealsByCategory = `-- name: GetMealsByCategory :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 WHERE category = ?1
 `
 
@@ -410,6 +417,7 @@ func (q *Queries) GetMealsByCategory(ctx context.Context, category string) ([]Me
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -425,7 +433,7 @@ func (q *Queries) GetMealsByCategory(ctx context.Context, category string) ([]Me
 }
 
 const getMealsByEffort = `-- name: GetMealsByEffort :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY total_effort ASC
 `
 
@@ -461,6 +469,7 @@ func (q *Queries) GetMealsByEffort(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -476,7 +485,7 @@ func (q *Queries) GetMealsByEffort(ctx context.Context) ([]Meal, error) {
 }
 
 const getMealsForOnePerson = `-- name: GetMealsForOnePerson :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 WHERE servings = 1 AND category LIKE '%dinner%'
 ORDER BY total_time ASC
 `
@@ -513,6 +522,7 @@ func (q *Queries) GetMealsForOnePerson(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -528,7 +538,7 @@ func (q *Queries) GetMealsForOnePerson(ctx context.Context) ([]Meal, error) {
 }
 
 const getMealsWithMinimumIngredients = `-- name: GetMealsWithMinimumIngredients :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY LENGTH(ingredients) ASC
 `
 
@@ -564,6 +574,7 @@ func (q *Queries) GetMealsWithMinimumIngredients(ctx context.Context) ([]Meal, e
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -579,7 +590,7 @@ func (q *Queries) GetMealsWithMinimumIngredients(ctx context.Context) ([]Meal, e
 }
 
 const getMealsWithMinimumWashing = `-- name: GetMealsWithMinimumWashing :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY washing_effort ASC
 `
 
@@ -615,6 +626,7 @@ func (q *Queries) GetMealsWithMinimumWashing(ctx context.Context) ([]Meal, error
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -630,7 +642,7 @@ func (q *Queries) GetMealsWithMinimumWashing(ctx context.Context) ([]Meal, error
 }
 
 const getMealsWithNoCutting = `-- name: GetMealsWithNoCutting :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY cutting_effort ASC
 `
 
@@ -666,6 +678,7 @@ func (q *Queries) GetMealsWithNoCutting(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -681,7 +694,7 @@ func (q *Queries) GetMealsWithNoCutting(ctx context.Context) ([]Meal, error) {
 }
 
 const getMealsWithNoPeeling = `-- name: GetMealsWithNoPeeling :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY peeling_effort ASC
 `
 
@@ -717,6 +730,7 @@ func (q *Queries) GetMealsWithNoPeeling(ctx context.Context) ([]Meal, error) {
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -732,7 +746,7 @@ func (q *Queries) GetMealsWithNoPeeling(ctx context.Context) ([]Meal, error) {
 }
 
 const getMostLikedMeals = `-- name: GetMostLikedMeals :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY likes DESC
 LIMIT ?1
 `
@@ -769,6 +783,7 @@ func (q *Queries) GetMostLikedMeals(ctx context.Context, limit int64) ([]Meal, e
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -784,7 +799,7 @@ func (q *Queries) GetMostLikedMeals(ctx context.Context, limit int64) ([]Meal, e
 }
 
 const getNewestMeals = `-- name: GetNewestMeals :many
-SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at FROM meals
+SELECT id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt FROM meals
 ORDER BY created_at DESC
 LIMIT ?1
 `
@@ -821,6 +836,7 @@ func (q *Queries) GetNewestMeals(ctx context.Context, limit int64) ([]Meal, erro
 			&i.Likes,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.ImageAlt,
 		); err != nil {
 			return nil, err
 		}
@@ -842,7 +858,7 @@ INSERT INTO meals (
 ) VALUES (
     ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, CURRENT_TIMESTAMP
 )
-RETURNING id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at
+RETURNING id, name, category, servings, description, light_version_instructions, instructions, image_url, calories, protein, cook_time, prep_time, total_time, washing_effort, peeling_effort, cutting_effort, items_required, ingredients, total_effort, likes, created_at, updated_at, image_alt
 `
 
 type InsertMealParams struct {
@@ -911,6 +927,7 @@ func (q *Queries) InsertMeal(ctx context.Context, arg InsertMealParams) (Meal, e
 		&i.Likes,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.ImageAlt,
 	)
 	return i, err
 }
@@ -924,18 +941,19 @@ SET
     light_version_instructions = ?5,
     instructions = ?6,
     image_url = ?7,
-    calories = ?8,
-    protein = ?9,
-    cook_time = ?10,
-    prep_time = ?11,
-    total_time = ?12,
-    washing_effort = ?13,
-    peeling_effort = ?14,
-    cutting_effort = ?15,
-    items_required = ?16,
-    ingredients = ?17,
-    total_effort = ?18,
-    servings = ?19,
+    image_alt = ?8,
+    calories = ?9,
+    protein = ?10,
+    cook_time = ?11,
+    prep_time = ?12,
+    total_time = ?13,
+    washing_effort = ?14,
+    peeling_effort = ?15,
+    cutting_effort = ?16,
+    items_required = ?17,
+    ingredients = ?18,
+    total_effort = ?19,
+    servings = ?20,
     updated_at = CURRENT_TIMESTAMP
 WHERE id = ?1
 `
@@ -948,6 +966,7 @@ type UpdateMealParams struct {
 	LightVersionInstructions sql.NullString
 	Instructions             string
 	ImageUrl                 string
+	ImageAlt                 sql.NullString
 	Calories                 int64
 	Protein                  int64
 	CookTime                 int64
@@ -971,6 +990,7 @@ func (q *Queries) UpdateMeal(ctx context.Context, arg UpdateMealParams) error {
 		arg.LightVersionInstructions,
 		arg.Instructions,
 		arg.ImageUrl,
+		arg.ImageAlt,
 		arg.Calories,
 		arg.Protein,
 		arg.CookTime,

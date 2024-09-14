@@ -32,6 +32,7 @@ type Meal struct {
 	Likes                    int64
 	CreatedAt                time.Time
 	UpdatedAt                time.Time
+	ImageAlt                 sql.NullString
 }
 
 type Session struct {

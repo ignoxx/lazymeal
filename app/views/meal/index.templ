@@ -11,15 +11,6 @@ import (
 	"lazymeal/public"
 )
 
-func removeStepNumberFromStep(step string) string {
-	firstDotIndex := strings.Index(step, ".")
-	if firstDotIndex == -1 {
-		return step
-	}
-
-	return strings.TrimSpace(step[firstDotIndex+1:])
-}
-
 templ LikeButtonClicked() {
 	<button class="absolute top-2 right-2 bg-red-100 text-red-500 p-2 rounded-full hover:bg-red-200 hover:text-red-600 transition transform active:scale-90 shadow-sm">
 		<i class="fas fa-thumbs-up text-xl"></i>
@@ -42,12 +33,12 @@ templ Index(trendingMeals []sqlc.Meal, meal sqlc.Meal, isAuthenticted bool) {
 									<img
 										class="absolute blur inset-0 w-full h-full object-cover transition-opacity duration-300"
 										src={ previewImage }
-										alt="Preview Image"
+										alt={ meal.ImageAlt.String }
 									/>
 								}
 								<img
 									src={ utils.ImageURL(meal.ImageUrl) }
-									alt={ meal.Description }
+									alt={ meal.ImageAlt.String }
 									loading="lazy"
 									class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300"
 									onload="this.style.opacity='1'; this.previousElementSibling.remove();"
