@@ -68,7 +68,7 @@ templ MealCard(meal sqlc.Meal) {
 }
 
 templ MealTrendingCard(meal sqlc.Meal) {
-	<a href={ templ.SafeURL(fmt.Sprintf("/%s", meal.Slug)) } class="block">
+	<a href={ templ.SafeURL(fmt.Sprintf("/%s", meal.Slug.String)) } class="block">
 		<div class="flex items-center bg-gray-100 hover:bg-gray-200 p-2 rounded-lg">
 			<div class="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden transition-opacity duration-300">
 				if previewImage, ok := public.PreviewImages[meal.ImageUrl]; ok {

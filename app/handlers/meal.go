@@ -206,5 +206,5 @@ func HandleMealCreate(kit *kit.Kit) error {
 		return kit.Render(errors.Error500())
 	}
 
-	return kit.Redirect(http.StatusSeeOther, fmt.Sprintf("/%s", meal.Slug))
+	return kit.Redirect(http.StatusSeeOther, fmt.Sprintf("/%s", meal.Slug.String))
 }

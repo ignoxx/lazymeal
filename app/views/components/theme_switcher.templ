@@ -1,10 +1,10 @@
 package components
 
 templ ThemeSwitcher() {
-	<div x-show="theme === 'dark'" class="cursor-pointer" @click={ "theme = 'light'" }>
+	<div x-show="theme === 'dark'" class="cursor-pointer hidden sm:block" @click={ "theme = 'light'" }>
 		@LightIcon()
 	</div>
-	<div x-show="theme === 'light'" class="cursor-pointer" @click={ "theme = 'dark'" }>
+	<div x-show="theme === 'light'" class="cursor-pointer hidden sm:block" @click={ "theme = 'dark'" }>
 		@DarkIcon()
 	</div>
 }
