@@ -23,7 +23,7 @@ templ BaseLayout(title, metaDescription string) {
 			<link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico"/>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<meta name="apple-mobile-web-app-capable" content="yes"/>
+			<meta name="mobile-web-app-capable" content="yes"/>
 			<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 			<meta name="apple-mobile-web-app-title" content="Lazy Meal"/>
 			<meta name="keywords" content="lazy dinner, lazy dinner ideas, lazy dinner for one, lazy Friday night dinner, lazy meals, lazy dish, the lazy dish, easy lazy dinners, quick dinner recipes, lazy cooking, fast dinner ideas, simple dinners, effortless meals, lazy weeknight meals"/>
@@ -40,6 +40,7 @@ templ BaseLayout(title, metaDescription string) {
 			<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 			<!-- HTMX -->
 			<script src="https://unpkg.com/htmx.org@1.9.9" defer></script>
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5080523601716556" crossorigin="anonymous"></script>
 		</head>
 		<body x-data="{theme: 'light'}" :class="theme" lang="en">
 			{ children... }
