@@ -57,7 +57,7 @@ func HandleMealLike(kit *kit.Kit) error {
 	mealIDStr := kit.Request.PathValue("mealID")
 	mealID, err := strconv.ParseInt(mealIDStr, 10, 64)
 	if err != nil {
-		return kit.Render(errors.Error404())
+		return kit.Render(mealView.LikeButtonClicked())
 	}
 
 	err = db.Get().UpdateMealLikes(kit.Request.Context(), mealID)
@@ -65,7 +65,6 @@ func HandleMealLike(kit *kit.Kit) error {
 		slog.Warn("failed to update meal likes", slog.String("err", err.Error()))
 	}
 
-	// 200 OK
 	return kit.Render(mealView.LikeButtonClicked())
 }
 func HandleMealEdit(kit *kit.Kit) error {
