@@ -11,6 +11,12 @@ import (
 	"github.com/anthdm/superkit/kit"
 )
 
+func HandlePrivacyPolicyIndex(kit *kit.Kit) error {
+	kit.Response.Header().Set("Content-Type", "text/html; charset=utf-8; image/jpeg; image/png; text/css; application/javascript")
+
+	return kit.Render(home.PrivacyPolicyIndex(kit.Auth().Check()))
+}
+
 func HandleLandingIndex(kit *kit.Kit) error {
 	activeFilter := getActiveFilter(kit)
 	meals, err := getMealsFiltered(kit.Request.Context(), activeFilter)

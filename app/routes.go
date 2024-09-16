@@ -55,6 +55,7 @@ func InitializeRoutes(router *chi.Mux) {
 		})
 
 		app.Get("/", kit.Handler(handlers.HandleLandingIndex))
+		app.Get("/privacy", kit.Handler(handlers.HandlePrivacyPolicyIndex))
 		// {articleSlug:[a-z-]+
 		app.Get("/{mealSlug:[a-z-0-9]+}", kit.Handler(handlers.HandleMealIndex))
 		app.Post("/{mealID}/like", kit.Handler(handlers.HandleMealLike))
