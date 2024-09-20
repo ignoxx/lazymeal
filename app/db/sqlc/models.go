@@ -34,6 +34,14 @@ type Meal struct {
 	Likes                    int64
 	CreatedAt                time.Time
 	UpdatedAt                time.Time
+	IsPublic                 bool
+}
+
+type MealGuideWhitelist struct {
+	ID        int64
+	Email     string
+	Discount  float64
+	CreatedAt time.Time
 }
 
 type OldMeal struct {

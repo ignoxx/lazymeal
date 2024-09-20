@@ -7,9 +7,71 @@ import (
 	"lazymeal/app/db/sqlc"
 	"lazymeal/app/types"
 	"lazymeal/app/views/home"
+	"log/slog"
+	"strings"
 
 	"github.com/anthdm/superkit/kit"
 )
+
+func HandleMealGuideWaitlistIndex(kit *kit.Kit) error {
+	kit.Response.Header().Set("Content-Type", "text/html; charset=utf-8; image/jpeg; image/png; text/css; application/javascript")
+	return kit.Render(home.MealPlanWaitlistIndex(kit.Auth().Check()))
+}
+
+func HandleMealGuideWaitlistSubmit(kit *kit.Kit) error {
+	email := kit.Request.FormValue("email")
+	email = kit.Request.PostFormValue("email")
+	fmt.Println(email)
+	if email == "" || len(email) < 6 {
+		errors := map[string]string{"invalidEmail": "please enter a valid email and try again!"}
+		return kit.Render(home.MealPlanWaitlistSubmitForm(errors))
+	}
+
+	slog.Info("received waitlist signup", slog.String("email", email))
+	count, err := db.Get().GetWaitlistCount(kit.Request.Context())
+
+	if err != nil {
+		errors := map[string]string{"invalidEmail": "we fucked something up, sorry. please try again later!"}
+		return kit.Render(home.MealPlanWaitlistSubmitForm(errors))
+	}
+
+	var discount float64
+	switch {
+	case count <= 200:
+		discount = 0.80 // 80% discount
+	case count <= 400:
+		discount = 0.50 // 50% discount
+	case count <= 600:
+		discount = 0.30 // 30% discount
+	case count <= 800:
+		discount = 0.15 // 15% discount
+	case count <= 1000:
+		discount = 0.10 // 10% discount
+	default:
+		discount = 0.05 // 5% discount
+	}
+
+	waitlist, err := db.Get().InsertEmail(kit.Request.Context(), sqlc.InsertEmailParams{
+		Email:    email,
+		Discount: discount,
+	})
+
+	if err != nil {
+		slog.Warn("failed to insert email into waitlist", slog.String("err", err.Error()), slog.String("email", email))
+
+		if strings.Contains(err.Error(), "UNIQUE constraint failed") {
+			return kit.Render(home.MealPlanWaitlistSubmitSuccess(int(waitlist.ID)))
+		}
+	}
+
+	return kit.Render(home.MealPlanWaitlistSubmitSuccess(int(count + 1)))
+}
+
+func HandleMealGuideIndex(kit *kit.Kit) error {
+	kit.Response.Header().Set("Content-Type", "text/html; charset=utf-8; image/jpeg; image/png; text/css; application/javascript")
+
+	return kit.Render(home.MealPlanIndex(kit.Auth().Check()))
+}
 
 func HandlePrivacyPolicyIndex(kit *kit.Kit) error {
 	kit.Response.Header().Set("Content-Type", "text/html; charset=utf-8; image/jpeg; image/png; text/css; application/javascript")

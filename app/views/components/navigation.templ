@@ -20,12 +20,22 @@ func chooseRandomHeadline() string {
 
 templ Navigation(isAuthenticated bool) {
 	<nav class="border-b py-3">
-		<div class="container mx-auto flex justify-between">
-			<div class="text-lg text-foreground">
-				<a href="/" class="font-semibold uppercase">🍲 lazy<span class="text-green-600">meal</span></a>
+		<div class="container mx-auto flex justify-between items-center">
+			<!-- Left side: Lazy Meal logo and Meal Guide (on desktop) -->
+			<div class="flex items-center gap-6">
+				<!-- Logo -->
+				<div class="text-lg text-foreground">
+					<a href="/" class="font-semibold uppercase">🍲 lazy<span class="text-green-600">meal</span></a>
+				</div>
+				<!-- Meal Guide Button (only next to logo on desktop) -->
+				<a href="/meal-guide" class="hidden md:block bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition text-sm font-semibold">
+					Get your Meal Guide
+				</a>
 			</div>
-			<div class="flex gap-4 items-center text-sm ">
-				<div>
+			<!-- Right side on desktop: Random headline and Auth button -->
+			<div class="flex gap-4 items-center text-sm">
+				<!-- Random headline (only on desktop) -->
+				<div class="hidden md:block">
 					{ chooseRandomHeadline() }!
 				</div>
 				<!-- create meal button -->
@@ -35,6 +45,10 @@ templ Navigation(isAuthenticated bool) {
 					</button>
 				}
 			</div>
+			<!-- Meal Guide Button on mobile (rightmost on mobile) -->
+			<a href="/meal-guide" class="block md:hidden bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition text-sm font-semibold">
+				Get your Meal Guide
+			</a>
 		</div>
 	</nav>
 }

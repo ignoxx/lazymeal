@@ -1,9 +1,11 @@
 -- name: GetAllMeals :many
 SELECT * FROM meals
+WHERE isPublic = TRUE
 ORDER BY category DESC;
 
 -- name: GetAllMealsPaginated :many
 SELECT * FROM meals
+WHERE isPublic = TRUE
 ORDER BY created_at DESC
 LIMIT ?1 OFFSET ?2;
 
@@ -18,10 +20,6 @@ WHERE slug = ?1;
 -- name: GetMealByIDs :many
 SELECT * FROM meals
 WHERE id IN (?1, ?2, ?3);
-
--- name: GetMealsByCategory :many
-SELECT * FROM meals
-WHERE category = ?1;
 
 -- name: GetMealsByCalories :many
 SELECT * FROM meals
