@@ -55,6 +55,12 @@ func main() {
 			ChangeFreq: "daily",
 			Priority:   1.0,
 		},
+		{
+			Loc:        SITE_BASE_URL + "meal-guide",
+			LastMod:    time.Now().Format(time.RFC3339), // Include time
+			ChangeFreq: "monthly",
+			Priority:   0.9,
+		},
 	}
 
 	for _, meal := range meals {
