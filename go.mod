@@ -1,14 +1,12 @@
 module lazymeal
 
-go 1.23
-
-toolchain go1.23.0
+go 1.23.0
 
 // uncomment for local development on the superkit core.
 // replace github.com/anthdm/superkit => ../
 
 require (
-	github.com/a-h/templ v0.2.778
+	github.com/a-h/templ v0.3.960
 	github.com/anthdm/superkit v0.0.0-20240701091803-e7f8e0aad3e9
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
@@ -51,7 +49,7 @@ require (
 	github.com/yargevad/filepathx v1.0.0 // indirect
 	go.starlark.net v0.0.0-20230302034142-4b1e35fe2254 // indirect
 	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1 // indirect
-	golang.org/x/sys v0.25.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
