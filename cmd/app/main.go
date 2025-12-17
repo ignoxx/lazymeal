@@ -5,6 +5,7 @@ import (
 	"lazymeal/app"
 	"lazymeal/public"
 	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
@@ -59,6 +60,6 @@ func disableCache(next http.Handler) http.Handler {
 
 func init() {
 	if err := godotenv.Load(); err != nil {
-		log.Fatal(err)
+		slog.Warn("no .env found", err)
 	}
 }
