@@ -1,6 +1,6 @@
 module lazymeal
 
-go 1.23.0
+go 1.25.5
 
 // uncomment for local development on the superkit core.
 // replace github.com/anthdm/superkit => ../
