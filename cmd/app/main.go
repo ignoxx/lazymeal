@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"lazymeal/app"
 	"lazymeal/public"
-	"log"
 	"log/slog"
 	"net/http"
 	"os"
